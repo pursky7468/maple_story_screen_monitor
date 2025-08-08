@@ -3,7 +3,7 @@ GEMINI_API_KEY = "AIzaSyBv_hIyvmyLb9vXIh2nzlKkVtm9AyvnRLU"
 # ROI座標將在程式啟動時由使用者選擇
 ROI_COORDINATES = None
 
-GROUP1_KEYWORDS = ["披風幸運60%卷軸"]
+GROUP1_KEYWORDS = ["披風幸運60%"]
 
 SCAN_INTERVAL = 5
 

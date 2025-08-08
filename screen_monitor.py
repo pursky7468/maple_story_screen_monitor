@@ -7,6 +7,7 @@ from tkinter import messagebox
 import io
 import base64
 import os
+import json
 from datetime import datetime
 from config import *
 from roi_selector import ROISelector
@@ -68,13 +69,27 @@ class ScreenMonitor:
             img_byte_arr = img_byte_arr.getvalue()
             
             prompt = f"""
-            妳是一位楓之谷遊戲的交易商，你需要把你身上的庫存賣出，
-            現在你想要把你身上的{GROUP1_KEYWORDS}的卷軸賣個好價錢
-            請分析這張圖片中的所有文字內容，並檢查這位玩家是否在收購{GROUP1_KEYWORDS}。
-            不需要加入你的推理過程和內容，
-            回覆的內容只需要圖片上的完整文字，
-            如果有match{GROUP1_KEYWORDS}的話，請強調玩家的名稱和頻道編號
-            其中頻道編號一般會在文字的最開頭。
+            你是一位楓之谷遊戲中的商人，
+            你負責把你手中的{GROUP1_KEYWORDS}賣出。
+            請分析這張圖片中的所有文字內容，並檢查是否有玩家在收購{GROUP1_KEYWORDS}。
+            請以JSON格式回傳分析結果，格式如下：
+            {{
+                "full_text": "圖片中的完整文字內容",
+                "is_match": true/false,
+                "player_name": "玩家名稱（如果有匹配的話）",
+                "channel_number": "頻道編號（通常在文字開頭）",
+                "matched_keywords": ["找到的關鍵字列表"]
+            }}
+            
+            注意事項：
+            - full_text 必須包含圖片中所有識別到的文字
+            - is_match 判斷是否有人在收購目標物品：{GROUP1_KEYWORDS}
+            - player_name 提取說話者的玩家名稱
+            - channel_number 提取頻道編號（通常格式如 [頻道1] 或 ch1 等）
+            - matched_keywords 列出實際找到的相關關鍵字
+            - 你必須嚴格確認百分比的數字內容，例如如果你要賣的東西是披風幸運60%，但玩家是要收購披風幸運10%，這是不成立匹配。
+            
+            請確保回傳的是有效的JSON格式，不要包含任何其他文字。
             """
             
             # 使用新的API格式
@@ -91,20 +106,96 @@ class ScreenMonitor:
             print(f"Gemini分析錯誤: {e}")
             return "ERROR"
     
-    def check_keyword_match(self, analysis_result):
-        """檢查分析結果中是否包含目標關鍵字"""
-        analysis_upper = analysis_result.upper()
+    def extract_json_from_response(self, response_text):
+        """從回應中提取JSON內容"""
+        # 移除可能的markdown代碼塊標記
+        response_text = response_text.strip()
         
-        # 檢查是否包含任何目標關鍵字
-        found_keywords = []
-        for keyword in GROUP1_KEYWORDS:
-            if keyword.upper() in analysis_upper:
-                found_keywords.append(keyword)
-        
-        if found_keywords:
-            return True, f"找到關鍵字: {', '.join(found_keywords)}\n\nGemini分析結果:\n{analysis_result}"
+        # 檢查是否有```json代碼塊
+        if response_text.startswith('```json'):
+            # 找到開始和結束位置
+            start_marker = '```json'
+            end_marker = '```'
+            
+            start_idx = response_text.find(start_marker) + len(start_marker)
+            end_idx = response_text.rfind(end_marker)
+            
+            if start_idx > len(start_marker) - 1 and end_idx > start_idx:
+                json_content = response_text[start_idx:end_idx].strip()
+            else:
+                # 如果沒找到結束標記，取開始標記之後的所有內容
+                json_content = response_text[start_idx:].strip()
+        elif response_text.startswith('```'):
+            # 處理其他類型的代碼塊
+            lines = response_text.split('\n')
+            json_lines = []
+            in_code_block = False
+            
+            for line in lines:
+                if line.strip().startswith('```') and not in_code_block:
+                    in_code_block = True
+                elif line.strip() == '```' and in_code_block:
+                    break
+                elif in_code_block:
+                    json_lines.append(line)
+            
+            json_content = '\n'.join(json_lines).strip()
         else:
-            return False, f"未找到目標關鍵字\n\nGemini分析結果:\n{analysis_result}"
+            # 沒有代碼塊，直接使用原始內容
+            json_content = response_text
+        
+        # 嘗試找到JSON對象的開始和結束
+        json_start = json_content.find('{')
+        json_end = json_content.rfind('}')
+        
+        if json_start >= 0 and json_end > json_start:
+            json_content = json_content[json_start:json_end + 1]
+        
+        return json_content
+
+    def check_keyword_match(self, analysis_result):
+        """解析JSON格式的分析結果"""
+        try:
+            # 先提取JSON內容
+            json_content = self.extract_json_from_response(analysis_result)
+            print(f"提取的JSON內容: {json_content}")
+            
+            # 解析JSON
+            result_data = json.loads(json_content)
+            
+            # 直接從JSON中獲取匹配結果
+            full_text = result_data.get("full_text", "")
+            is_match = result_data.get("is_match", False)
+            player_name = result_data.get("player_name", "未知")
+            channel_number = result_data.get("channel_number", "未知")
+            matched_keywords = result_data.get("matched_keywords", [])
+            
+            # 格式化顯示資訊
+            if is_match:
+                match_info = f"""✓ 找到匹配！
+玩家名稱: {player_name}
+頻道編號: {channel_number}
+匹配關鍵字: {', '.join(matched_keywords)}
+
+完整文字內容:
+{full_text}"""
+                return True, match_info
+            else:
+                no_match_info = f"""⋅ 未找到匹配
+頻道編號: {channel_number}
+
+完整文字內容:
+{full_text}"""
+                return False, no_match_info
+                
+        except json.JSONDecodeError as e:
+            print(f"JSON解析失敗: {e}")
+            print(f"嘗試解析的內容: {json_content if 'json_content' in locals() else analysis_result}")
+            return False, f"JSON解析失敗\n\nGemini原始回應:\n{analysis_result}"
+        
+        except Exception as e:
+            print(f"解析結果時發生錯誤: {e}")
+            return False, f"解析錯誤: {str(e)}\n\n原始回應:\n{analysis_result}"
     
     def show_alert(self, message):
         root = tk.Tk()
@@ -125,7 +216,23 @@ class ScreenMonitor:
                 roi_image = self.capture_roi()
                 if roi_image:
                     analysis = self.analyze_text_with_gemini(roi_image)
-                    print("分析結果:", analysis)
+                    print("Gemini原始回應:", analysis)
+                    
+                    # 如果開啟截圖保存，也保存JSON分析結果
+                    if self.save_screenshots:
+                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                        json_path = os.path.join(SCREENSHOT_FOLDER, f"analysis_{timestamp}.json")
+                        try:
+                            # 嘗試解析並格式化JSON
+                            json_data = json.loads(analysis)
+                            with open(json_path, 'w', encoding='utf-8') as f:
+                                json.dump(json_data, f, ensure_ascii=False, indent=2)
+                            print(f"已保存分析結果: {json_path}")
+                        except json.JSONDecodeError:
+                            # 如果不是有效JSON，保存原始文字
+                            with open(json_path.replace('.json', '.txt'), 'w', encoding='utf-8') as f:
+                                f.write(analysis)
+                    
                     is_match, details = self.check_keyword_match(analysis)
                     
                     if is_match:
