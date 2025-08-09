@@ -1,0 +1,30 @@
+=== 測試 3 JSON解析錯誤詳細報告 ===
+
+時間戳: 20250809_101007_079
+錯誤類型: JSON解析錯誤
+錯誤訊息: Expecting value: line 1 column 1 (char 0)
+錯誤行號: 1
+錯誤列號: 1
+
+=== 內容分析 ===
+原始回應長度: 5 字符
+提取JSON長度: 5 字符
+包含```json標記: False
+包含結束標記: False
+以{開始: False
+以}結束: False
+大括號平衡: 0 (0為平衡)
+引號平衡: True
+
+=== 原始回應 ===
+ERROR
+
+=== 提取的JSON ===
+ERROR
+
+=== 字符分析 ===
+  0: 'E' (ASCII: 69)
+  1: 'R' (ASCII: 82)
+  2: 'R' (ASCII: 82)
+  3: 'O' (ASCII: 79)
+  4: 'R' (ASCII: 82)

@@ -13,12 +13,13 @@ from config import *
 from roi_selector import ROISelector
 
 class ScreenMonitor:
-    def __init__(self, roi_coordinates, save_screenshots=False):
+    def __init__(self, roi_coordinates, save_screenshots=False, show_alerts=True):
         genai.configure(api_key=GEMINI_API_KEY)
         self.model = genai.GenerativeModel('gemini-1.5-flash')
         self.running = False
         self.roi_coordinates = roi_coordinates
         self.save_screenshots = save_screenshots
+        self.show_alerts = show_alerts
         
         # 如果需要保存截圖，創建資料夾
         if self.save_screenshots:
@@ -68,25 +69,38 @@ class ScreenMonitor:
             image.save(img_byte_arr, format='PNG')
             img_byte_arr = img_byte_arr.getvalue()
             
+            # 生成商品清單文字
+            selling_list = '\n'.join([f"- {item_name}: {', '.join(keywords)}" 
+                                    for item_name, keywords in SELLING_ITEMS.items()])
+            
             prompt = f"""
             你是一位楓之谷遊戲中的商人，
-            你負責把你手中的{GROUP1_KEYWORDS}賣出。
-            請分析這張圖片中的所有文字內容，並檢查是否有玩家在收購{GROUP1_KEYWORDS}。
+            你手中有以下商品要賣出：
+            {selling_list}
+            
+            請分析這張圖片中的所有文字內容，並檢查是否有玩家在收購你手中的任何商品。
             請以JSON格式回傳分析結果，格式如下：
             {{
                 "full_text": "圖片中的完整文字內容",
                 "is_match": true/false,
                 "player_name": "玩家名稱（如果有匹配的話）",
                 "channel_number": "頻道編號（通常在文字開頭）",
-                "matched_keywords": ["找到的關鍵字列表"]
+                "matched_items": [
+                    {{
+                        "item_name": "商品名稱",
+                        "keywords_found": ["找到的相關關鍵字"]
+                    }}
+                ],
+                "matched_keywords": ["所有找到的關鍵字"]
             }}
             
             注意事項：
             - full_text 必須包含圖片中所有識別到的文字
-            - is_match 判斷是否有人在收購目標物品：{GROUP1_KEYWORDS}
+            - is_match 判斷是否有人在收購你手中的任何商品
             - player_name 提取說話者的玩家名稱
             - channel_number 提取頻道編號（通常格式如 [頻道1] 或 ch1 等）
-            - matched_keywords 列出實際找到的相關關鍵字
+            - matched_items 列出匹配的商品及其找到的關鍵字
+            - matched_keywords 列出所有找到的相關關鍵字
             - 你必須嚴格確認百分比的數字內容，例如如果你要賣的東西是披風幸運60%，但玩家是要收購披風幸運10%，這是不成立匹配。
             
             請確保回傳的是有效的JSON格式，不要包含任何其他文字。
@@ -168,14 +182,26 @@ class ScreenMonitor:
             is_match = result_data.get("is_match", False)
             player_name = result_data.get("player_name", "未知")
             channel_number = result_data.get("channel_number", "未知")
+            matched_items = result_data.get("matched_items", [])
             matched_keywords = result_data.get("matched_keywords", [])
             
             # 格式化顯示資訊
             if is_match:
+                # 格式化匹配商品清單
+                items_info = []
+                for item in matched_items:
+                    item_name = item.get("item_name", "未知商品")
+                    keywords_found = item.get("keywords_found", [])
+                    items_info.append(f"  - {item_name}: {', '.join(keywords_found)}")
+                
+                items_text = '\n'.join(items_info) if items_info else "  - 無具體商品資訊"
+                
                 match_info = f"""✓ 找到匹配！
 玩家名稱: {player_name}
 頻道編號: {channel_number}
-匹配關鍵字: {', '.join(matched_keywords)}
+匹配商品:
+{items_text}
+所有關鍵字: {', '.join(matched_keywords)}
 
 完整文字內容:
 {full_text}"""
@@ -198,10 +224,13 @@ class ScreenMonitor:
             return False, f"解析錯誤: {str(e)}\n\n原始回應:\n{analysis_result}"
     
     def show_alert(self, message):
-        root = tk.Tk()
-        root.withdraw()  
-        messagebox.showinfo("匹配提醒", f"找到符合條件的內容！\n\n{message}")
-        root.destroy()
+        if self.show_alerts:
+            root = tk.Tk()
+            root.withdraw()  
+            messagebox.showinfo("匹配提醒", f"找到符合條件的內容！\n\n{message}")
+            root.destroy()
+        else:
+            print("提示窗已關閉，跳過彈窗顯示")
     
     def start_monitoring(self):
         self.running = True
@@ -268,6 +297,18 @@ def get_user_settings():
         else:
             print("請輸入 y 或 n")
     
+    # 詢問是否顯示提示窗
+    while True:
+        alert_choice = input("是否顯示匹配提示窗？(y/n): ").lower().strip()
+        if alert_choice in ['y', 'yes', '是']:
+            show_alerts = True
+            break
+        elif alert_choice in ['n', 'no', '否']:
+            show_alerts = False
+            break
+        else:
+            print("請輸入 y 或 n")
+    
     # ROI選擇
     print("\n請選擇監控區域（ROI）...")
     print("即將顯示全螢幕截圖，請用滑鼠拖拉選擇監控區域")
@@ -278,12 +319,13 @@ def get_user_settings():
     
     if roi_coordinates is None:
         print("未選擇ROI區域，程式結束")
-        return None, None
+        return None, None, None
     
     print(f"\n已選擇ROI: {roi_coordinates}")
     print(f"截圖保存: {'開啟' if save_screenshots else '關閉'}")
+    print(f"提示窗顯示: {'開啟' if show_alerts else '關閉'}")
     
-    return roi_coordinates, save_screenshots
+    return roi_coordinates, save_screenshots, show_alerts
 
 def main():
     if GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_HERE":
@@ -291,18 +333,20 @@ def main():
         return
     
     # 獲取使用者設定
-    roi_coordinates, save_screenshots = get_user_settings()
+    roi_coordinates, save_screenshots, show_alerts = get_user_settings()
     if roi_coordinates is None:
         return
     
     # 創建監控器
-    monitor = ScreenMonitor(roi_coordinates, save_screenshots)
+    monitor = ScreenMonitor(roi_coordinates, save_screenshots, show_alerts)
     
     print("\n螢幕監控程式")
-    print("=" * 30)
-    print("目標關鍵字:")
-    print(f"搜尋內容: {', '.join(GROUP1_KEYWORDS)}")
-    print("=" * 30)
+    print("=" * 40)
+    print("監控商品:")
+    for item_name, keywords in SELLING_ITEMS.items():
+        print(f"  - {item_name}")
+        print(f"    關鍵字: {', '.join(keywords)}")
+    print("=" * 40)
     
     monitor.start_monitoring()
 
