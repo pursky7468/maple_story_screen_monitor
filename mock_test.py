@@ -4,7 +4,7 @@ import json
 import random
 from datetime import datetime
 from integration_test import IntegrationTester
-from screen_monitor import ScreenMonitor
+from screen_monitor import ScreenMonitor, convert_to_json_serializable
 from roi_selector import ROISelector
 from config import *
 
@@ -171,7 +171,7 @@ class MockIntegrationTester(IntegrationTester):
         summary["roi_coordinates"] = roi_coordinates
         summary["test_mode"] = "MOCK_MODE"
         with open(summary_file, 'w', encoding='utf-8') as f:
-            json.dump(summary, f, ensure_ascii=False, indent=2)
+            json.dump(convert_to_json_serializable(summary), f, ensure_ascii=False, indent=2)
         
         # 執行測試循環（複用父類的邏輯）
         results = []
@@ -241,7 +241,7 @@ class MockIntegrationTester(IntegrationTester):
         }
         
         with open(summary_file, 'w', encoding='utf-8') as f:
-            json.dump(summary, f, ensure_ascii=False, indent=2)
+            json.dump(convert_to_json_serializable(summary), f, ensure_ascii=False, indent=2)
         
         # 顯示詳細測試結果
         stats = summary["statistics"]
