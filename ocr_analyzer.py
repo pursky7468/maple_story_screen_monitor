@@ -1,20 +1,26 @@
 try:
     import easyocr
+    import numpy as np
+    from PIL import Image, ImageEnhance, ImageFilter
     EASYOCR_AVAILABLE = True
-except ImportError:
+    ENHANCEMENT_AVAILABLE = True
+except ImportError as e:
     EASYOCR_AVAILABLE = False
+    ENHANCEMENT_AVAILABLE = False
     easyocr = None
+    print(f"OCR增強功能不可用: {e}")
 
 from text_analyzer import TextAnalyzer, AnalysisResult
 import re
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Any
 
 class OCRAnalyzer(TextAnalyzer):
     """使用EasyOCR的文字分析器"""
     
-    def __init__(self, selling_items: dict, languages: List[str] = None):
+    def __init__(self, selling_items: dict, languages: List[str] = None, enable_enhancement: bool = True):
         super().__init__(selling_items)
         self.strategy_type = "OCR"
+        self.enable_enhancement = enable_enhancement and ENHANCEMENT_AVAILABLE
         
         if not EASYOCR_AVAILABLE:
             raise ImportError("EasyOCR未安裝。請執行: pip install easyocr")
@@ -24,28 +30,67 @@ class OCRAnalyzer(TextAnalyzer):
         
         try:
             self.reader = easyocr.Reader(languages)
-            print(f"OCR初始化成功，支援語言: {languages}")
+            enhancement_status = "啟用圖像增強" if self.enable_enhancement else "基礎模式"
+            print(f"OCR初始化成功，支援語言: {languages} ({enhancement_status})")
         except Exception as e:
             print(f"OCR初始化失敗: {e}")
             raise
     
-    def analyze_image(self, image) -> str:
-        """使用OCR分析圖片"""
+    def preprocess_image(self, image: Image.Image) -> Image.Image:
+        """圖像預處理以提升OCR效果"""
+        if not self.enable_enhancement:
+            return image
+            
+        try:
+            # 轉換為灰度圖像
+            if image.mode != 'L':
+                image = image.convert('L')
+            
+            # 增強對比度
+            enhancer = ImageEnhance.Contrast(image)
+            image = enhancer.enhance(1.3)
+            
+            # 增強清晰度
+            enhancer = ImageEnhance.Sharpness(image)
+            image = enhancer.enhance(1.1)
+            
+            # 適度去噪
+            image = image.filter(ImageFilter.MedianFilter(size=3))
+            
+            return image
+            
+        except Exception as e:
+            print(f"圖像預處理失敗，使用原圖: {e}")
+            return image
+
+    def analyze_image(self, image) -> List[Dict]:
+        """使用增強版OCR分析圖片"""
         if self.reader is None:
             return "ERROR: OCR未正確初始化"
         
         try:
+            # 圖像預處理
+            if self.enable_enhancement:
+                processed_image = self.preprocess_image(image)
+            else:
+                processed_image = image
+                
             # 將PIL圖片轉換為numpy array
-            import numpy as np
-            image_array = np.array(image)
+            image_array = np.array(processed_image)
             
             # 使用EasyOCR進行文字識別
-            results = self.reader.readtext(image_array)
+            results = self.reader.readtext(
+                image_array,
+                width_ths=0.6,      # 調整文字寬度閾值
+                height_ths=0.6,     # 調整文字高度閾值
+                detail=1,           # 返回詳細信息
+                paragraph=False     # 不合併段落，保持原始結構
+            )
             
             # 提取文字內容
             extracted_text = []
             for (bbox, text, confidence) in results:
-                if confidence > 0.5:  # 只保留信心度高於50%的結果
+                if confidence > 0.4:  # 降低信心度閾值以獲取更多結果
                     extracted_text.append({
                         'text': text.strip(),
                         'confidence': confidence,

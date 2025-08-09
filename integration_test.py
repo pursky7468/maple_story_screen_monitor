@@ -66,19 +66,16 @@ class IntegrationTester:
         """獲取分析器選擇"""
         print("\n請選擇要測試的分析方法：")
         print("1. Gemini AI (需要API Key，準確度高)")
-        print("2. OCR (本地處理，速度快)")
-        print("3. 增強版OCR (三區域優化，提升玩家名稱和頻道識別)")
+        print("2. 增強版OCR (本地處理，已優化玩家名稱和頻道識別)")
         
         while True:
-            choice = input("請輸入選項 (1, 2 或 3): ").strip()
+            choice = input("請輸入選項 (1 或 2): ").strip()
             if choice == "1":
                 return "gemini"
             elif choice == "2":
                 return "ocr"
-            elif choice == "3":
-                return "enhanced_ocr"
             else:
-                print("請輸入 1, 2 或 3")
+                print("請輸入 1 或 2")
     
     def create_analyzer(self, analyzer_type: str):
         """創建分析器實例"""
@@ -96,7 +93,7 @@ class IntegrationTester:
         elif analyzer_type == "ocr":
             try:
                 from ocr_analyzer import OCRAnalyzer
-                return OCRAnalyzer(SELLING_ITEMS)
+                return OCRAnalyzer(SELLING_ITEMS, enable_enhancement=True)
             except ImportError as e:
                 print(f"❌ OCR依賴缺失: {e}")
                 print("\n安裝OCR依賴：")
@@ -108,20 +105,6 @@ class IntegrationTester:
                 print(f"❌ OCR初始化失敗: {e}")
                 return None
         
-        elif analyzer_type == "enhanced_ocr":
-            try:
-                from enhanced_ocr_analyzer import EnhancedOCRAnalyzer
-                return EnhancedOCRAnalyzer(SELLING_ITEMS)
-            except ImportError as e:
-                print(f"❌ 增強版OCR依賴缺失: {e}")
-                print("\n安裝增強版OCR依賴：")
-                print("方法1 (推薦)：python install_ocr.py")
-                print("方法2 (手動)：pip install easyocr opencv-python")
-                print("\n注意：增強版OCR需要額外的opencv-python庫")
-                return None
-            except Exception as e:
-                print(f"❌ 增強版OCR初始化失敗: {e}")
-                return None
         
         return None
     

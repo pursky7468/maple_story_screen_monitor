@@ -81,43 +81,87 @@ class TextAnalyzer(ABC):
         return False  # 基礎實現不檢查配額錯誤
     
     def extract_channel_number(self, text: str) -> str:
-        """從文字中提取頻道編號"""
-        # 匹配常見的頻道格式
+        """從文字中提取頻道編號（增強版）"""
+        # 擴展的頻道格式匹配模式
         patterns = [
             r'CHO(\d+)',           # CHO123
+            r'CH(\d+)',            # CH123  
             r'\[頻道(\d+)\]',      # [頻道1]
-            r'ch(\d+)',            # ch1
-            r'CH(\d+)',            # CH1
             r'頻道(\d+)',          # 頻道1
+            r'ch(\d+)',            # ch1 (小寫)
+            r'(\d+)頻道',          # 1頻道
+            r'Channel\s*(\d+)',    # Channel 1
+            r'CHAN\s*(\d+)',       # CHAN 1
+            r'(\d+)CH',            # 1CH
+            r'頻道\s*(\d+)',       # 頻道 1 (有空格)
+            r'CHO\s*(\d+)',        # CHO 123 (有空格)
         ]
         
         for pattern in patterns:
             match = re.search(pattern, text, re.IGNORECASE)
             if match:
-                if pattern.startswith('CHO') or pattern.startswith('CH'):
-                    return f"CHO{match.group(1)}"
+                channel_num = match.group(1)
+                # 根據模式決定返回格式
+                if 'CHO' in pattern:
+                    return f"CHO{channel_num}"
+                elif 'CH' in pattern:
+                    return f"CH{channel_num}"
                 else:
-                    return f"頻道{match.group(1)}"
+                    return f"頻道{channel_num}"
         
         return "未知"
     
     def extract_player_name(self, text: str) -> str:
-        """從文字中提取玩家名稱（基本實現）"""
-        # 嘗試找到冒號前的玩家名稱
+        """從文字中提取玩家名稱（增強版）"""
+        # 擴展的玩家名稱匹配模式
         patterns = [
-            r'^([^:\s]+)\s*:\s*',      # 玩家名: 內容
-            r'([A-Za-z0-9_]+)\s*:\s*', # 英文玩家名: 內容
+            r'^([^:\s]{2,12})\s*[:：]\s*',              # 玩家名: 或 玩家名：
+            r'([A-Za-z0-9_]{3,12})\s*[:：]\s*',         # 英文玩家名:
+            r'([一-龯]{2,6})\s*[:：]\s*',              # 中文玩家名:
+            r'([A-Za-z][A-Za-z0-9_]{2,11})\s*[:：]',   # 字母開頭的玩家名
+            r'(\w{3,12})\s*說\s*[:：]',                # 玩家名 說:
+            r'<([^>]+)>\s*[:：]',                       # <玩家名>:
+            r'【([^】]+)】\s*[:：]',                    # 【玩家名】:
+            r'\[([^\]]+)\]\s*[:：]',                   # [玩家名]:
+            r'([^:\s]+)\s*[:：]\s*收',                  # 玩家名: 收...
+            r'([^:\s]+)\s*[:：]\s*買',                  # 玩家名: 買...
         ]
         
         for pattern in patterns:
-            match = re.search(pattern, text)
+            match = re.search(pattern, text, re.MULTILINE)
             if match:
                 name = match.group(1).strip()
-                # 過濾掉頻道編號
-                if not re.match(r'^(CHO\d+|CH\d+|頻道\d+)$', name):
+                # 驗證玩家名稱的有效性
+                if self.is_valid_player_name(name):
                     return name
         
         return "未知"
+    
+    def is_valid_player_name(self, name: str) -> bool:
+        """驗證玩家名稱是否有效"""
+        if len(name) < 2 or len(name) > 12:
+            return False
+        
+        # 排除常見的非玩家名稱
+        invalid_names = [
+            'CHO', 'CH', '頻道', 'Channel', 'CHAN',
+            '收購', '買', '賣', '出售', '交易',
+            '時間', '日期', '系統', 'System'
+        ]
+        
+        for invalid in invalid_names:
+            if invalid.upper() in name.upper():
+                return False
+        
+        # 排除純數字
+        if name.isdigit():
+            return False
+        
+        # 排除頻道格式
+        if re.match(r'^(CHO\d+|CH\d+|頻道\d+|\d+頻道)$', name):
+            return False
+            
+        return True
     
     def find_matching_items(self, text: str) -> tuple[List[Dict], List[str]]:
         """在文字中尋找匹配的商品"""
