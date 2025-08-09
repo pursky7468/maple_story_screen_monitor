@@ -1,25 +1,25 @@
 import pyautogui
 import time
-import google.generativeai as genai
-from PIL import Image
 import tkinter as tk
 from tkinter import messagebox
-import io
-import base64
 import os
 import json
 from datetime import datetime
 from config import *
 from roi_selector import ROISelector
+from text_analyzer import AnalysisResult
+from gemini_analyzer import GeminiAnalyzer
+from ocr_analyzer import OCRAnalyzer
 
 class ScreenMonitor:
-    def __init__(self, roi_coordinates, save_screenshots=False, show_alerts=True):
-        genai.configure(api_key=GEMINI_API_KEY)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
-        self.running = False
+    """使用策略模式的螢幕監控器"""
+    
+    def __init__(self, roi_coordinates, analyzer, save_screenshots=False, show_alerts=True):
         self.roi_coordinates = roi_coordinates
+        self.analyzer = analyzer
         self.save_screenshots = save_screenshots
         self.show_alerts = show_alerts
+        self.running = False
         
         # 如果需要保存截圖，創建資料夾
         if self.save_screenshots:
@@ -61,167 +61,71 @@ class ScreenMonitor:
             print(f"截圖錯誤: {e}")
             return None
     
-    def analyze_text_with_gemini(self, image):
+    def analyze_with_strategy(self, image):
+        """使用策略模式進行分析"""
         try:
-            # 將PIL圖片轉換為bytes
-            import io
-            img_byte_arr = io.BytesIO()
-            image.save(img_byte_arr, format='PNG')
-            img_byte_arr = img_byte_arr.getvalue()
-            
-            # 生成商品清單文字
-            selling_list = '\n'.join([f"- {item_name}: {', '.join(keywords)}" 
-                                    for item_name, keywords in SELLING_ITEMS.items()])
-            
-            prompt = f"""
-            你是一位楓之谷遊戲中的商人，
-            你手中有以下商品要賣出：
-            {selling_list}
-            
-            請分析這張圖片中的所有文字內容，並檢查是否有玩家在收購你手中的任何商品。
-            請以JSON格式回傳分析結果，格式如下：
-            {{
-                "full_text": "圖片中的完整文字內容",
-                "is_match": true/false,
-                "player_name": "玩家名稱（如果有匹配的話）",
-                "channel_number": "頻道編號（通常在文字開頭）",
-                "matched_items": [
-                    {{
-                        "item_name": "商品名稱",
-                        "keywords_found": ["找到的相關關鍵字"]
-                    }}
-                ],
-                "matched_keywords": ["所有找到的關鍵字"]
-            }}
-            
-            注意事項：
-            - full_text 必須包含圖片中所有識別到的文字
-            - is_match 判斷是否有人在收購你手中的任何商品
-            - player_name 提取說話者的玩家名稱
-            - channel_number 提取頻道編號（通常格式如 [頻道1] 或 ch1 等）
-            - matched_items 列出匹配的商品及其找到的關鍵字
-            - matched_keywords 列出所有找到的相關關鍵字
-            - 你必須嚴格確認百分比的數字內容，例如如果你要賣的東西是披風幸運60%，但玩家是要收購披風幸運10%，這是不成立匹配。
-            
-            請確保回傳的是有效的JSON格式，不要包含任何其他文字。
-            """
-            
-            # 使用新的API格式
-            response = self.model.generate_content([
-                prompt,
-                {
-                    "mime_type": "image/png",
-                    "data": img_byte_arr
-                }
-            ])
-            return response.text.strip()
-            
+            result, raw_response = self.analyzer.analyze(image)
+            return result, raw_response
         except Exception as e:
-            print(f"Gemini分析錯誤: {e}")
-            return "ERROR"
+            error_result = AnalysisResult(
+                full_text=f"分析錯誤: {str(e)}",
+                is_match=False,
+                analysis_method=self.analyzer.__class__.__name__
+            )
+            return error_result, f"ERROR: {str(e)}"
     
-    def extract_json_from_response(self, response_text):
-        """從回應中提取JSON內容"""
-        # 移除可能的markdown代碼塊標記
-        response_text = response_text.strip()
-        
-        # 檢查是否有```json代碼塊
-        if response_text.startswith('```json'):
-            # 找到開始和結束位置
-            start_marker = '```json'
-            end_marker = '```'
+    def format_match_info(self, result: AnalysisResult) -> str:
+        """格式化匹配資訊"""
+        if result.is_match:
+            # 格式化匹配商品清單
+            items_info = []
+            for item in result.matched_items:
+                item_name = item.get("item_name", "未知商品")
+                keywords_found = item.get("keywords_found", [])
+                items_info.append(f"  - {item_name}: {', '.join(keywords_found)}")
             
-            start_idx = response_text.find(start_marker) + len(start_marker)
-            end_idx = response_text.rfind(end_marker)
+            items_text = '\n'.join(items_info) if items_info else "  - 無具體商品資訊"
             
-            if start_idx > len(start_marker) - 1 and end_idx > start_idx:
-                json_content = response_text[start_idx:end_idx].strip()
-            else:
-                # 如果沒找到結束標記，取開始標記之後的所有內容
-                json_content = response_text[start_idx:].strip()
-        elif response_text.startswith('```'):
-            # 處理其他類型的代碼塊
-            lines = response_text.split('\n')
-            json_lines = []
-            in_code_block = False
-            
-            for line in lines:
-                if line.strip().startswith('```') and not in_code_block:
-                    in_code_block = True
-                elif line.strip() == '```' and in_code_block:
-                    break
-                elif in_code_block:
-                    json_lines.append(line)
-            
-            json_content = '\n'.join(json_lines).strip()
-        else:
-            # 沒有代碼塊，直接使用原始內容
-            json_content = response_text
-        
-        # 嘗試找到JSON對象的開始和結束
-        json_start = json_content.find('{')
-        json_end = json_content.rfind('}')
-        
-        if json_start >= 0 and json_end > json_start:
-            json_content = json_content[json_start:json_end + 1]
-        
-        return json_content
-
-    def check_keyword_match(self, analysis_result):
-        """解析JSON格式的分析結果"""
-        try:
-            # 先提取JSON內容
-            json_content = self.extract_json_from_response(analysis_result)
-            print(f"提取的JSON內容: {json_content}")
-            
-            # 解析JSON
-            result_data = json.loads(json_content)
-            
-            # 直接從JSON中獲取匹配結果
-            full_text = result_data.get("full_text", "")
-            is_match = result_data.get("is_match", False)
-            player_name = result_data.get("player_name", "未知")
-            channel_number = result_data.get("channel_number", "未知")
-            matched_items = result_data.get("matched_items", [])
-            matched_keywords = result_data.get("matched_keywords", [])
-            
-            # 格式化顯示資訊
-            if is_match:
-                # 格式化匹配商品清單
-                items_info = []
-                for item in matched_items:
-                    item_name = item.get("item_name", "未知商品")
-                    keywords_found = item.get("keywords_found", [])
-                    items_info.append(f"  - {item_name}: {', '.join(keywords_found)}")
-                
-                items_text = '\n'.join(items_info) if items_info else "  - 無具體商品資訊"
-                
-                match_info = f"""✓ 找到匹配！
-玩家名稱: {player_name}
-頻道編號: {channel_number}
+            match_info = f"""✓ 找到匹配！
+分析方法: {result.analysis_method}
+信心度: {result.confidence:.2f}
+玩家名稱: {result.player_name}
+頻道編號: {result.channel_number}
 匹配商品:
 {items_text}
-所有關鍵字: {', '.join(matched_keywords)}
+所有關鍵字: {', '.join(result.matched_keywords)}
 
 完整文字內容:
-{full_text}"""
-                return True, match_info
-            else:
-                no_match_info = f"""⋅ 未找到匹配
-頻道編號: {channel_number}
+{result.full_text}"""
+            return match_info
+        else:
+            no_match_info = f"""⋅ 未找到匹配
+分析方法: {result.analysis_method}
+信心度: {result.confidence:.2f}
+頻道編號: {result.channel_number}
 
 完整文字內容:
-{full_text}"""
-                return False, no_match_info
-                
-        except json.JSONDecodeError as e:
-            print(f"JSON解析失敗: {e}")
-            print(f"嘗試解析的內容: {json_content if 'json_content' in locals() else analysis_result}")
-            return False, f"JSON解析失敗\n\nGemini原始回應:\n{analysis_result}"
-        
-        except Exception as e:
-            print(f"解析結果時發生錯誤: {e}")
-            return False, f"解析錯誤: {str(e)}\n\n原始回應:\n{analysis_result}"
+{result.full_text}"""
+            return no_match_info
+    
+    def save_analysis_result(self, result: AnalysisResult, raw_response: str):
+        """保存分析結果"""
+        if self.save_screenshots:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            
+            # 保存結構化結果
+            result_path = os.path.join(SCREENSHOT_FOLDER, f"analysis_{timestamp}.json")
+            analysis_data = {
+                "timestamp": timestamp,
+                "analysis_method": result.analysis_method,
+                "result": result.to_dict(),
+                "raw_response": raw_response
+            }
+            
+            with open(result_path, 'w', encoding='utf-8') as f:
+                json.dump(analysis_data, f, ensure_ascii=False, indent=2)
+            
+            print(f"已保存分析結果: {result_path}")
     
     def show_alert(self, message):
         if self.show_alerts:
@@ -233,43 +137,35 @@ class ScreenMonitor:
             print("提示窗已關閉，跳過彈窗顯示")
     
     def start_monitoring(self):
+        """開始監控"""
         self.running = True
         print("開始監控螢幕...")
+        print(f"分析方法: {self.analyzer.__class__.__name__}")
         print(f"ROI區域: x={self.roi_coordinates['x']}, y={self.roi_coordinates['y']}, "
               f"寬度={self.roi_coordinates['width']}, 高度={self.roi_coordinates['height']}")
         print(f"截圖保存: {'開啟' if self.save_screenshots else '關閉'}")
+        print(f"提示窗顯示: {'開啟' if self.show_alerts else '關閉'}")
         print("按 Ctrl+C 停止監控")
         
         try:
             while self.running:
                 roi_image = self.capture_roi()
                 if roi_image:
-                    analysis = self.analyze_text_with_gemini(roi_image)
-                    print("Gemini原始回應:", analysis)
+                    result, raw_response = self.analyze_with_strategy(roi_image)
                     
-                    # 如果開啟截圖保存，也保存JSON分析結果
-                    if self.save_screenshots:
-                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                        json_path = os.path.join(SCREENSHOT_FOLDER, f"analysis_{timestamp}.json")
-                        try:
-                            # 嘗試解析並格式化JSON
-                            json_data = json.loads(analysis)
-                            with open(json_path, 'w', encoding='utf-8') as f:
-                                json.dump(json_data, f, ensure_ascii=False, indent=2)
-                            print(f"已保存分析結果: {json_path}")
-                        except json.JSONDecodeError:
-                            # 如果不是有效JSON，保存原始文字
-                            with open(json_path.replace('.json', '.txt'), 'w', encoding='utf-8') as f:
-                                f.write(analysis)
+                    # 保存分析結果
+                    self.save_analysis_result(result, raw_response)
                     
-                    is_match, details = self.check_keyword_match(analysis)
+                    # 格式化顯示資訊
+                    match_details = self.format_match_info(result)
                     
-                    if is_match:
+                    if result.is_match:
                         print("✓ 找到匹配！")
-                        print(f"分析結果: {details}")
-                        self.show_alert(details)
+                        print(f"詳情: {match_details}")
+                        self.show_alert(match_details)
                     else:
                         print("⋅ 未找到完整匹配")
+                        print(f"分析方法: {result.analysis_method}, 信心度: {result.confidence:.2f}")
                 
                 time.sleep(SCAN_INTERVAL)
                 
@@ -280,14 +176,60 @@ class ScreenMonitor:
     def stop_monitoring(self):
         self.running = False
 
+def get_analyzer_choice():
+    """獲取分析器選擇"""
+    print("\n請選擇文字分析方法：")
+    print("1. Gemini AI (需要API Key，準確度高)")
+    print("2. OCR (本地處理，速度快)")
+    
+    while True:
+        choice = input("請輸入選項 (1 或 2): ").strip()
+        if choice == "1":
+            return "gemini"
+        elif choice == "2":
+            return "ocr"
+        else:
+            print("請輸入 1 或 2")
+
+def create_analyzer(analyzer_type: str):
+    """創建分析器實例"""
+    if analyzer_type == "gemini":
+        if GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_HERE":
+            print("錯誤：請先在 config.py 中設置您的 Gemini API Key")
+            return None
+        try:
+            return GeminiAnalyzer(GEMINI_API_KEY, SELLING_ITEMS)
+        except Exception as e:
+            print(f"Gemini分析器初始化失敗: {e}")
+            return None
+    
+    elif analyzer_type == "ocr":
+        try:
+            return OCRAnalyzer(SELLING_ITEMS)
+        except ImportError as e:
+            print(f"❌ OCR依賴缺失: {e}")
+            print("\n安裝OCR依賴：")
+            print("方法1 (推薦)：pip install -r requirements_ocr.txt")
+            print("方法2 (最小安裝)：pip install easyocr")
+            print("\n注意：首次使用OCR會自動下載語言模型，需要網路連線")
+            return None
+        except Exception as e:
+            print(f"❌ OCR初始化失敗: {e}")
+            return None
+    
+    return None
+
 def get_user_settings():
     """獲取使用者設定"""
     print("螢幕監控程式 - 初始設定")
     print("=" * 40)
     
+    # 選擇分析方法
+    analyzer_type = get_analyzer_choice()
+    
     # 詢問是否保存截圖
     while True:
-        save_choice = input("是否保存截圖供debug使用？(y/n): ").lower().strip()
+        save_choice = input("\n是否保存截圖供debug使用？(y/n): ").lower().strip()
         if save_choice in ['y', 'yes', '是']:
             save_screenshots = True
             break
@@ -319,26 +261,29 @@ def get_user_settings():
     
     if roi_coordinates is None:
         print("未選擇ROI區域，程式結束")
-        return None, None, None
+        return None, None, None, None
     
     print(f"\n已選擇ROI: {roi_coordinates}")
+    print(f"分析方法: {analyzer_type}")
     print(f"截圖保存: {'開啟' if save_screenshots else '關閉'}")
     print(f"提示窗顯示: {'開啟' if show_alerts else '關閉'}")
     
-    return roi_coordinates, save_screenshots, show_alerts
+    return roi_coordinates, analyzer_type, save_screenshots, show_alerts
 
 def main():
-    if GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_HERE":
-        print("請先在 config.py 中設置您的 Gemini API Key")
-        return
-    
+    """主程式"""
     # 獲取使用者設定
-    roi_coordinates, save_screenshots, show_alerts = get_user_settings()
+    roi_coordinates, analyzer_type, save_screenshots, show_alerts = get_user_settings()
     if roi_coordinates is None:
         return
     
+    # 創建分析器
+    analyzer = create_analyzer(analyzer_type)
+    if analyzer is None:
+        return
+    
     # 創建監控器
-    monitor = ScreenMonitor(roi_coordinates, save_screenshots, show_alerts)
+    monitor = ScreenMonitor(roi_coordinates, analyzer, save_screenshots, show_alerts)
     
     print("\n螢幕監控程式")
     print("=" * 40)

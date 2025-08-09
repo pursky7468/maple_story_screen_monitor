@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 from screen_monitor import ScreenMonitor
 from roi_selector import ROISelector
+from gemini_analyzer import GeminiAnalyzer
 from config import *
 
 class IntegrationTester:
@@ -71,9 +72,9 @@ class IntegrationTester:
         screenshot_path = os.path.join(self.test_folder, f"test_{test_id:03d}_{timestamp}_screenshot.png")
         roi_image.save(screenshot_path)
         
-        # 進行LLM分析
+        # 進行分析
         analysis_start_time = datetime.now()
-        analysis_result = monitor.analyze_text_with_gemini(roi_image)
+        result, analysis_result = monitor.analyze_with_strategy(roi_image)
         analysis_end_time = datetime.now()
         
         # 檢查是否是API配額錯誤
@@ -105,9 +106,13 @@ class IntegrationTester:
         analysis_path = os.path.join(self.test_folder, f"test_{test_id:03d}_{timestamp}_analysis.json")
         
         try:
-            # 嘗試解析JSON並格式化保存
-            json_content = monitor.extract_json_from_response(analysis_result)
-            parsed_result = json.loads(json_content)
+            # 嘗試解析JSON並格式化保存 (僅適用於Gemini)
+            if hasattr(analyzer, 'extract_json_from_response'):
+                json_content = analyzer.extract_json_from_response(analysis_result)
+                parsed_result = json.loads(json_content)
+            else:
+                # OCR分析器直接返回結構化結果
+                parsed_result = result.to_dict()
             
             # 添加測試元數據
             test_result = {
@@ -126,7 +131,10 @@ class IntegrationTester:
                 
         except json.JSONDecodeError as e:
             # 詳細的JSON解析錯誤分析
-            extracted_json = monitor.extract_json_from_response(analysis_result)
+            if hasattr(analyzer, 'extract_json_from_response'):
+                extracted_json = analyzer.extract_json_from_response(analysis_result)
+            else:
+                extracted_json = str(analysis_result)
             
             error_analysis = {
                 "error_type": "JSON解析錯誤",
@@ -211,7 +219,8 @@ class IntegrationTester:
                         f.write(f"{i:3d}: '{char}' (ASCII: {ord(char)})\n")
         
         # 進行匹配檢查（不觸發提示窗）
-        is_match, match_details = monitor.check_keyword_match(analysis_result)
+        is_match = result.is_match
+        match_details = monitor.format_match_info(result)
         
         print(f"測試 {test_id} 完成:")
         print(f"  截圖: {screenshot_path}")
@@ -243,7 +252,8 @@ class IntegrationTester:
             return
         
         # 創建監控器（關閉提示窗功能）
-        monitor = ScreenMonitor(roi_coordinates, save_screenshots=False, show_alerts=False)
+        analyzer = GeminiAnalyzer(GEMINI_API_KEY, SELLING_ITEMS)
+        monitor = ScreenMonitor(roi_coordinates, analyzer, save_screenshots=False, show_alerts=False)
         
         # 更新測試摘要中的ROI資訊
         with open(summary_file, 'r', encoding='utf-8') as f:

@@ -11,9 +11,10 @@ from config import *
 class MockScreenMonitor(ScreenMonitor):
     """模擬版本的ScreenMonitor，用於測試JSON解析邏輯"""
     
-    def __init__(self, roi_coordinates, save_screenshots=False, show_alerts=False):
+    def __init__(self, roi_coordinates, analyzer=None, save_screenshots=False, show_alerts=False):
         # 不調用父類的__init__以避免API初始化
         self.roi_coordinates = roi_coordinates
+        self.analyzer = analyzer  # Mock模式下可以為None
         self.save_screenshots = save_screenshots
         self.show_alerts = show_alerts
         self.running = False
@@ -106,15 +107,25 @@ class MockScreenMonitor(ScreenMonitor):
 ```''',
         ]
     
-    def analyze_text_with_gemini(self, image):
-        """模擬Gemini API調用"""
+    def analyze_with_strategy(self, image):
+        """模擬分析功能（兼容新的策略模式）"""
+        from text_analyzer import AnalysisResult
+        
         # 隨機選擇一個回應
-        response = random.choice(self.mock_responses)
+        raw_response = random.choice(self.mock_responses)
         
         # 模擬API延遲
         time.sleep(random.uniform(0.5, 2.0))
         
-        return response
+        # 創建模擬的分析結果
+        result = AnalysisResult(
+            full_text=f"模擬分析結果 - {datetime.now().strftime('%H:%M:%S')}",
+            is_match=random.choice([True, False]),
+            analysis_method="MockAnalyzer",
+            confidence=random.uniform(0.6, 0.95)
+        )
+        
+        return result, raw_response
     
     def capture_roi(self):
         """模擬截圖功能"""
@@ -152,7 +163,7 @@ class MockIntegrationTester(IntegrationTester):
             return
         
         # 創建模擬監控器
-        monitor = MockScreenMonitor(roi_coordinates, save_screenshots=False, show_alerts=False)
+        monitor = MockScreenMonitor(roi_coordinates, analyzer=None, save_screenshots=False, show_alerts=False)
         
         # 更新測試摘要中的ROI資訊
         with open(summary_file, 'r', encoding='utf-8') as f:
