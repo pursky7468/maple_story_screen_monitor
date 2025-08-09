@@ -1,16 +1,19 @@
 import os
 import time
 import json
+import numpy as np
 from datetime import datetime
-from screen_monitor import ScreenMonitor
+from screen_monitor import ScreenMonitor, convert_to_json_serializable
 from roi_selector import ROISelector
 from gemini_analyzer import GeminiAnalyzer
+from real_time_merger import setup_real_time_merger, log_test_result
 from config import *
 
 class IntegrationTester:
     def __init__(self):
         self.test_folder = None
         self.roi_coordinates = None
+        self.real_time_merger = None
         
     def setup_test_environment(self, test_runs):
         """設置測試環境"""
@@ -23,6 +26,10 @@ class IntegrationTester:
             
         print(f"測試資料夾已創建: {self.test_folder}")
         
+        # 設置實時合併器
+        self.real_time_merger = setup_real_time_merger(self.test_folder)
+        print("實時結果合併器已啟用")
+        
         # 創建測試摘要檔案
         summary_file = os.path.join(self.test_folder, "test_summary.json")
         test_info = {
@@ -34,7 +41,7 @@ class IntegrationTester:
         }
         
         with open(summary_file, 'w', encoding='utf-8') as f:
-            json.dump(test_info, f, ensure_ascii=False, indent=2)
+            json.dump(convert_to_json_serializable(test_info), f, ensure_ascii=False, indent=2)
             
         return summary_file
     
@@ -54,6 +61,69 @@ class IntegrationTester:
         print(f"已選擇ROI: {roi_coordinates}")
         self.roi_coordinates = roi_coordinates
         return roi_coordinates
+    
+    def get_analyzer_choice(self):
+        """獲取分析器選擇"""
+        print("\n請選擇要測試的分析方法：")
+        print("1. Gemini AI (需要API Key，準確度高)")
+        print("2. OCR (本地處理，速度快)")
+        print("3. 增強版OCR (三區域優化，提升玩家名稱和頻道識別)")
+        
+        while True:
+            choice = input("請輸入選項 (1, 2 或 3): ").strip()
+            if choice == "1":
+                return "gemini"
+            elif choice == "2":
+                return "ocr"
+            elif choice == "3":
+                return "enhanced_ocr"
+            else:
+                print("請輸入 1, 2 或 3")
+    
+    def create_analyzer(self, analyzer_type: str):
+        """創建分析器實例"""
+        if analyzer_type == "gemini":
+            if GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_HERE":
+                print("錯誤：請先在 config.py 中設置您的 Gemini API Key")
+                return None
+            try:
+                from gemini_analyzer import GeminiAnalyzer
+                return GeminiAnalyzer(GEMINI_API_KEY, SELLING_ITEMS)
+            except Exception as e:
+                print(f"Gemini分析器初始化失敗: {e}")
+                return None
+        
+        elif analyzer_type == "ocr":
+            try:
+                from ocr_analyzer import OCRAnalyzer
+                return OCRAnalyzer(SELLING_ITEMS)
+            except ImportError as e:
+                print(f"❌ OCR依賴缺失: {e}")
+                print("\n安裝OCR依賴：")
+                print("方法1 (推薦)：python install_ocr.py")
+                print("方法2 (手動)：pip install easyocr")
+                print("\n注意：首次使用OCR會自動下載語言模型，需要網路連線")
+                return None
+            except Exception as e:
+                print(f"❌ OCR初始化失敗: {e}")
+                return None
+        
+        elif analyzer_type == "enhanced_ocr":
+            try:
+                from enhanced_ocr_analyzer import EnhancedOCRAnalyzer
+                return EnhancedOCRAnalyzer(SELLING_ITEMS)
+            except ImportError as e:
+                print(f"❌ 增強版OCR依賴缺失: {e}")
+                print("\n安裝增強版OCR依賴：")
+                print("方法1 (推薦)：python install_ocr.py")
+                print("方法2 (手動)：pip install easyocr opencv-python")
+                print("\n注意：增強版OCR需要額外的opencv-python庫")
+                return None
+            except Exception as e:
+                print(f"❌ 增強版OCR初始化失敗: {e}")
+                return None
+        
+        return None
     
     def run_single_test(self, test_id, monitor):
         """執行單次測試"""
@@ -77,41 +147,51 @@ class IntegrationTester:
         result, analysis_result = monitor.analyze_with_strategy(roi_image)
         analysis_end_time = datetime.now()
         
-        # 檢查是否是API配額錯誤
-        if analysis_result == "ERROR" or "429" in str(analysis_result) or "quota" in str(analysis_result).lower():
-            if "429" in str(analysis_result) or "quota" in str(analysis_result).lower():
-                print(f"⚠️  測試 {test_id}: API配額已用盡")
-                return {
-                    "test_id": test_id,
-                    "timestamp": timestamp,
-                    "screenshot_path": screenshot_path,
-                    "error": "API配額已用盡",
-                    "error_type": "API_QUOTA_EXCEEDED",
-                    "analysis_duration_ms": (analysis_end_time - analysis_start_time).total_seconds() * 1000,
-                    "success": False
-                }
+        # 使用策略模式處理錯誤（完全隔離的錯誤判斷）
+        if analysis_result == "ERROR" or str(analysis_result).startswith("ERROR"):
+            # 讓分析器自己決定錯誤類型
+            error_type = monitor.analyzer.get_error_type(str(analysis_result))
+            
+            # 根據錯誤類型生成適當的錯誤信息
+            if error_type == "API_QUOTA_EXCEEDED":
+                error_message = "API配額已用盡"
+                print(f"⚠️  測試 {test_id}: {error_message}")
             else:
-                print(f"❌ 測試 {test_id}: LLM分析失敗")
-                return {
-                    "test_id": test_id,
-                    "timestamp": timestamp,
-                    "screenshot_path": screenshot_path,
-                    "error": "LLM分析失敗",
-                    "error_type": "API_ERROR",
-                    "analysis_duration_ms": (analysis_end_time - analysis_start_time).total_seconds() * 1000,
-                    "success": False
-                }
+                error_message = f"{monitor.analyzer.strategy_type}分析失敗"
+                print(f"❌ 測試 {test_id}: {error_message}")
+            
+            error_info = {
+                "error": error_message,
+                "error_type": error_type,
+                "strategy_type": monitor.analyzer.strategy_type,
+                "raw_response": str(analysis_result)
+            }
+            
+            # 記錄到實時合併器
+            if self.real_time_merger:
+                log_test_result(self.real_time_merger, test_id, screenshot_path, None, error_info)
+            
+            return {
+                "test_id": test_id,
+                "timestamp": timestamp,
+                "screenshot_path": screenshot_path,
+                "error": error_message,
+                "error_type": error_type,
+                "strategy_type": monitor.analyzer.strategy_type,
+                "analysis_duration_ms": (analysis_end_time - analysis_start_time).total_seconds() * 1000,
+                "success": False
+            }
         
         # 保存分析結果
         analysis_path = os.path.join(self.test_folder, f"test_{test_id:03d}_{timestamp}_analysis.json")
         
         try:
-            # 嘗試解析JSON並格式化保存 (僅適用於Gemini)
-            if hasattr(analyzer, 'extract_json_from_response'):
-                json_content = analyzer.extract_json_from_response(analysis_result)
+            # 使用策略模式處理結果解析（避免硬編碼判斷）
+            if monitor.analyzer.strategy_type == "GEMINI":
+                json_content = monitor.analyzer.extract_json_from_response(analysis_result)
                 parsed_result = json.loads(json_content)
             else:
-                # OCR分析器直接返回結構化結果
+                # 其他分析器直接返回結構化結果
                 parsed_result = result.to_dict()
             
             # 添加測試元數據
@@ -127,12 +207,12 @@ class IntegrationTester:
             }
             
             with open(analysis_path, 'w', encoding='utf-8') as f:
-                json.dump(test_result, f, ensure_ascii=False, indent=2)
+                json.dump(convert_to_json_serializable(test_result), f, ensure_ascii=False, indent=2)
                 
         except json.JSONDecodeError as e:
-            # 詳細的JSON解析錯誤分析
-            if hasattr(analyzer, 'extract_json_from_response'):
-                extracted_json = analyzer.extract_json_from_response(analysis_result)
+            # 使用策略模式處理JSON解析錯誤
+            if monitor.analyzer.strategy_type == "GEMINI":
+                extracted_json = monitor.analyzer.extract_json_from_response(analysis_result)
             else:
                 extracted_json = str(analysis_result)
             
@@ -180,7 +260,7 @@ class IntegrationTester:
             
             # 保存詳細錯誤報告
             with open(analysis_path.replace('.json', '_error.json'), 'w', encoding='utf-8') as f:
-                json.dump(test_result, f, ensure_ascii=False, indent=2)
+                json.dump(convert_to_json_serializable(test_result), f, ensure_ascii=False, indent=2)
                 
             # 也保存純文字版本方便查看
             with open(analysis_path.replace('.json', '_debug.txt'), 'w', encoding='utf-8') as f:
@@ -228,6 +308,10 @@ class IntegrationTester:
         print(f"  匹配: {'是' if is_match else '否'}")
         if is_match:
             print(f"  詳情: {match_details[:100]}...")
+        
+        # 記錄到實時合併器
+        if self.real_time_merger:
+            log_test_result(self.real_time_merger, test_id, screenshot_path, result.to_dict() if hasattr(result, 'to_dict') else result, None)
             
         return {
             "test_id": test_id,
@@ -251,16 +335,24 @@ class IntegrationTester:
         if roi_coordinates is None:
             return
         
+        # 讓使用者選擇分析策略
+        analyzer_type = self.get_analyzer_choice()
+        analyzer = self.create_analyzer(analyzer_type)
+        if analyzer is None:
+            print("分析器創建失敗，測試結束")
+            return
+        
         # 創建監控器（關閉提示窗功能）
-        analyzer = GeminiAnalyzer(GEMINI_API_KEY, SELLING_ITEMS)
         monitor = ScreenMonitor(roi_coordinates, analyzer, save_screenshots=False, show_alerts=False)
         
-        # 更新測試摘要中的ROI資訊
+        # 更新測試摘要中的ROI資訊和分析方法
         with open(summary_file, 'r', encoding='utf-8') as f:
             summary = json.load(f)
         summary["roi_coordinates"] = roi_coordinates
+        summary["analyzer_type"] = analyzer_type
+        summary["analyzer_class"] = analyzer.__class__.__name__
         with open(summary_file, 'w', encoding='utf-8') as f:
-            json.dump(summary, f, ensure_ascii=False, indent=2)
+            json.dump(convert_to_json_serializable(summary), f, ensure_ascii=False, indent=2)
         
         # 執行測試循環
         results = []
@@ -350,7 +442,7 @@ class IntegrationTester:
         }
         
         with open(summary_file, 'w', encoding='utf-8') as f:
-            json.dump(summary, f, ensure_ascii=False, indent=2)
+            json.dump(convert_to_json_serializable(summary), f, ensure_ascii=False, indent=2)
         
         # 顯示詳細測試結果
         stats = summary["statistics"]
@@ -358,6 +450,7 @@ class IntegrationTester:
         print("整合測試完成！")
         print(f"{'='*60}")
         print(f"測試資料夾: {self.test_folder}")
+        print(f"分析方法: {summary.get('analyzer_class', '未知')} ({summary.get('analyzer_type', '未知')})")
         print(f"執行結果: {len(results)}/{test_runs} 次測試")
         print(f"成功率: {stats['success_rate']}")
         print(f"失敗次數: {stats['total_failed']}")
@@ -371,21 +464,37 @@ class IntegrationTester:
             for error_type, count in stats['error_breakdown'].items():
                 print(f"  - {error_type}: {count} 次")
         
-        print(f"\n檔案說明:")
+        # 生成最終的合併報告
+        if self.real_time_merger:
+            self.real_time_merger.generate_quick_html()
+            print(f"\n🎯 合併報告已生成:")
+            print(f"  - quick_view.html: 快速查看器（推薦）")
+            print(f"  - combined_results.json: 合併的JSON數據")
+        
+        print(f"\n📁 檔案說明:")
         print(f"  - test_summary.json: 完整測試摘要")
+        print(f"  - quick_view.html: 圖片+結果合併查看器 🌟")
+        print(f"  - combined_results.json: 合併的測試數據")
         print(f"  - *_screenshot.png: 測試截圖")
         print(f"  - *_analysis.json: 成功解析的結果")
         print(f"  - *_error.json: JSON解析錯誤的詳細分析")
         print(f"  - *_debug.txt: 人類可讀的錯誤分析報告")
         print(f"{'='*60}")
+        
+        if self.real_time_merger and len(self.real_time_merger.merged_results) > 0:
+            print(f"💡 調試建議：")
+            print(f"   1. 打開 {self.test_folder}/quick_view.html 查看測試結果")
+            print(f"   2. 點擊圖片可以放大查看")
+            print(f"   3. 合併報告包含了截圖和分析結果，便於調試")
+            print(f"{'='*60}")
 
 def main():
     """主程式"""
-    if GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_HERE":
-        print("請先在 config.py 中設置您的 Gemini API Key")
-        return
-        
     print("螢幕監控整合測試程式")
+    print("=" * 40)
+    print("支援的分析方法：")
+    print("- Gemini AI (需要設置API Key)")
+    print("- OCR 本地識別 (需要安裝easyocr)")
     print("=" * 40)
     
     # 獲取測試次數

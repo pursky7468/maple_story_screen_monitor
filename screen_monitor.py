@@ -4,12 +4,28 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 import json
+import numpy as np
 from datetime import datetime
 from config import *
 from roi_selector import ROISelector
 from text_analyzer import AnalysisResult
 from gemini_analyzer import GeminiAnalyzer
 from ocr_analyzer import OCRAnalyzer
+
+def convert_to_json_serializable(obj):
+    """將物件轉換為JSON可序列化的格式"""
+    if isinstance(obj, (np.integer, np.int32, np.int64)):
+        return int(obj)
+    elif isinstance(obj, (np.floating, np.float32, np.float64)):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {key: convert_to_json_serializable(value) for key, value in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [convert_to_json_serializable(item) for item in obj]
+    else:
+        return obj
 
 class ScreenMonitor:
     """使用策略模式的螢幕監控器"""
@@ -118,8 +134,8 @@ class ScreenMonitor:
             analysis_data = {
                 "timestamp": timestamp,
                 "analysis_method": result.analysis_method,
-                "result": result.to_dict(),
-                "raw_response": raw_response
+                "result": convert_to_json_serializable(result.to_dict()),
+                "raw_response": convert_to_json_serializable(raw_response)
             }
             
             with open(result_path, 'w', encoding='utf-8') as f:
