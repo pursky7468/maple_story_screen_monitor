@@ -66,7 +66,7 @@ class IntegrationTester:
         """獲取分析器選擇"""
         print("\n請選擇要測試的分析方法：")
         print("1. Gemini AI (需要API Key，準確度高)")
-        print("2. 增強版OCR (本地處理，已優化玩家名稱和頻道識別)")
+        print("2. OCR (本地處理，速度快)")
         
         while True:
             choice = input("請輸入選項 (1 或 2): ").strip()
@@ -93,7 +93,7 @@ class IntegrationTester:
         elif analyzer_type == "ocr":
             try:
                 from ocr_analyzer import OCRAnalyzer
-                return OCRAnalyzer(SELLING_ITEMS, enable_enhancement=True)
+                return OCRAnalyzer(SELLING_ITEMS)
             except ImportError as e:
                 print(f"❌ OCR依賴缺失: {e}")
                 print("\n安裝OCR依賴：")
@@ -108,7 +108,7 @@ class IntegrationTester:
         
         return None
     
-    def run_single_test(self, test_id, monitor):
+    def run_single_test(self, test_id, monitor, fallback_analyzer=None):
         """執行單次測試"""
         print(f"\n--- 執行測試 {test_id} ---")
         
@@ -135,6 +135,68 @@ class IntegrationTester:
             # 讓分析器自己決定錯誤類型
             error_type = monitor.analyzer.get_error_type(str(analysis_result))
             
+            # 如果是API配額錯誤且有備用分析器，自動切換
+            if error_type == "API_QUOTA_EXCEEDED" and fallback_analyzer:
+                print(f"⚠️  測試 {test_id}: API配額已用盡，切換到OCR分析")
+                
+                # 使用備用分析器重新分析
+                fallback_start_time = datetime.now()
+                fallback_result, fallback_analysis_result = fallback_analyzer.analyze_image(roi_image), None
+                
+                # OCR分析器直接返回結構化結果
+                if not (isinstance(fallback_result, str) and fallback_result.startswith("ERROR")):
+                    parsed_fallback = fallback_analyzer.parse_result(fallback_result)
+                    fallback_end_time = datetime.now()
+                    
+                    print(f"✅ 測試 {test_id}: 已切換到OCR完成分析")
+                    
+                    # 保存分析結果（標記為使用備用分析器）
+                    analysis_path = os.path.join(self.test_folder, f"test_{test_id:03d}_{timestamp}_analysis.json")
+                    fallback_test_result = {
+                        "test_id": test_id,
+                        "timestamp": timestamp,
+                        "screenshot_path": screenshot_path,
+                        "analysis_start_time": analysis_start_time.isoformat(),
+                        "analysis_end_time": fallback_end_time.isoformat(),
+                        "analysis_duration_ms": (fallback_end_time - fallback_start_time).total_seconds() * 1000,
+                        "primary_analyzer": monitor.analyzer.strategy_type,
+                        "fallback_analyzer": fallback_analyzer.strategy_type,
+                        "fallback_used": True,
+                        "primary_error": str(analysis_result),
+                        "parsed_result": parsed_fallback.to_dict()
+                    }
+                    
+                    with open(analysis_path, 'w', encoding='utf-8') as f:
+                        json.dump(convert_to_json_serializable(fallback_test_result), f, ensure_ascii=False, indent=2)
+                    
+                    # 進行匹配檢查
+                    is_match = parsed_fallback.is_match
+                    match_details = fallback_analyzer.format_match_info(parsed_fallback) if hasattr(fallback_analyzer, 'format_match_info') else ""
+                    
+                    print(f"測試 {test_id} 完成 (使用OCR備用):")
+                    print(f"  截圖: {screenshot_path}")
+                    print(f"  分析: {analysis_path}")
+                    print(f"  匹配: {'是' if is_match else '否'}")
+                    if is_match and match_details:
+                        print(f"  詳情: {match_details[:100]}...")
+                    
+                    # 記錄到實時合併器
+                    if self.real_time_merger:
+                        log_test_result(self.real_time_merger, test_id, screenshot_path, parsed_fallback.to_dict(), None)
+                        
+                    return {
+                        "test_id": test_id,
+                        "timestamp": timestamp,
+                        "screenshot_path": screenshot_path,
+                        "analysis_path": analysis_path,
+                        "is_match": is_match,
+                        "analysis_duration_ms": (fallback_end_time - fallback_start_time).total_seconds() * 1000,
+                        "fallback_used": True,
+                        "primary_analyzer": monitor.analyzer.strategy_type,
+                        "fallback_analyzer": fallback_analyzer.strategy_type,
+                        "success": True
+                    }
+            
             # 根據錯誤類型生成適當的錯誤信息
             if error_type == "API_QUOTA_EXCEEDED":
                 error_message = "API配額已用盡"
@@ -147,7 +209,9 @@ class IntegrationTester:
                 "error": error_message,
                 "error_type": error_type,
                 "strategy_type": monitor.analyzer.strategy_type,
-                "raw_response": str(analysis_result)
+                "raw_response": str(analysis_result),
+                "fallback_available": fallback_analyzer is not None,
+                "fallback_attempted": error_type == "API_QUOTA_EXCEEDED" and fallback_analyzer is not None
             }
             
             # 記錄到實時合併器
@@ -162,6 +226,7 @@ class IntegrationTester:
                 "error_type": error_type,
                 "strategy_type": monitor.analyzer.strategy_type,
                 "analysis_duration_ms": (analysis_end_time - analysis_start_time).total_seconds() * 1000,
+                "fallback_available": fallback_analyzer is not None,
                 "success": False
             }
         
@@ -325,6 +390,18 @@ class IntegrationTester:
             print("分析器創建失敗，測試結束")
             return
         
+        # 創建備用分析器（當主分析器是Gemini時，使用OCR作為備用）
+        fallback_analyzer = None
+        if analyzer_type == "gemini":
+            try:
+                from ocr_analyzer import OCRAnalyzer
+                from config import SELLING_ITEMS
+                fallback_analyzer = OCRAnalyzer(SELLING_ITEMS)
+                print("✅ OCR備用分析器已創建，將在API配額用盡時自動切換")
+            except Exception as e:
+                print(f"⚠️  無法創建OCR備用分析器: {e}")
+                print("將繼續使用單一分析器模式")
+        
         # 創建監控器（關閉提示窗功能）
         monitor = ScreenMonitor(roi_coordinates, analyzer, save_screenshots=False, show_alerts=False)
         
@@ -344,7 +421,7 @@ class IntegrationTester:
         
         for i in range(1, test_runs + 1):
             try:
-                result = self.run_single_test(i, monitor)
+                result = self.run_single_test(i, monitor, fallback_analyzer)
                 if result:
                     results.append(result)
                     
@@ -398,6 +475,7 @@ class IntegrationTester:
         # 分析測試結果
         completed_tests = [r for r in results if r.get("success", False)]
         failed_tests = [r for r in results if not r.get("success", False)]
+        fallback_used_tests = [r for r in completed_tests if r.get("fallback_used", False)]
         
         # 統計錯誤類型
         error_stats = {}
@@ -418,10 +496,13 @@ class IntegrationTester:
             "success_rate": f"{len(completed_tests)/len(results)*100:.1f}%" if results else "0%",
             "total_matches": match_count,
             "match_rate": f"{match_count/len(completed_tests)*100:.1f}%" if completed_tests else "0%",
+            "fallback_used_count": len(fallback_used_tests),
+            "fallback_usage_rate": f"{len(fallback_used_tests)/len(results)*100:.1f}%" if results else "0%",
             "average_analysis_time_ms": round(avg_analysis_time, 2),
             "min_analysis_time_ms": min(analysis_times) if analysis_times else 0,
             "max_analysis_time_ms": max(analysis_times) if analysis_times else 0,
-            "error_breakdown": error_stats
+            "error_breakdown": error_stats,
+            "has_fallback_analyzer": fallback_analyzer is not None
         }
         
         with open(summary_file, 'w', encoding='utf-8') as f:
@@ -439,6 +520,8 @@ class IntegrationTester:
         print(f"失敗次數: {stats['total_failed']}")
         print(f"匹配次數: {stats['total_matches']}")
         print(f"匹配率: {stats['match_rate']}")
+        if stats.get('has_fallback_analyzer', False):
+            print(f"OCR備用使用: {stats['fallback_used_count']} 次 ({stats['fallback_usage_rate']})")
         print(f"平均分析時間: {stats['average_analysis_time_ms']} 毫秒")
         print(f"分析時間範圍: {stats['min_analysis_time_ms']}-{stats['max_analysis_time_ms']} 毫秒")
         

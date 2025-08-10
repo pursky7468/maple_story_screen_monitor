@@ -179,7 +179,7 @@ class RealTimeMerger:
         """生成測試卡片HTML"""
         cards = []
         
-        for result in self.merged_results[-20:]:  # 只顯示最近20個
+        for result in self.merged_results:  # 只顯示最近20個
             # 確定卡片樣式
             header_class = "card-header"
             badges = []

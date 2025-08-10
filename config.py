@@ -10,7 +10,7 @@ SELLING_ITEMS = {
     "耳環智力10%": ["耳環智力10%", "耳環智力10%", "耳智10", "耳環智力10"],
 }
 
-SCAN_INTERVAL = 5
+SCAN_INTERVAL = 2
 
 # 截圖保存設定
 SAVE_SCREENSHOTS = False  # 是否保存截圖

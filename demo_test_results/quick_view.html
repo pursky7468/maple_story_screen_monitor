@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速測試查看器</title>
+    <style>
+        body { font-family: 'Microsoft JhengHei', Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .header { background: #2c3e50; color: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        .stats { display: flex; gap: 15px; margin-bottom: 20px; }
+        .stat { background: white; padding: 15px; border-radius: 8px; text-align: center; flex: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .stat-number { font-size: 1.5em; font-weight: bold; color: #3498db; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .card-header { padding: 15px; background: #ecf0f1; border-bottom: 1px solid #bdc3c7; }
+        .card-header.success { background: #d5f4e6; border-left: 4px solid #27ae60; }
+        .card-header.match { background: #fff3cd; border-left: 4px solid #f39c12; }
+        .card-header.error { background: #ffeaa7; border-left: 4px solid #e74c3c; }
+        .card-content { padding: 15px; }
+        .screenshot { max-width: 100%; border: 1px solid #ddd; border-radius: 4px; }
+        .result-text { background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: Consolas, monospace; font-size: 11px; max-height: 150px; overflow-y: auto; }
+        .match-info { background: #fff3cd; border: 1px solid #f39c12; padding: 10px; border-radius: 4px; margin-top: 10px; }
+        .badge { padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
+        .badge-success { background: #27ae60; color: white; }
+        .badge-error { background: #e74c3c; color: white; }
+        .badge-match { background: #f39c12; color: white; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>快速測試查看器</h2>
+        <p>生成時間: 2025-08-09 21:30:35</p>
+    </div>
+    
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-number">3</div>
+            <div>總測試</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">3</div>
+            <div>成功分析</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">2</div>
+            <div>找到匹配</div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        
+        <div class="card">
+            <div class="card-header success match">
+                <strong>測試 #001</strong>
+                <div style="margin-top: 5px;"><span class="badge badge-success">分析成功</span> <span class="badge badge-match">找到匹配</span></div>
+            </div>
+            <div class="card-content">
+                <img class='screenshot' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAABQCAIAAABgThCRAAAJjElEQVR4nO3ce0hT7x8H8Geac1tW2qBp2myUScnS8lZeoqw0S6Gii5USkUVKlpqJqZViV5L8BiUZ+0PzEhYZeIGo1LmMtKiwSaBEkuYNL62TWublfPlx+B32W5aDXxd9fL/+2vk8zzlnzybvnT7bScCyLAEAALqY/O0nAAAAvx7CHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBAKZwuJeVlQUGBspkMgsLC2dn54yMjMHBQX50w4YNbm5uBruo1WqBQPDo0SO+8uDBg40bN0qlUolE4uTklJqaqtPpxjxdZWWlWCzmNxmGiYuLUygUEolEqVSqVCp+aGhoKCUlZf78+RKJxNvbW6PRkKnt4cOHHh4eYrFYoVBcvHiRZVl+KDs729HRUSwWu7m5VVRU8PWGhgZ3d/dZs2bt2rWrr6+Prx84cCAhIeGPrwAAfgXWCHFxcTNnzszMzGxra2MYpqioSCaTBQYGfvv2jZsQEBDg6upqsFdlZSWXNdzm6dOnzc3NL1y48OHDh/7+frVa7enpuXDhwrdv3xrs+OrVK6lUam5uzleCgoKUSuXLly/7+vpu374tEomuXr3KDUVHRysUihcvXjAMk5ycLBKJ3rx5Y8yijHlBJt0ctVptbm5+7dq1vr6+0tJSiURy5coVbuju3btisfju3bs9PT2pqakikUir1XJDvr6+sbGxvb29Pj4+SUlJXLGxsVEqlfb09EyF1+0XzgGYIMb/u7xz5w4h5NGjR98H940bN4wM9+LiYoFAUFJSoj9hYGBg+fLlK1asGBkZ4SpDQ0NXrlyRSCRWVlZ8uLe0tBBCiouL+R0PHz4sl8tZlmUYRiQS3bx5k6uPjo7KZLKEhARjVl5ZWTlucdLN8fT0jIyM5DcjIiKcnJy4x0ql8ujRo/zQqlWrwsLCuNfc1NT0+fPnLMv+888/vr6+3ISQkJDU1NRxn9LfXe8EnAMwQYzflklPT/f19V27dq1+cfXq1RkZGS4uLsQ4586dW7VqVVBQkH5RLBafPXu2pqaGbxFUV1cnJiaeOHEiKSmJn2ZnZ8eybHBwMF+Ry+XNzc3Dw8MzZsz48uVLWFgYfwGl3yyKi4sTCAT6fQa6tbe319bW7tmzh69kZmbW19cTQjo7O7Varf6buHbt2vv37/+nMfdfhJDR0VGBQEAI0Wq1FRUVMTExf2kpAPD/GifcGYapra318/P7fig6Otrd3d2Yc3z69OnZs2cGHw8cPz8/kUhUVlbGbS5evPjdu3fJycmmpqY/OWBVVdWCBQumTZumX+zo6Dh06BAhJDw8nKukp6ezLGthYUGmBq1WSwgRCoWbNm2SSCR2dnbp6encUENDAyFEoVDwk+VyeVdXl06nMzExWblyZUFBgU6nKyoqWrNmDSEkKSkpPj5+xowZf281APA7w721tZUQMm/evHEP9OLFC8H/4mKCENLc3Dw6OmpnZ/f9XkKh0Nra+v3799ymTCabM2fOz0+kVqvLysqOHz+uX7x8+bK7u7tKpdq3b59cLidTUldXFyEkNDR03759HR0dly9fPnXqVGZmJvf5SgjRD2vuM49hGK69Vl1dLZfL7e3t4+Pja2trX758GRkZ+VdXAwC/M9y5K+iRkZFxD/SjnjvXLSGEGFxo835UH1NTU9POnTu3b99+8OBB/XpsbGxLS0tdXV1eXh5/5T7VDA0NEUJCQkK2bds2c+bMHTt2REREnD59muu3GEzm3hSuG+Po6FhTU8MwTF5enkQiSUxMTE5OFgqFUVFRs2fPXrx4sVqt/ktrAoDfE+62trampqbc9bsB43vZcrlcIBCMeZCRkZG2tjYjr7Xb29v9/f3d3d3z8vK41rABpVIZGxubm5v7o19Y0o27GPfx8eErXl5e3d3dra2tlpaWhJD+/n5+iHs8a9Ysg4NUVFQ0NTXt37+/sLCwpKSkvr4+JiYmJCTk69evf3ApAPCbw3369OleXl78Nbg+Hx+frVu3GnMOS0tLHx8f7us7AxqNZmBgwOCL1jG1t7f7+fktXbq0qKhIKBT+aBr37Wt3dzeZehwcHAgh37594yvDw8Pcg0WLFnH9MX6oubnZxsbm+656YmJiSkqKmZlZVVXVunXr5s6du3fv3s7OzsbGxj+1DgD4Bcb/tUxMTMzjx4/173nhbkeqq6vz9/c38jTJyckajebevXv6xcHBwYSEBA8PjzG/sNXX2tq6evVqFxeXwsJC/WSvq6sTCAT6z+3JkydWVlb29vZk6lEqlTY2NqWlpXxFo9HMnz/f1tbWxsbGycmpvLycHyovL1+/fr3BEYqLixmGCQ0N5dplXNOGa+CM+U8lAJjE4b5ly5bw8PDNmzffuHGju7u7t7c3Ozs7JCRky5YtBw4cMPI0/v7+Z86c2b1796VLlzo6OgYHB58+fbpu3bre3t6CggIuRH6kv79//fr1Uqk0NzfXoEHv7OwcEBAQFRX1+vVrhmGysrJUKtXZs2fNzMzI1GNiYnL+/HmVSpWTk9PX13fr1i2VSsX13LnP16tXrxYWFvb29qalpT1//jw+Pl5/d5ZlT548mZaWxr0dvr6+Dx8+bGtry8vLmzt3LnftDwCThpG/h8/JyfH29pZKpRYWFsuWLbt27Rp/e6qRd6iyLFtRUREcHGxtbS0Wi5csWZKSkqLT6cY8XUZGBn8TU1ZW1pjP/OPHj9x9TLGxsXK5XCgUKpXK/Px8/iDHjh0jhHz+/HnMUxjzgkzGOfn5+U5OTkKh0MHBQaVS6Q9dv35doVCIRCJXV9fy8nKDF6SgoGD58uWjo6Pc5sjIyJEjRywtLZcsWVJdXT1h1zvR5gBMEIKf/MkCAMAkhf8VEgCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AAAKIdwBACiEcAcAoBDCHQCAQgh3AABCn38BrKAHfAw3IboAAAAASUVORK5CYII=' alt='測試截圖'>
+                
+                <div class="result-text">
+                文字內容: CHO123: 收購披風幸運60%卷軸，價格好商量
+                分析方法: DemoAnalyzer
+                信心度: 0.78
+                </div>
+                
+                
+                <div class="match-info">
+                    <strong>🎯 找到匹配</strong><br>
+                    玩家: 玩家甲<br>
+                    頻道: CHO123<br>
+                    匹配商品: 1 個
+                </div>
+                
+            </div>
+        </div>
+            
+
+        <div class="card">
+            <div class="card-header success">
+                <strong>測試 #002</strong>
+                <div style="margin-top: 5px;"><span class="badge badge-success">分析成功</span></div>
+            </div>
+            <div class="card-content">
+                <img class='screenshot' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAABQCAIAAABgThCRAAAJt0lEQVR4nO3ce0hT7x8H8Geac1szLQPz0mqUSq5RmXbRLcrKsgtURKwyoitZmblEJC2VMq2k+kbahQVaakRpoAVRaWZG2g2WF0iCysq0dK2TVqbb+fLj4XfYbxWO3+9b/Xp8v/7yPM9zrpP3Hj/nHEU8zxMAAGCL0+8+AAAA+Och3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAKAfh/uVK1eioqK8vLzkcvm4ceMOHz7c3d0t9M6dOzckJMRulcrKSpFIdOPGDaHl2rVr8+bN8/T0lMlkKpUqPT3dbDZ/d3efP38OCAjYunUrXTSbzaL/NHfuXGHw9evXJ02aJJVKlUrl/v37eZ4n/VVPT09aWtrIkSNlMll4eHhVVZVtb15eXmBgoFQqDQkJqaioENqfPHkSGhrq7u6+fPnyzs5OoX3Dhg1JSUm/9gwA4B/COyAhIWHQoEG5ubktLS0cx5WUlHh5eUVFRX39+pUOmDNnzsSJE+3WunnzJk1eupiamurq6pqVlfXq1auurq7KysrJkyePHj366dOn3+5xx44dhJAtW7bQxcrKSkKIyWT6dmRlZaWrq2tOTk5nZ+fly5dlMtlff/3lyEk5ckH+uDHbt29XKpUPHz7kOC4lJUUikTQ2NtKu4uJiqVRaXFzc0dGRnp4ukUjq6upol1ar1ev1JpNJo9EkJyfTxqamJk9Pz46Ojv5w3RwcA/AH6ft398KFC4SQGzdufBvcp06dcjDcS0tLRSJRWVmZ7YBPnz4FBwdPmTLFYrHYttfW1rq6urq7uwvhfuTIEV9f3+8e3uTJkzdv3iwsxsTEqFSqPk+KHl6fjX/WGI7jJBLJmTNn6KLVavXy8kpKSqKLarU6Li5OWGvatGmrVq3ieb6np8fZ2fn+/fv0Omu1WjpAp9Olp6f3eUi/8Xx//RiAP0jfZZns7GytVjtz5kzbxunTpx8+fHj8+PHEMfv27Zs2bdqCBQtsG6VSaUZGRk1NjW2J4OvXr2vXro2Pj/fz8xMajUajWq3+drNv3rypra1duXKl0JKbm1tfX09/TkhIEIlEtnUGtrm5uX3+/HnVqlV0ked5oXTW1tZWV1dn+yHOnDnz6tWr/yrM/RshxGq1ikQiQkhdXV1FRUV8fPxvOhUA+F/1Ee4cx9XW1kZERHzbtX379tDQUEf28eHDh3v37tl9PVARERESieTKlStCy969e3t7e1NTU22HGY3Gt2/fhoaGymSy4cOHZ2RkWK1WmkGEELFYPH/+fJlM5ufnl52dLayVnZ3N87xcLif9T2tr66ZNmwgh69evp1V1QohSqRQGKBSKd+/emc1mJyenqVOnFhUVmc3mkpKSGTNmEEKSk5MTExPd3Nx+60kAwE8L99evXxNChg8f3ueGHj58aHfPk8YEIaS5udlqtdrOxAVisXjYsGEvXrygi0aj8cCBA6dPn5ZIJMKY3t7ehoYGuVxeWFjY1taWmZmZkZGRmJhICHn37h0hJDo6es2aNa2trYcOHdq9e3dubi7p3w4dOhQaGmowGNasWaNQKOj3K53aC2Podx7HcbS8Vl1drVAoRowYkZiYWFtb++jRo82bN//WkwCAnxnuzs7OhBCLxdLnhn5Uc6f1AULIgAEDvrui0G6xWNatW7dx48bw8HC7AV++fLl161ZAQICbm1t0dHRcXNzRo0dNJlNPTw8hRKfTLV26dNCgQcuWLYuJibGb9fdDer3+5cuXRqOxoKCAztzpHzq26IdCqzGBgYE1NTUcxxUUFMhksp07d6akpIjF4tjY2CFDhowZM4be0AYAdsLd19fX2dmZzt/tOF7LVigUIpHouxuxWCwtLS10dnnw4MGOjo7MzMw+N6jVant6ehobG+n0U6PRCF1hYWHt7e3f3Vd/o1ar9Xr92bNnzWazh4cHIaSrq0vopT+7u7vbrVVRUfHs2bN169adP3++rKysvr4+Pj5ep9N9+fLll58BAPy0cB84cGBYWJgwB7el0WiWLFniyD48PDw0Gg29fWenqqrq06dP9EbrxYsXnz9/LpfLaVWnoaEhJydHJBI9f/7cbi0aNEOHDvX396f3YIWu3t5eRw6pn/Dz8+N5vr29PSAggNbHhK7m5mZvb+9vq+o7d+5MS0tzcXG5devWrFmzfHx8Vq9e3dbW1tTU9MsPHwD+e30/LRMfH3/79m3bB1ro60hGozEyMtLB3aSkpFRVVV26dMm2sbu7OykpadKkSfSG7YMHD2yrOiqVij4KSd9gKisrs927j4/PqFGj1Gq1t7f35cuXha6qqqqRI0f6+vqS/sdoNIpEIttP6s6dO4MHDx4xYoS3t7dKpSovLxe6ysvLZ8+ebbeF0tJSjuOio6NpNYwWbWgBhz5FAwDshPvixYvXr1+/aNGiU6dOtbe3m0ymvLw8nU63ePHiDRs2OLibyMjIvXv3rlix4uDBg62trd3d3Xfv3p01a5bJZCoqKqIh8iPjx4+PiIjYsWMHfTfn+PHjp0+fzsrKcnFxcXJyyszMNBgM+fn5nZ2d586dMxgM/bbmPm7cuDlz5sTGxj5+/JjjuJMnTxoMhoyMDBcXF/r9euzYsfPnz5tMpj179ty/f5/elBbwPL9r1649e/bQj0Or1V6/fr2lpaWgoMDHx4fO/QHgj+Hg8/D5+fnh4eGenp5yuXzChAk5OTnC66kOvqHK83xFRcXChQuHDRsmlUqDgoLS0tLMZvOP9ijM3Hmef//+fVxcnEKhcHV1HTt2bEFBge3IwsJClUolFov9/f0NBoPda64fP3787vYduSB/3BiO4/R6vUKhEIvFarW6sLDQdvUTJ04olUqJRDJx4sTy8nK7C1JUVBQcHGy1WumixWLZtm2bh4dHUFBQdXX1/+f54g1VgB8R9ef/xAIAwCr8V0gAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEAGIRwBwBgEMIdAIBBCHcAAAYh3AEACHv+BuFyl6DFeoksAAAAAElFTkSuQmCC' alt='測試截圖'>
+                
+                <div class="result-text">
+                文字內容: CHO456: 賣武器攻擊力30%卷軸，便宜出售
+                分析方法: DemoAnalyzer
+                信心度: 0.86
+                </div>
+                
+                
+            </div>
+        </div>
+            
+
+        <div class="card">
+            <div class="card-header success match">
+                <strong>測試 #003</strong>
+                <div style="margin-top: 5px;"><span class="badge badge-success">分析成功</span> <span class="badge badge-match">找到匹配</span></div>
+            </div>
+            <div class="card-content">
+                <img class='screenshot' src='data:image/png;base64,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' alt='測試截圖'>
+                
+                <div class="result-text">
+                文字內容: CHO789: 收購母礦，大量收購，私聊價格
+                分析方法: DemoAnalyzer
+                信心度: 0.72
+                </div>
+                
+                
+                <div class="match-info">
+                    <strong>🎯 找到匹配</strong><br>
+                    玩家: 玩家丙<br>
+                    頻道: CHO789<br>
+                    匹配商品: 1 個
+                </div>
+                
+            </div>
+        </div>
+            
+    </div>
+    
+    <script>
+        // 點擊圖片放大
+        document.querySelectorAll('.screenshot').forEach(img => {
+            img.style.cursor = 'pointer';
+            img.onclick = function() {
+                const modal = document.createElement('div');
+                modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:flex;justify-content:center;align-items:center;';
+                const bigImg = document.createElement('img');
+                bigImg.src = this.src;
+                bigImg.style.cssText = 'max-width:90%;max-height:90%;';
+                modal.appendChild(bigImg);
+                modal.onclick = () => document.body.removeChild(modal);
+                document.body.appendChild(modal);
+            };
+        });
+    </script>
+</body>
+</html>

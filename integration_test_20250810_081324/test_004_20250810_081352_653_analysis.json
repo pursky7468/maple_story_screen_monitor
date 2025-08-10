@@ -1,0 +1,19 @@
+{
+  "test_id": 4,
+  "timestamp": "20250810_081352_653",
+  "screenshot_path": "integration_test_20250810_081324\\test_004_20250810_081352_653_screenshot.png",
+  "analysis_start_time": "2025-08-10T08:13:52.709634",
+  "analysis_end_time": "2025-08-10T08:13:53.622326",
+  "analysis_duration_ms": 912.6919999999999,
+  "raw_response": [],
+  "parsed_result": {
+    "full_text": "",
+    "is_match": false,
+    "player_name": "未知",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.0,
+    "analysis_method": "OCR"
+  }
+}

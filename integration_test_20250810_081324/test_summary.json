@@ -1,0 +1,95 @@
+{
+  "test_start_time": "20250810_081324",
+  "total_runs": 5,
+  "roi_coordinates": {
+    "x": 148,
+    "y": 913,
+    "width": 1015,
+    "height": 40
+  },
+  "selling_items": {
+    "披風幸運60%": [
+      "披風幸運60%",
+      "披風幸運60%卷軸",
+      "披風幸60%",
+      "披風幸運60",
+      "披敏60%",
+      "披敏60"
+    ],
+    "母礦": [
+      "母礦",
+      "青銅母礦",
+      "青銅母礦",
+      "鋼鐵母礦",
+      "紫礦石母礦",
+      "鋰礦石母礦"
+    ],
+    "耳環智力10%": [
+      "耳環智力10%",
+      "耳環智力10%",
+      "耳智10",
+      "耳環智力10"
+    ]
+  },
+  "results": [
+    {
+      "test_id": 1,
+      "timestamp": "20250810_081335_598",
+      "screenshot_path": "integration_test_20250810_081324\\test_001_20250810_081335_598_screenshot.png",
+      "analysis_path": "integration_test_20250810_081324\\test_001_20250810_081335_598_analysis.json",
+      "is_match": false,
+      "analysis_duration_ms": 598.982,
+      "success": true
+    },
+    {
+      "test_id": 2,
+      "timestamp": "20250810_081341_298",
+      "screenshot_path": "integration_test_20250810_081324\\test_002_20250810_081341_298_screenshot.png",
+      "analysis_path": "integration_test_20250810_081324\\test_002_20250810_081341_298_analysis.json",
+      "is_match": false,
+      "analysis_duration_ms": 598.313,
+      "success": true
+    },
+    {
+      "test_id": 3,
+      "timestamp": "20250810_081346_970",
+      "screenshot_path": "integration_test_20250810_081324\\test_003_20250810_081346_970_screenshot.png",
+      "analysis_path": "integration_test_20250810_081324\\test_003_20250810_081346_970_analysis.json",
+      "is_match": false,
+      "analysis_duration_ms": 612.376,
+      "success": true
+    },
+    {
+      "test_id": 4,
+      "timestamp": "20250810_081352_653",
+      "screenshot_path": "integration_test_20250810_081324\\test_004_20250810_081352_653_screenshot.png",
+      "analysis_path": "integration_test_20250810_081324\\test_004_20250810_081352_653_analysis.json",
+      "is_match": false,
+      "analysis_duration_ms": 912.6919999999999,
+      "success": true
+    },
+    {
+      "test_id": 5,
+      "timestamp": "20250810_081358_632",
+      "screenshot_path": "integration_test_20250810_081324\\test_005_20250810_081358_632_screenshot.png",
+      "analysis_path": "integration_test_20250810_081324\\test_005_20250810_081358_632_analysis.json",
+      "is_match": false,
+      "analysis_duration_ms": 1295.742,
+      "success": true
+    }
+  ],
+  "analyzer_type": "ocr",
+  "analyzer_class": "OCRAnalyzer",
+  "test_end_time": "20250810_081359",
+  "statistics": {
+    "total_completed": 5,
+    "total_failed": 0,
+    "success_rate": "100.0%",
+    "total_matches": 0,
+    "match_rate": "0.0%",
+    "average_analysis_time_ms": 803.62,
+    "min_analysis_time_ms": 598.313,
+    "max_analysis_time_ms": 1295.742,
+    "error_breakdown": {}
+  }
+}

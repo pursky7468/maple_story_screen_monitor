@@ -1,0 +1,19 @@
+{
+  "test_image": "demo_test_results\\demo_test_001_screenshot.png",
+  "basic_ocr": {
+    "player_name": "未知",
+    "channel_number": "CH0123",
+    "is_match": false,
+    "confidence": 0.4950089522728474
+  },
+  "enhanced_ocr": {
+    "player_name": "未知",
+    "channel_number": "未知",
+    "is_match": false,
+    "confidence": 0.0
+  },
+  "improvements": {
+    "player_improved": false,
+    "channel_improved": false
+  }
+}

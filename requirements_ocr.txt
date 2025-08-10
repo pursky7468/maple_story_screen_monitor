@@ -1,0 +1,13 @@
+# 基本依賴
+pyautogui==0.9.54
+Pillow>=10.1.0
+
+# Gemini分析器依賴
+google-generativeai>=0.8.0
+
+# OCR分析器依賴
+easyocr>=1.7.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+torch>=2.0.0
+torchvision>=0.15.0
