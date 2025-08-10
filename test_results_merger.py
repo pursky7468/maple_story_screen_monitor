@@ -455,13 +455,32 @@ class TestResultsMerger:
             html_parts.append("<h4>分析結果</h4>")
             
             if parsed_result.get('is_match'):
+                matched_items = parsed_result.get('matched_items', [])
+                
+                # 生成物品詳細信息
+                items_info = ""
+                if matched_items:
+                    items_list = []
+                    for item in matched_items:
+                        if isinstance(item, dict):
+                            item_name = item.get('item_name', '未知物品')
+                            keywords = item.get('keywords_found', [])
+                            if keywords:
+                                items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{item_name}</span> ({', '.join(keywords)})")
+                            else:
+                                items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{item_name}</span>")
+                        else:
+                            items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{str(item)}</span>")
+                    items_info = "<br>&nbsp;&nbsp;&nbsp;&nbsp;".join(items_list)
+                
                 html_parts.append(f"""
                 <div class="match-highlight">
-                    <strong>🎯 找到匹配！</strong><br>
-                    玩家: {parsed_result.get('player_name', '未知')}<br>
-                    頻道: {parsed_result.get('channel_number', '未知')}<br>
-                    信心度: {parsed_result.get('confidence', 0):.2f}<br>
-                    匹配商品: {len(parsed_result.get('matched_items', []))} 個
+                    <strong>🎯 找到匹配交易！</strong><br>
+                    <strong>玩家:</strong> <span style='color: #2980b9; font-weight: bold;'>{parsed_result.get('player_name', '未知')}</span><br>
+                    <strong>頻道:</strong> <span style='color: #27ae60; font-weight: bold;'>{parsed_result.get('channel_number', '未知')}</span><br>
+                    <strong>信心度:</strong> {parsed_result.get('confidence', 0):.2f}<br>
+                    <strong>匹配商品 ({len(matched_items)} 個):</strong><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{items_info}
                 </div>
                 """)
             

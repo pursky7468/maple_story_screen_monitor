@@ -216,12 +216,31 @@ class RealTimeMerger:
             match_info = ""
             if result['has_match'] and result['match_details']:
                 details = result['match_details']
+                matched_items = details.get('matched_items', [])
+                
+                # 生成物品詳細信息
+                items_html = ""
+                if matched_items:
+                    items_list = []
+                    for item in matched_items:
+                        if isinstance(item, dict):
+                            item_name = item.get('item_name', '未知物品')
+                            keywords = item.get('keywords_found', [])
+                            if keywords:
+                                items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{item_name}</span> ({', '.join(keywords)})")
+                            else:
+                                items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{item_name}</span>")
+                        else:
+                            items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{str(item)}</span>")
+                    items_html = "<br>".join(items_list)
+                
                 match_info = f"""
                 <div class="match-info">
-                    <strong>🎯 找到匹配</strong><br>
-                    玩家: {details.get('player_name', '未知')}<br>
-                    頻道: {details.get('channel_number', '未知')}<br>
-                    匹配商品: {len(details.get('matched_items', []))} 個
+                    <strong>🎯 找到匹配交易</strong><br>
+                    <strong>玩家:</strong> <span style='color: #2980b9; font-weight: bold;'>{details.get('player_name', '未知')}</span><br>
+                    <strong>頻道:</strong> <span style='color: #27ae60; font-weight: bold;'>{details.get('channel_number', '未知')}</span><br>
+                    <strong>匹配商品 ({len(matched_items)} 個):</strong><br>
+                    <div style='margin-left: 10px; margin-top: 5px;'>{items_html}</div>
                 </div>
                 """
             
