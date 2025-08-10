@@ -11,6 +11,8 @@ from roi_selector import ROISelector
 from text_analyzer import AnalysisResult
 from gemini_analyzer import GeminiAnalyzer
 from ocr_analyzer import OCRAnalyzer
+from real_time_merger import RealTimeMerger, log_test_result
+import webbrowser
 
 def convert_to_json_serializable(obj):
     """將物件轉換為JSON可序列化的格式"""
@@ -36,25 +38,26 @@ class ScreenMonitor:
         self.save_screenshots = save_screenshots
         self.show_alerts = show_alerts
         self.running = False
+        self.monitoring_counter = 0
+        self.real_time_merger = None
+        self.monitoring_session_folder = None
         
-        # 如果需要保存截圖，創建資料夾
+        # 如果需要保存截圖，創建資料夾和實時合併器
         if self.save_screenshots:
-            if not os.path.exists(SCREENSHOT_FOLDER):
-                os.makedirs(SCREENSHOT_FOLDER)
-            print(f"截圖將保存到: {SCREENSHOT_FOLDER}")
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            self.monitoring_session_folder = f"monitoring_session_{timestamp}"
+            
+            if not os.path.exists(self.monitoring_session_folder):
+                os.makedirs(self.monitoring_session_folder)
+            
+            # 初始化實時合併器
+            self.real_time_merger = RealTimeMerger(self.monitoring_session_folder)
+            
+            print(f"監控會話資料夾: {self.monitoring_session_folder}")
+            print(f"HTML合併報告將自動生成並開啟")
         
     def capture_roi(self):
         try:
-            # 先截取全螢幕
-            full_screenshot = pyautogui.screenshot()
-            
-            # 如果需要保存全螢幕截圖
-            if self.save_screenshots:
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                full_path = os.path.join(SCREENSHOT_FOLDER, f"full_{timestamp}.png")
-                full_screenshot.save(full_path)
-                print(f"已保存全螢幕截圖: {full_path}")
-            
             # 截取ROI區域
             roi_screenshot = pyautogui.screenshot(
                 region=(
@@ -64,13 +67,6 @@ class ScreenMonitor:
                     self.roi_coordinates["height"]
                 )
             )
-            
-            # 如果需要保存ROI截圖
-            if self.save_screenshots:
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                roi_path = os.path.join(SCREENSHOT_FOLDER, f"roi_{timestamp}.png")
-                roi_screenshot.save(roi_path)
-                print(f"已保存ROI截圖: {roi_path}")
             
             return roi_screenshot
         except Exception as e:
@@ -124,24 +120,40 @@ class ScreenMonitor:
 {result.full_text}"""
             return no_match_info
     
-    def save_analysis_result(self, result: AnalysisResult, raw_response: str):
-        """保存分析結果"""
-        if self.save_screenshots:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    def save_analysis_result(self, result: AnalysisResult, raw_response: str, screenshot_path: str):
+        """保存分析結果並記錄到合併器"""
+        if self.save_screenshots and self.real_time_merger:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # 包含毫秒
             
             # 保存結構化結果
-            result_path = os.path.join(SCREENSHOT_FOLDER, f"analysis_{timestamp}.json")
+            result_path = os.path.join(self.monitoring_session_folder, f"analysis_{timestamp}.json")
             analysis_data = {
+                "monitoring_id": self.monitoring_counter,
                 "timestamp": timestamp,
                 "analysis_method": result.analysis_method,
                 "result": convert_to_json_serializable(result.to_dict()),
-                "raw_response": convert_to_json_serializable(raw_response)
+                "raw_response": convert_to_json_serializable(raw_response),
+                "screenshot_path": screenshot_path
             }
             
             with open(result_path, 'w', encoding='utf-8') as f:
                 json.dump(analysis_data, f, ensure_ascii=False, indent=2)
             
-            print(f"已保存分析結果: {result_path}")
+            # 記錄到實時合併器
+            result_dict = result.to_dict() if hasattr(result, 'to_dict') else result
+            error_info = None
+            
+            if isinstance(raw_response, str) and (raw_response.startswith("ERROR") or "ERROR" in raw_response):
+                error_info = {
+                    "error": raw_response,
+                    "error_type": "ANALYSIS_ERROR",
+                    "analysis_method": result.analysis_method
+                }
+                result_dict = None
+            
+            log_test_result(self.real_time_merger, self.monitoring_counter, screenshot_path, result_dict, error_info)
+            
+            print(f"已記錄分析結果 #{self.monitoring_counter}")
     
     def show_alert(self, message):
         if self.show_alerts:
@@ -167,30 +179,418 @@ class ScreenMonitor:
             while self.running:
                 roi_image = self.capture_roi()
                 if roi_image:
+                    self.monitoring_counter += 1
+                    
+                    # 保存截圖
+                    screenshot_path = None
+                    if self.save_screenshots:
+                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
+                        screenshot_path = os.path.join(self.monitoring_session_folder, f"monitor_{self.monitoring_counter:03d}_{timestamp}.png")
+                        roi_image.save(screenshot_path)
+                    
                     result, raw_response = self.analyze_with_strategy(roi_image)
                     
                     # 保存分析結果
-                    self.save_analysis_result(result, raw_response)
+                    if screenshot_path:
+                        self.save_analysis_result(result, raw_response, screenshot_path)
                     
                     # 格式化顯示資訊
                     match_details = self.format_match_info(result)
                     
                     if result.is_match:
-                        print("✓ 找到匹配！")
-                        print(f"詳情: {match_details}")
+                        print(f"[#{self.monitoring_counter}] ✓ 找到匹配！")
+                        print(f"玩家: {result.player_name}, 物品: {', '.join([item['item_name'] for item in result.matched_items])}")
                         self.show_alert(match_details)
                     else:
-                        print("⋅ 未找到完整匹配")
-                        print(f"分析方法: {result.analysis_method}, 信心度: {result.confidence:.2f}")
+                        print(f"[#{self.monitoring_counter}] ⋅ 未找到匹配 (方法: {result.analysis_method}, 信心度: {result.confidence:.2f})")
                 
                 time.sleep(SCAN_INTERVAL)
                 
         except KeyboardInterrupt:
-            print("\n監控已停止")
+            print(f"\n監控已停止 (共執行 {self.monitoring_counter} 次分析)")
+            self.finalize_session()
             self.running = False
     
+    def finalize_session(self):
+        """結束會話並生成報告"""
+        if self.save_screenshots and self.real_time_merger:
+            print("\n正在生成HTML合併報告...")
+            
+            # 生成完整的HTML報告（不限制條目數量）
+            html_path = self.generate_complete_html_report()
+            
+            if html_path:
+                # 顯示統計信息
+                total_results = len(self.real_time_merger.merged_results)
+                matches = sum(1 for r in self.real_time_merger.merged_results 
+                            if r.get('has_match', False))
+                
+                print(f"\n{'='*50}")
+                print(f"監控會話完成報告")
+                print(f"{'='*50}")
+                print(f"會話資料夾: {self.monitoring_session_folder}")
+                print(f"總分析次數: {total_results}")
+                print(f"找到匹配: {matches} 次")
+                print(f"匹配率: {matches/total_results*100:.1f}%" if total_results > 0 else "匹配率: 0%")
+                print(f"分析方法: {self.analyzer.__class__.__name__}")
+                print(f"HTML報告: {html_path}")
+                print(f"{'='*50}")
+                
+                # 自動開啟HTML報告
+                try:
+                    webbrowser.open(f"file://{os.path.abspath(html_path)}")
+                    print("HTML報告已自動開啟")
+                except Exception as e:
+                    print(f"無法自動開啟HTML報告: {e}")
+                    print(f"請手動開啟: {html_path}")
+            else:
+                print("生成HTML報告失敗")
+    
+    def generate_complete_html_report(self):
+        """生成完整的HTML報告，顯示所有結果"""
+        if not self.real_time_merger:
+            return None
+            
+        try:
+            # 使用自定義HTML生成，不限制條目數量
+            html_content = self.create_unlimited_html_report()
+            
+            html_path = os.path.join(self.monitoring_session_folder, "complete_monitoring_report.html")
+            with open(html_path, 'w', encoding='utf-8') as f:
+                f.write(html_content)
+            
+            return html_path
+        except Exception as e:
+            print(f"生成HTML報告錯誤: {e}")
+            return None
+    
+    def create_unlimited_html_report(self):
+        """創建不限制條目數量的HTML報告"""
+        import base64
+        
+        total_results = len(self.real_time_merger.merged_results)
+        matches = sum(1 for r in self.real_time_merger.merged_results 
+                     if r.get('has_match', False))
+        
+        # 按test_id排序
+        sorted_results = sorted(self.real_time_merger.merged_results, 
+                              key=lambda x: x.get('test_id', 0))
+        
+        html_content = f"""<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>螢幕監控完整報告</title>
+    <style>
+        body {{
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }}
+        .header {{
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }}
+        .stats {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }}
+        .stat-card {{
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }}
+        .stat-number {{
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }}
+        .container {{
+            display: grid;
+            gap: 20px;
+        }}
+        .result-card {{
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }}
+        .result-card.match {{
+            border-left: 5px solid #4CAF50;
+        }}
+        .result-card.no-match {{
+            border-left: 5px solid #f44336;
+        }}
+        .result-card.error {{
+            border-left: 5px solid #ff9800;
+        }}
+        .result-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }}
+        .result-id {{
+            font-size: 1.2em;
+            font-weight: bold;
+        }}
+        .timestamp {{
+            color: #666;
+            font-size: 0.9em;
+        }}
+        .screenshot {{
+            text-align: center;
+            margin-bottom: 15px;
+        }}
+        .screenshot img {{
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }}
+        .screenshot img:hover {{
+            transform: scale(1.05);
+        }}
+        .analysis-info {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }}
+        .info-item {{
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }}
+        .info-label {{
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }}
+        .info-value {{
+            margin-top: 5px;
+        }}
+        .match-details {{
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+        }}
+        .error-details {{
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ff9800;
+        }}
+        .full-text {{
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }}
+        @media (max-width: 768px) {{
+            .analysis-info {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+        .modal {{
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }}
+        .modal-content {{
+            display: block;
+            margin: auto;
+            max-width: 90%;
+            max-height: 90%;
+            margin-top: 5%;
+        }}
+        .close {{
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🖥️ 螢幕監控完整報告</h1>
+        <p>完整顯示所有 {total_results} 次分析結果</p>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">{total_results}</div>
+            <div>總分析次數</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{matches}</div>
+            <div>找到匹配</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{matches/total_results*100:.1f}%</div>
+            <div>匹配率</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{self.analyzer.__class__.__name__}</div>
+            <div>分析方法</div>
+        </div>
+    </div>
+    
+    <div class="container">
+"""
+        
+        # 生成每個結果的HTML
+        for data in sorted_results:
+            test_id = data.get('test_id', 0)
+            result = data.get('analysis_result', {})
+            error_info = data.get('error_info', {})
+            screenshot_path = data.get('screenshot_filename', '')
+            
+            # 確定卡片類型
+            if error_info:
+                card_class = "error"
+                status_icon = "[ERROR]"
+                status_text = f"錯誤: {error_info.get('error', '未知錯誤')}"
+            elif data.get('has_match', False):
+                card_class = "match"
+                status_icon = "[OK]"
+                status_text = "找到匹配"
+            else:
+                card_class = "no-match"
+                status_icon = "[NO]"
+                status_text = "未找到匹配"
+            
+            # 處理截圖
+            screenshot_html = ""
+            image_base64 = data.get('image_base64')
+            if image_base64:
+                screenshot_html = f'<div class="screenshot"><img src="data:image/png;base64,{image_base64}" alt="分析截圖" onclick="openModal(this)"></div>'
+            elif screenshot_path:
+                full_screenshot_path = os.path.join(self.monitoring_session_folder, screenshot_path)
+                if os.path.exists(full_screenshot_path):
+                    try:
+                        with open(full_screenshot_path, "rb") as img_file:
+                            img_data = base64.b64encode(img_file.read()).decode()
+                        screenshot_html = f'<div class="screenshot"><img src="data:image/png;base64,{img_data}" alt="分析截圖" onclick="openModal(this)"></div>'
+                    except Exception as e:
+                        screenshot_html = f'<div class="screenshot"><p>截圖載入失敗: {e}</p></div>'
+                else:
+                    screenshot_html = f'<div class="screenshot"><p>截圖檔案不存在: {screenshot_path}</p></div>'
+            
+            # 生成分析詳情
+            analysis_html = ""
+            if result:
+                confidence = result.get('confidence', 0)
+                player_name = result.get('player_name', '未知')
+                channel_number = result.get('channel_number', '未知')
+                full_text = result.get('full_text', '')
+                matched_items = result.get('matched_items', [])
+                
+                analysis_html = f"""
+                <div class="analysis-info">
+                    <div class="info-item">
+                        <div class="info-label">玩家名稱</div>
+                        <div class="info-value">{player_name}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">頻道編號</div>
+                        <div class="info-value">{channel_number}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">信心度</div>
+                        <div class="info-value">{confidence:.3f}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">分析方法</div>
+                        <div class="info-value">{result.get('analysis_method', '未知')}</div>
+                    </div>
+                </div>
+                """
+                
+                if matched_items:
+                    items_text = ", ".join([item.get('item_name', '未知') for item in matched_items])
+                    analysis_html += f'<div class="match-details"><strong>匹配物品:</strong> {items_text}</div>'
+                
+                if full_text:
+                    analysis_html += f'<div class="full-text">{full_text}</div>'
+            elif error_info:
+                analysis_html = f'<div class="error-details"><strong>錯誤詳情:</strong> {error_info.get("error", "未知錯誤")}</div>'
+            
+            html_content += f"""
+        <div class="result-card {card_class}">
+            <div class="result-header">
+                <div class="result-id">{status_icon} 分析 #{test_id}</div>
+                <div class="timestamp">{data.get('timestamp', '未知時間')}</div>
+            </div>
+            <div style="margin-bottom: 10px;"><strong>{status_text}</strong></div>
+            {screenshot_html}
+            {analysis_html}
+        </div>
+            """
+        
+        html_content += """
+    </div>
+
+    <!-- Modal for image viewing -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        function openModal(img) {
+            var modal = document.getElementById('imageModal');
+            var modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            var modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
+"""
+        
+        return html_content
+
     def stop_monitoring(self):
+        """停止監控"""
         self.running = False
+        if self.save_screenshots:
+            self.finalize_session()
 
 def get_analyzer_choice():
     """獲取分析器選擇"""
