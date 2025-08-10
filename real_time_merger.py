@@ -83,16 +83,23 @@ class RealTimeMerger:
             print(f"警告：保存合併結果失敗 - {e}")
     
     def generate_quick_html(self):
-        """生成快速HTML查看器"""
+        """生成快速HTML查看器 - 只顯示有匹配的結果"""
         if not self.merged_results:
+            return
+        
+        # 只取有匹配的結果，並按時間倒序排列
+        matched_results = [r for r in self.merged_results if r['has_match']]
+        matched_results.reverse()  # 最新的在上面
+        
+        if not matched_results:
+            print("沒有找到匹配結果，不生成HTML報告")
             return
         
         html_file = self.test_folder / "quick_view.html"
         
         # 統計信息
-        total = len(self.merged_results)
-        successful = len([r for r in self.merged_results if r['analysis_result']])
-        matched = len([r for r in self.merged_results if r['has_match']])
+        total_tests = len(self.merged_results)
+        matched_count = len(matched_results)
         
         html_content = f"""
 <!DOCTYPE html>
@@ -100,61 +107,59 @@ class RealTimeMerger:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>快速測試查看器</title>
+    <title>交易匹配監控結果</title>
     <style>
         body {{ font-family: 'Microsoft JhengHei', Arial, sans-serif; margin: 20px; background: #f5f5f5; }}
         .header {{ background: #2c3e50; color: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; }}
         .stats {{ display: flex; gap: 15px; margin-bottom: 20px; }}
         .stat {{ background: white; padding: 15px; border-radius: 8px; text-align: center; flex: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
-        .stat-number {{ font-size: 1.5em; font-weight: bold; color: #3498db; }}
-        .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }}
-        .card {{ background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
-        .card-header {{ padding: 15px; background: #ecf0f1; border-bottom: 1px solid #bdc3c7; }}
-        .card-header.success {{ background: #d5f4e6; border-left: 4px solid #27ae60; }}
-        .card-header.match {{ background: #fff3cd; border-left: 4px solid #f39c12; }}
-        .card-header.error {{ background: #ffeaa7; border-left: 4px solid #e74c3c; }}
-        .card-content {{ padding: 15px; }}
-        .screenshot {{ max-width: 100%; border: 1px solid #ddd; border-radius: 4px; }}
-        .result-text {{ background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 4px; font-family: Consolas, monospace; font-size: 11px; max-height: 150px; overflow-y: auto; }}
-        .match-info {{ background: #fff3cd; border: 1px solid #f39c12; padding: 10px; border-radius: 4px; margin-top: 10px; }}
-        .badge {{ padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }}
-        .badge-success {{ background: #27ae60; color: white; }}
-        .badge-error {{ background: #e74c3c; color: white; }}
-        .badge-match {{ background: #f39c12; color: white; }}
+        .stat-number {{ font-size: 1.5em; font-weight: bold; color: #e74c3c; }}
+        .match-list {{ display: flex; flex-direction: column; gap: 15px; }}
+        .match-card {{ background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 4px solid #e74c3c; }}
+        .match-header {{ background: #fff3cd; padding: 12px 15px; border-bottom: 1px solid #f39c12; }}
+        .match-content {{ padding: 15px; }}
+        .field-row {{ margin-bottom: 12px; }}
+        .field-label {{ font-weight: bold; color: #2c3e50; min-width: 80px; display: inline-block; }}
+        .field-value {{ color: #34495e; }}
+        .player-name {{ color: #2980b9; font-weight: bold; }}
+        .channel-name {{ color: #27ae60; font-weight: bold; }}
+        .items-list {{ color: #e74c3c; font-weight: bold; }}
+        .full-text {{ background: #ecf0f1; padding: 10px; border-radius: 4px; font-family: Consolas, monospace; font-size: 12px; line-height: 1.4; }}
+        .screenshot {{ max-width: 200px; max-height: 100px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; float: right; margin-left: 15px; }}
+        .timestamp {{ color: #7f8c8d; font-size: 0.9em; float: right; }}
     </style>
 </head>
 <body>
     <div class="header">
-        <h2>快速測試查看器</h2>
-        <p>生成時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+        <h2>🎯 交易匹配監控結果</h2>
+        <p>生成時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | 找到 {matched_count} 個匹配交易</p>
     </div>
     
     <div class="stats">
         <div class="stat">
-            <div class="stat-number">{total}</div>
-            <div>總測試</div>
+            <div class="stat-number">{total_tests}</div>
+            <div>總測試數</div>
         </div>
         <div class="stat">
-            <div class="stat-number">{successful}</div>
-            <div>成功分析</div>
+            <div class="stat-number">{matched_count}</div>
+            <div>匹配交易</div>
         </div>
         <div class="stat">
-            <div class="stat-number">{matched}</div>
-            <div>找到匹配</div>
+            <div class="stat-number">{(matched_count/total_tests*100):.1f}%</div>
+            <div>匹配率</div>
         </div>
     </div>
     
-    <div class="grid">
-        {self.generate_cards()}
+    <div class="match-list">
+        {self.generate_match_cards(matched_results)}
     </div>
     
     <script>
         // 點擊圖片放大
         document.querySelectorAll('.screenshot').forEach(img => {{
-            img.style.cursor = 'pointer';
             img.onclick = function() {{
                 const modal = document.createElement('div');
-                modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:flex;justify-content:center;align-items:center;';
+                modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:flex;justify-content:center;align-items:center;cursor:pointer;';
                 const bigImg = document.createElement('img');
                 bigImg.src = this.src;
                 bigImg.style.cssText = 'max-width:90%;max-height:90%;';
@@ -171,89 +176,78 @@ class RealTimeMerger:
         try:
             with open(html_file, 'w', encoding='utf-8') as f:
                 f.write(html_content)
-            print(f"快速查看器已生成: {html_file}")
+            print(f"交易匹配報告已生成: {html_file} (共 {matched_count} 個匹配)")
         except Exception as e:
             print(f"生成HTML查看器失敗: {e}")
     
-    def generate_cards(self):
-        """生成測試卡片HTML"""
+    def generate_match_cards(self, matched_results):
+        """生成匹配交易卡片HTML - 新格式"""
         cards = []
         
-        for result in self.merged_results:  # 只顯示最近20個
-            # 確定卡片樣式
-            header_class = "card-header"
-            badges = []
+        for result in matched_results:
+            details = result.get('match_details', {})
+            analysis = result.get('analysis_result', {})
             
-            if result['analysis_result']:
-                header_class += " success"
-                badges.append('<span class="badge badge-success">分析成功</span>')
+            # 玩家信息
+            player_name = details.get('player_name', '未知')
+            channel_number = details.get('channel_number', '未知')
             
-            if result['has_match']:
-                header_class += " match"
-                badges.append('<span class="badge badge-match">找到匹配</span>')
-            
-            if result['error_info']:
-                header_class += " error"
-                badges.append('<span class="badge badge-error">發生錯誤</span>')
-            
-            # 生成結果摘要
-            result_summary = ""
-            if result['analysis_result']:
-                analysis = result['analysis_result']
-                summary_text = analysis.get('full_text', '')
-                if len(summary_text) > 100:
-                    summary_text = summary_text[:100] + "..."
-                
-                result_summary = f"""
-                <div class="result-text">
-                文字內容: {summary_text}
-                分析方法: {analysis.get('analysis_method', '未知')}
-                信心度: {analysis.get('confidence', 0):.2f}
-                </div>
-                """
-            
-            # 匹配信息
-            match_info = ""
-            if result['has_match'] and result['match_details']:
-                details = result['match_details']
-                matched_items = details.get('matched_items', [])
-                
-                # 生成物品詳細信息
-                items_html = ""
-                if matched_items:
-                    items_list = []
-                    for item in matched_items:
-                        if isinstance(item, dict):
-                            item_name = item.get('item_name', '未知物品')
-                            keywords = item.get('keywords_found', [])
-                            if keywords:
-                                items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{item_name}</span> ({', '.join(keywords)})")
-                            else:
-                                items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{item_name}</span>")
+            # 商品內容
+            matched_items = details.get('matched_items', [])
+            items_display = []
+            if matched_items:
+                for item in matched_items:
+                    if isinstance(item, dict):
+                        item_name = item.get('item_name', '未知物品')
+                        keywords = item.get('keywords_found', [])
+                        if keywords:
+                            items_display.append(f"{item_name} ({', '.join(keywords)})")
                         else:
-                            items_list.append(f"<span style='color: #e74c3c; font-weight: bold;'>{str(item)}</span>")
-                    items_html = "<br>".join(items_list)
-                
-                match_info = f"""
-                <div class="match-info">
-                    <strong>🎯 找到匹配交易</strong><br>
-                    <strong>玩家:</strong> <span style='color: #2980b9; font-weight: bold;'>{details.get('player_name', '未知')}</span><br>
-                    <strong>頻道:</strong> <span style='color: #27ae60; font-weight: bold;'>{details.get('channel_number', '未知')}</span><br>
-                    <strong>匹配商品 ({len(matched_items)} 個):</strong><br>
-                    <div style='margin-left: 10px; margin-top: 5px;'>{items_html}</div>
-                </div>
-                """
+                            items_display.append(item_name)
+                    else:
+                        items_display.append(str(item))
+            items_text = ' | '.join(items_display) if items_display else '無'
+            
+            # 完整廣播內容
+            full_text = analysis.get('full_text', '無法取得完整內容')
+            
+            # 時間戳
+            timestamp = result.get('timestamp', '')
+            if len(timestamp) >= 13:  # 包含毫秒的格式
+                time_display = f"{timestamp[8:10]}:{timestamp[10:12]}:{timestamp[12:14]}"
+            else:
+                time_display = timestamp
             
             card_html = f"""
-        <div class="card">
-            <div class="{header_class}">
-                <strong>測試 #{result['test_id']:03d}</strong>
-                <div style="margin-top: 5px;">{' '.join(badges)}</div>
+        <div class="match-card">
+            <div class="match-header">
+                <strong>交易匹配 #{result['test_id']:03d}</strong>
+                <span class="timestamp">{time_display}</span>
             </div>
-            <div class="card-content">
-                {"<img class='screenshot' src='data:image/png;base64," + result['image_base64'] + "' alt='測試截圖'>" if result['image_base64'] else "<p>圖片載入失敗</p>"}
-                {result_summary}
-                {match_info}
+            <div class="match-content">
+                {"<img class='screenshot' src='data:image/png;base64," + result['image_base64'] + "' alt='交易截圖'>" if result['image_base64'] else ""}
+                
+                <div class="field-row">
+                    <span class="field-label">玩家:</span>
+                    <span class="field-value player-name">{player_name}</span>
+                </div>
+                
+                <div class="field-row">
+                    <span class="field-label">頻道:</span>
+                    <span class="field-value channel-name">{channel_number}</span>
+                </div>
+                
+                <div class="field-row">
+                    <span class="field-label">商品內容:</span>
+                    <span class="field-value items-list">{items_text}</span>
+                </div>
+                
+                <div class="field-row">
+                    <span class="field-label">完整廣播:</span>
+                </div>
+                <div class="full-text">{full_text}</div>
+                
+                <div style="clear: both;"></div>
             </div>
         </div>
             """
@@ -261,6 +255,11 @@ class RealTimeMerger:
             cards.append(card_html)
         
         return '\n'.join(cards)
+    
+    def generate_cards(self):
+        """生成測試卡片HTML - 保留舊方法以防其他地方使用"""
+        # 這個方法現在只作為後備，實際使用新的generate_match_cards
+        return self.generate_match_cards([r for r in self.merged_results if r['has_match']])
 
 # 集成到現有系統的輔助函數
 def setup_real_time_merger(test_folder):
