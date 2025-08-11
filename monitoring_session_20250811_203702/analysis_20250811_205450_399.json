@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 401,
+  "timestamp": "20250811_205450_399",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "侍之心 2687賣80等16屬劍士鞋4力12敏15跳1200雪/卡帝斯全套7敏54攻600雪",
+    "is_match": false,
+    "player_name": "侍之心",
+    "channel_number": "2687",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9716062776653552,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "侍之心",
+    "rear_text": "2687賣80等16屬劍士鞋4力12敏15跳1200雪/卡帝斯全套7敏54攻600雪",
+    "full_text": "侍之心 2687賣80等16屬劍士鞋4力12敏15跳1200雪/卡帝斯全套7敏54攻600雪",
+    "ocr_results": [
+      {
+        "text": "侍之心",
+        "confidence": 0.9988901334627909,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "2687賣80等16屬劍士鞋4力12敏15跳1200雪/卡帝斯全套7敏54攻600雪",
+        "confidence": 0.9443224218679196,
+        "bbox": [
+          [
+            161,
+            1
+          ],
+          [
+            829,
+            1
+          ],
+          [
+            829,
+            36
+          ],
+          [
+            161,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_401_20250811_205449_808.png"
+}

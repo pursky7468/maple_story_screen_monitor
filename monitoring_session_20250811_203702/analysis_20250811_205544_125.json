@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 421,
+  "timestamp": "20250811_205544_125",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "伊芙莉娜 楓賣大廣35Ow瞬移石10Ow護身13Ow背包80Ow/賣60%下衣體耳體4Ow 10%鞋跳60w",
+    "is_match": false,
+    "player_name": "伊芙莉娜",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6678416591267979,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "伊芙莉娜",
+    "rear_text": "楓賣大廣35Ow瞬移石10Ow護身13Ow背包80Ow/賣60%下衣體耳體4Ow 10%鞋跳60w",
+    "full_text": "伊芙莉娜 楓賣大廣35Ow瞬移石10Ow護身13Ow背包80Ow/賣60%下衣體耳體4Ow 10%鞋跳60w",
+    "ocr_results": [
+      {
+        "text": "伊芙莉娜",
+        "confidence": 0.9965505003929138,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            103,
+            1
+          ],
+          [
+            103,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "楓賣大廣35Ow瞬移石10Ow護身13Ow背包80Ow/賣60%下衣體耳體4Ow 10%鞋跳60w",
+        "confidence": 0.3391328178606821,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            979,
+            1
+          ],
+          [
+            979,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_421_20250811_205543_428.png"
+}

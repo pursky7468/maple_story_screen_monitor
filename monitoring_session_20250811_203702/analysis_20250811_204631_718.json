@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 215,
+  "timestamp": "20250811_204631_718",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "個Q0米 2373收雙手劍攻擊10%1:2雪大小量都收 有沒有破百張大佬",
+    "is_match": false,
+    "player_name": "個Q0米",
+    "channel_number": "2373",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.5795919457996608,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "個Q0米",
+    "rear_text": "2373收雙手劍攻擊10%1:2雪大小量都收 有沒有破百張大佬",
+    "full_text": "個Q0米 2373收雙手劍攻擊10%1:2雪大小量都收 有沒有破百張大佬",
+    "ocr_results": [
+      {
+        "text": "個Q0米",
+        "confidence": 0.39980530738830566,
+        "bbox": [
+          [
+            30,
+            4
+          ],
+          [
+            112,
+            4
+          ],
+          [
+            112,
+            36
+          ],
+          [
+            30,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "2373收雙手劍攻擊10%1:2雪大小量都收 有沒有破百張大佬",
+        "confidence": 0.7593785842110158,
+        "bbox": [
+          [
+            193,
+            1
+          ],
+          [
+            747,
+            1
+          ],
+          [
+            747,
+            36
+          ],
+          [
+            193,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        108,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_215_20250811_204631_187.png"
+}

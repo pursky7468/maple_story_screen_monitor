@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 29,
+  "timestamp": "20250811_203817_677",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "YouShi 收小廣/瞬移石",
+    "is_match": false,
+    "player_name": "YouShi",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.809838863344075,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "YouShi",
+    "rear_text": "收小廣/瞬移石",
+    "full_text": "YouShi 收小廣/瞬移石",
+    "ocr_results": [
+      {
+        "text": "YouShi",
+        "confidence": 0.7161301704999816,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            86,
+            4
+          ],
+          [
+            86,
+            32
+          ],
+          [
+            8,
+            32
+          ]
+        ]
+      },
+      {
+        "text": "收小廣/瞬移石",
+        "confidence": 0.9035475561881683,
+        "bbox": [
+          [
+            168,
+            4
+          ],
+          [
+            308,
+            4
+          ],
+          [
+            308,
+            36
+          ],
+          [
+            168,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        83,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_029_20250811_203817_348.png"
+}

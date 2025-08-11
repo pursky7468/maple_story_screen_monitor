@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 123,
+  "timestamp": "20250811_204228_474",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "031 0283頻0030妞妞+比大小 弓訓練1060~o0000全程錄影0長期老字號^首儲500送5",
+    "is_match": false,
+    "player_name": "031",
+    "channel_number": "0283",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7198209236369152,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "031",
+    "rear_text": "0283頻0030妞妞+比大小 弓訓練1060~o0000全程錄影0長期老字號^首儲500送5",
+    "full_text": "031 0283頻0030妞妞+比大小 弓訓練1060~o0000全程錄影0長期老字號^首儲500送5",
+    "ocr_results": [
+      {
+        "text": "031",
+        "confidence": 0.9994596704398414,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            54,
+            4
+          ],
+          [
+            54,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "0283頻0030妞妞+比大小",
+        "confidence": 0.9563429965570978,
+        "bbox": [
+          [
+            144,
+            4
+          ],
+          [
+            396,
+            4
+          ],
+          [
+            396,
+            34
+          ],
+          [
+            144,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "弓訓練1060~o0000全程錄影0長期老字號^首儲500送5",
+        "confidence": 0.20366010391380596,
+        "bbox": [
+          [
+            407,
+            0
+          ],
+          [
+            1003,
+            0
+          ],
+          [
+            1003,
+            36
+          ],
+          [
+            407,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        51,
+        13,
+        75,
+        15
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_123_20250811_204227_698.png"
+}

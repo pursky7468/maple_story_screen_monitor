@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 323,
+  "timestamp": "20250811_205119_157",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "風花雪月 2378 收弓鞋5/6屬7雪/13雪另售102AD梅杜斯 350雪",
+    "is_match": false,
+    "player_name": "風花雪月",
+    "channel_number": "2378",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9308315989770146,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "風花雪月",
+    "rear_text": "2378 收弓鞋5/6屬7雪/13雪另售102AD梅杜斯 350雪",
+    "full_text": "風花雪月 2378 收弓鞋5/6屬7雪/13雪另售102AD梅杜斯 350雪",
+    "ocr_results": [
+      {
+        "text": "風花雪月",
+        "confidence": 0.999397337436676,
+        "bbox": [
+          [
+            9,
+            1
+          ],
+          [
+            99,
+            1
+          ],
+          [
+            99,
+            36
+          ],
+          [
+            9,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "2378 收弓鞋5/6屬7雪/13雪另售102AD梅杜斯 350雪",
+        "confidence": 0.8622658605173531,
+        "bbox": [
+          [
+            181,
+            0
+          ],
+          [
+            683,
+            0
+          ],
+          [
+            683,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_323_20250811_205118_656.png"
+}

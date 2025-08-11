@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 290,
+  "timestamp": "20250811_204950_634",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Eric認證機 =H1e1= O1613頻弓訓場10比大小100~1500雪0Eric老牌娛樂O casino公會認證歡迎來走走看",
+    "is_match": false,
+    "player_name": "Eric認證機 =H1e1=",
+    "channel_number": "1613",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.31882561619057614,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Eric認證機 =H1e1=",
+    "rear_text": "O1613頻弓訓場10比大小100~1500雪0Eric老牌娛樂O casino公會認證歡迎來走走看",
+    "full_text": "Eric認證機 =H1e1= O1613頻弓訓場10比大小100~1500雪0Eric老牌娛樂O casino公會認證歡迎來走走看",
+    "ocr_results": [
+      {
+        "text": "Eric認證機 =H1e1=",
+        "confidence": 0.11861057065101502,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            172,
+            4
+          ],
+          [
+            172,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "O1613頻弓訓場10比大小100~1500雪0Eric老牌娛樂O casino公會認證歡迎來走走看",
+        "confidence": 0.5190406617301373,
+        "bbox": [
+          [
+            205,
+            1
+          ],
+          [
+            1001,
+            1
+          ],
+          [
+            1001,
+            36
+          ],
+          [
+            205,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        169,
+        11,
+        9,
+        13
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_290_20250811_204949_699.png"
+}

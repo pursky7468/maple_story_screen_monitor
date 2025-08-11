@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 90,
+  "timestamp": "20250811_204059_895",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "懷念0 l5AP耳環65雪 ll2AP香菇120雪10智披風60雪傳送25:35雪自由直接來",
+    "is_match": false,
+    "player_name": "懷念0",
+    "channel_number": "120",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8878660852207099,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "懷念0",
+    "rear_text": "l5AP耳環65雪 ll2AP香菇120雪10智披風60雪傳送25:35雪自由直接來",
+    "full_text": "懷念0 l5AP耳環65雪 ll2AP香菇120雪10智披風60雪傳送25:35雪自由直接來",
+    "ocr_results": [
+      {
+        "text": "懷念0",
+        "confidence": 0.9658612529573248,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            72,
+            4
+          ],
+          [
+            72,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "l5AP耳環65雪 ll2AP香菇120雪10智披風60雪傳送25:35雪自由直接來",
+        "confidence": 0.8098709174840949,
+        "bbox": [
+          [
+            153,
+            1
+          ],
+          [
+            827,
+            1
+          ],
+          [
+            827,
+            36
+          ],
+          [
+            153,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        69,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_090_20250811_204059_282.png"
+}

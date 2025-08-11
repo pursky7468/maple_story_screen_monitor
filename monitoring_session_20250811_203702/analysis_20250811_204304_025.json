@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 136,
+  "timestamp": "20250811_204304_025",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "飄) 收乾淨無爭議CD圖密語回最低 收到不回",
+    "is_match": false,
+    "player_name": "飄)",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8664779320232184,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "飄)",
+    "rear_text": "收乾淨無爭議CD圖密語回最低 收到不回",
+    "full_text": "飄) 收乾淨無爭議CD圖密語回最低 收到不回",
+    "ocr_results": [
+      {
+        "text": "飄)",
+        "confidence": 0.9775067857364498,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            50,
+            4
+          ],
+          [
+            50,
+            32
+          ],
+          [
+            8,
+            32
+          ]
+        ]
+      },
+      {
+        "text": "收乾淨無爭議CD圖密語回最低 收到不回",
+        "confidence": 0.7554490783099871,
+        "bbox": [
+          [
+            139,
+            0
+          ],
+          [
+            535,
+            0
+          ],
+          [
+            535,
+            36
+          ],
+          [
+            139,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_136_20250811_204303_617.png"
+}

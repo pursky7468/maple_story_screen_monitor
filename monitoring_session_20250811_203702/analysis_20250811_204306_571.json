@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 137,
+  "timestamp": "20250811_204306_571",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "missinguuu 102刀] 收一層無爭議CD圖 EM價格謝謝~~",
+    "is_match": false,
+    "player_name": "missinguuu",
+    "channel_number": "102",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7672005250261367,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "missinguuu",
+    "rear_text": "102刀] 收一層無爭議CD圖 EM價格謝謝~~",
+    "full_text": "missinguuu 102刀] 收一層無爭議CD圖 EM價格謝謝~~",
+    "ocr_results": [
+      {
+        "text": "missinguuu",
+        "confidence": 0.9178452919080716,
+        "bbox": [
+          [
+            7,
+            0
+          ],
+          [
+            134,
+            0
+          ],
+          [
+            134,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "102刀] 收一層無爭議CD圖 EM價格謝謝~~",
+        "confidence": 0.6165557581442018,
+        "bbox": [
+          [
+            216,
+            4
+          ],
+          [
+            604,
+            4
+          ],
+          [
+            604,
+            35
+          ],
+          [
+            216,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        131,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_137_20250811_204306_082.png"
+}

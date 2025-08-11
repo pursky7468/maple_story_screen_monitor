@@ -1,0 +1,53 @@
+{
+  "monitoring_id": 106,
+  "timestamp": "20250811_204143_652",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "1690木桶收套服智力10%12雪, 60%30雪, 出售466克里斯1400雪,墜飾30%力量720",
+    "is_match": false,
+    "player_name": "1690木桶收套服智力10%12雪, 60%30雪, 出售466克里斯1400雪,墜飾30%力量720",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8806028133650644,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "1690木桶收套服智力10%12雪, 60%30雪, 出售466克里斯1400雪,墜飾30%力量720",
+    "rear_text": "",
+    "full_text": "1690木桶收套服智力10%12雪, 60%30雪, 出售466克里斯1400雪,墜飾30%力量720",
+    "ocr_results": [
+      {
+        "text": "1690木桶收套服智力10%12雪, 60%30雪, 出售466克里斯1400雪,墜飾30%力量720",
+        "confidence": 0.8806028133650644,
+        "bbox": [
+          [
+            199,
+            1
+          ],
+          [
+            1009,
+            1
+          ],
+          [
+            1009,
+            36
+          ],
+          [
+            199,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_106_20250811_204142_867.png"
+}

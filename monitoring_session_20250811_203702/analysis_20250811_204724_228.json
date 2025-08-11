@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 235,
+  "timestamp": "20250811_204724_228",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "桃桃商行[ 706出手攻60%8雪/下敏100%4雪/頭敏100%2雪/盾幸60%4雪/手工10%10雪",
+    "is_match": false,
+    "player_name": "桃桃商行[",
+    "channel_number": "706",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8147762883556151,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "桃桃商行[",
+    "rear_text": "706出手攻60%8雪/下敏100%4雪/頭敏100%2雪/盾幸60%4雪/手工10%10雪",
+    "full_text": "桃桃商行[ 706出手攻60%8雪/下敏100%4雪/頭敏100%2雪/盾幸60%4雪/手工10%10雪",
+    "ocr_results": [
+      {
+        "text": "桃桃商行[",
+        "confidence": 0.7666250514408347,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            99,
+            2
+          ],
+          [
+            99,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "706出手攻60%8雪/下敏100%4雪/頭敏100%2雪/盾幸60%4雪/手工10%10雪",
+        "confidence": 0.8629275252703956,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            907,
+            1
+          ],
+          [
+            907,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_235_20250811_204723_601.png"
+}

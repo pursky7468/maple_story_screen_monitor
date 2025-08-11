@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 319,
+  "timestamp": "20250811_205108_853",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "綠茶王 957賣木盾105|90血30雪6雪 賣103攻10幸狗刀]2200雪 104攻10幸狗刀]3700雪",
+    "is_match": false,
+    "player_name": "綠茶王",
+    "channel_number": "957",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.763180882852784,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "綠茶王",
+    "rear_text": "957賣木盾105|90血30雪6雪 賣103攻10幸狗刀]2200雪 104攻10幸狗刀]3700雪",
+    "full_text": "綠茶王 957賣木盾105|90血30雪6雪 賣103攻10幸狗刀]2200雪 104攻10幸狗刀]3700雪",
+    "ocr_results": [
+      {
+        "text": "綠茶王",
+        "confidence": 0.9884648487153747,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "957賣木盾105|90血30雪6雪 賣103攻10幸狗刀]2200雪 104攻10幸狗刀]3700雪",
+        "confidence": 0.5378969169901933,
+        "bbox": [
+          [
+            158,
+            1
+          ],
+          [
+            895,
+            1
+          ],
+          [
+            895,
+            36
+          ],
+          [
+            158,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_319_20250811_205108_205.png"
+}

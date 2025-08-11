@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 19,
+  "timestamp": "20250811_203751_143",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Simple 出售10幸50等披風80雪9幸65等20雪 直接來自由",
+    "is_match": false,
+    "player_name": "Simple",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7823821429449509,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Simple",
+    "rear_text": "出售10幸50等披風80雪9幸65等20雪 直接來自由",
+    "full_text": "Simple 出售10幸50等披風80雪9幸65等20雪 直接來自由",
+    "ocr_results": [
+      {
+        "text": "Simple",
+        "confidence": 0.7241993028418956,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            94,
+            4
+          ],
+          [
+            94,
+            36
+          ],
+          [
+            8,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "出售10幸50等披風80雪9幸65等20雪 直接來自由",
+        "confidence": 0.8405649830480062,
+        "bbox": [
+          [
+            173,
+            1
+          ],
+          [
+            635,
+            1
+          ],
+          [
+            635,
+            36
+          ],
+          [
+            173,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        89,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_019_20250811_203750_645.png"
+}

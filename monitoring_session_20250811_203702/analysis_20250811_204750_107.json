@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 245,
+  "timestamp": "20250811_204750_107",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "秦王嬴政 T1631自由1T出清便宜賣] 12敏黑雪鞋=390雪. 17屬80級賊褲1100雪~先來先賣",
+    "is_match": false,
+    "player_name": "秦王嬴政",
+    "channel_number": "1631",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7983573740681318,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "秦王嬴政",
+    "rear_text": "T1631自由1T出清便宜賣] 12敏黑雪鞋=390雪. 17屬80級賊褲1100雪~先來先賣",
+    "full_text": "秦王嬴政 T1631自由1T出清便宜賣] 12敏黑雪鞋=390雪. 17屬80級賊褲1100雪~先來先賣",
+    "ocr_results": [
+      {
+        "text": "秦王嬴政",
+        "confidence": 0.9974266886711121,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            101,
+            4
+          ],
+          [
+            101,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "T1631自由1T出清便宜賣] 12敏黑雪鞋=390雪. 17屬80級賊褲1100雪~先來先賣",
+        "confidence": 0.5992880594651516,
+        "bbox": [
+          [
+            190,
+            0
+          ],
+          [
+            965,
+            0
+          ],
+          [
+            965,
+            36
+          ],
+          [
+            190,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_245_20250811_204749_419.png"
+}

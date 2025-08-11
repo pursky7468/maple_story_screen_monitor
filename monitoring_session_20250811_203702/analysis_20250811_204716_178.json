@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 232,
+  "timestamp": "20250811_204716_178",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "來都來了射一下[#1171 自由耶穌售傳送石l:ll0w 賣弓箭手套服33屬1800雪 (可議) 不回密",
+    "is_match": false,
+    "player_name": "來都來了射一下[#1171",
+    "channel_number": "1800",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6090888234342003,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "來都來了射一下[#1171",
+    "rear_text": "自由耶穌售傳送石l:ll0w 賣弓箭手套服33屬1800雪 (可議) 不回密",
+    "full_text": "來都來了射一下[#1171 自由耶穌售傳送石l:ll0w 賣弓箭手套服33屬1800雪 (可議) 不回密",
+    "ocr_results": [
+      {
+        "text": "來都來了射一下[#1171",
+        "confidence": 0.33135527390257136,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            216,
+            4
+          ],
+          [
+            216,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "自由耶穌售傳送石l:ll0w 賣弓箭手套服33屬1800雪 (可議)",
+        "confidence": 0.5012644485319863,
+        "bbox": [
+          [
+            241,
+            0
+          ],
+          [
+            821,
+            0
+          ],
+          [
+            821,
+            36
+          ],
+          [
+            241,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "不回密",
+        "confidence": 0.9946467478680433,
+        "bbox": [
+          [
+            832,
+            4
+          ],
+          [
+            902,
+            4
+          ],
+          [
+            902,
+            36
+          ],
+          [
+            832,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        215,
+        9,
+        11,
+        17
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_232_20250811_204715_438.png"
+}

@@ -1,0 +1,53 @@
+{
+  "monitoring_id": 130,
+  "timestamp": "20250811_204247_926",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "收劍士裝備鞋7-9屬7/15/30套服9|10屬1/2雪11屬上衣8屬下衣10雪套敏10%",
+    "is_match": false,
+    "player_name": "收劍士裝備鞋7-9屬7/15/30套服9|10屬1/2雪11屬上衣8屬下衣10雪套敏10%",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7208137473725177,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "收劍士裝備鞋7-9屬7/15/30套服9|10屬1/2雪11屬上衣8屬下衣10雪套敏10%",
+    "rear_text": "",
+    "full_text": "收劍士裝備鞋7-9屬7/15/30套服9|10屬1/2雪11屬上衣8屬下衣10雪套敏10%",
+    "ocr_results": [
+      {
+        "text": "收劍士裝備鞋7-9屬7/15/30套服9|10屬1/2雪11屬上衣8屬下衣10雪套敏10%",
+        "confidence": 0.7208137473725177,
+        "bbox": [
+          [
+            139,
+            0
+          ],
+          [
+            877,
+            0
+          ],
+          [
+            877,
+            36
+          ],
+          [
+            139,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        15,
+        75,
+        13
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_130_20250811_204247_233.png"
+}

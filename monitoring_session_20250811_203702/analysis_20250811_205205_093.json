@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 340,
+  "timestamp": "20250811_205205_093",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "AACasino 170弓訓場1 [比大小] 050-5000娛樂小遊戲O5O0送500認準公會 (6AACasino)",
+    "is_match": false,
+    "player_name": "AACasino",
+    "channel_number": "170",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6157639180681673,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "AACasino",
+    "rear_text": "170弓訓場1 [比大小] 050-5000娛樂小遊戲O5O0送500認準公會 (6AACasino)",
+    "full_text": "AACasino 170弓訓場1 [比大小] 050-5000娛樂小遊戲O5O0送500認準公會 (6AACasino)",
+    "ocr_results": [
+      {
+        "text": "AACasino",
+        "confidence": 0.997272357989037,
+        "bbox": [
+          [
+            10,
+            4
+          ],
+          [
+            112,
+            4
+          ],
+          [
+            112,
+            34
+          ],
+          [
+            10,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "170弓訓場1 [比大小]",
+        "confidence": 0.5929280346155665,
+        "bbox": [
+          [
+            194,
+            4
+          ],
+          [
+            403,
+            4
+          ],
+          [
+            403,
+            33
+          ],
+          [
+            194,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "050-5000娛樂小遊戲O5O0送500認準公會 (6AACasino)",
+        "confidence": 0.25709136159989837,
+        "bbox": [
+          [
+            414,
+            2
+          ],
+          [
+            978,
+            2
+          ],
+          [
+            978,
+            34
+          ],
+          [
+            414,
+            34
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        108,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_340_20250811_205204_324.png"
+}

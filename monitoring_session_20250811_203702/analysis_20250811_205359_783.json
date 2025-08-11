@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 382,
+  "timestamp": "20250811_205359_783",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Keelung guol 收盾幸60 1:4雪 收14張直接來",
+    "is_match": false,
+    "player_name": "Keelung guol",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.5457391840772146,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Keelung guol",
+    "rear_text": "收盾幸60 1:4雪 收14張直接來",
+    "full_text": "Keelung guol 收盾幸60 1:4雪 收14張直接來",
+    "ocr_results": [
+      {
+        "text": "Keelung guol",
+        "confidence": 0.3994751591966722,
+        "bbox": [
+          [
+            7,
+            0
+          ],
+          [
+            147,
+            0
+          ],
+          [
+            147,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "收盾幸60 1:4雪 收14張直接來",
+        "confidence": 0.692003208957757,
+        "bbox": [
+          [
+            229,
+            1
+          ],
+          [
+            521,
+            1
+          ],
+          [
+            521,
+            36
+          ],
+          [
+            229,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        146,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_382_20250811_205359_363.png"
+}

@@ -1,0 +1,46 @@
+{
+  "monitoring_id": 337,
+  "timestamp": "20250811_205156_755",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "2620賣巨大雪吉拉椅430雪來現場交易",
+    "is_match": false,
+    "player_name": "2620賣巨大雪吉拉椅430雪來現場交易",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9737197434531093,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "2620賣巨大雪吉拉椅430雪來現場交易",
+    "rear_text": "",
+    "full_text": "2620賣巨大雪吉拉椅430雪來現場交易",
+    "ocr_results": [
+      {
+        "text": "2620賣巨大雪吉拉椅430雪來現場交易",
+        "confidence": 0.9737197434531093,
+        "bbox": [
+          [
+            141,
+            1
+          ],
+          [
+            511,
+            1
+          ],
+          [
+            511,
+            36
+          ],
+          [
+            141,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": []
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_337_20250811_205156_207.png"
+}

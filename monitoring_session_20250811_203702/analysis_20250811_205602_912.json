@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 428,
+  "timestamp": "20250811_205602_912",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Oo煞氣a主教00 PW有缺7的嗎? 另收頭盔智力60%一張60雪要的來",
+    "is_match": false,
+    "player_name": "Oo煞氣a主教00",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9411157813301068,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Oo煞氣a主教00",
+    "rear_text": "PW有缺7的嗎? 另收頭盔智力60%一張60雪要的來",
+    "full_text": "Oo煞氣a主教00 PW有缺7的嗎? 另收頭盔智力60%一張60雪要的來",
+    "ocr_results": [
+      {
+        "text": "Oo煞氣a主教00",
+        "confidence": 0.8909006634486519,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            170,
+            2
+          ],
+          [
+            170,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "PW有缺7的嗎? 另收頭盔智力60%一張60雪要的來",
+        "confidence": 0.9913308992115615,
+        "bbox": [
+          [
+            251,
+            1
+          ],
+          [
+            733,
+            1
+          ],
+          [
+            733,
+            36
+          ],
+          [
+            251,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        167,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_428_20250811_205602_345.png"
+}

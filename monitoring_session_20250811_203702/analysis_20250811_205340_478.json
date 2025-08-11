@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 375,
+  "timestamp": "20250811_205340_478",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "LULU123 967收+10敏速披+10敏速披另售108力5冰槍285雪!!自由!!",
+    "is_match": false,
+    "player_name": "LULU123",
+    "channel_number": "967",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7953440056622958,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "LULU123",
+    "rear_text": "967收+10敏速披+10敏速披另售108力5冰槍285雪!!自由!!",
+    "full_text": "LULU123 967收+10敏速披+10敏速披另售108力5冰槍285雪!!自由!!",
+    "ocr_results": [
+      {
+        "text": "LULU123",
+        "confidence": 0.5949908385908601,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            106,
+            4
+          ],
+          [
+            106,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "967收+10敏速披+10敏速披另售108力5冰槍285雪!!自由!!",
+        "confidence": 0.9956971727337316,
+        "bbox": [
+          [
+            187,
+            1
+          ],
+          [
+            731,
+            1
+          ],
+          [
+            731,
+            36
+          ],
+          [
+            187,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        104,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_375_20250811_205339_925.png"
+}

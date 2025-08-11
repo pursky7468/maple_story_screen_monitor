@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 183,
+  "timestamp": "20250811_204507_089",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Anesn 恭喜我們公會 IHokage]l 的會長大大[宇智波歪理]榮升120 暗殺者!!狂賀啃~",
+    "is_match": false,
+    "player_name": "Anesn",
+    "channel_number": "120",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6379556849670591,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Anesn",
+    "rear_text": "恭喜我們公會 IHokage]l 的會長大大[宇智波歪理]榮升120 暗殺者!!狂賀啃~",
+    "full_text": "Anesn 恭喜我們公會 IHokage]l 的會長大大[宇智波歪理]榮升120 暗殺者!!狂賀啃~",
+    "ocr_results": [
+      {
+        "text": "Anesn",
+        "confidence": 0.9999664133639764,
+        "bbox": [
+          [
+            10,
+            4
+          ],
+          [
+            78,
+            4
+          ],
+          [
+            78,
+            32
+          ],
+          [
+            10,
+            32
+          ]
+        ]
+      },
+      {
+        "text": "恭喜我們公會 IHokage]l 的會長大大[宇智波歪理]榮升120 暗殺者!!狂賀啃~",
+        "confidence": 0.27594495657014184,
+        "bbox": [
+          [
+            159,
+            0
+          ],
+          [
+            895,
+            0
+          ],
+          [
+            895,
+            36
+          ],
+          [
+            159,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        75,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_183_20250811_204506_450.png"
+}

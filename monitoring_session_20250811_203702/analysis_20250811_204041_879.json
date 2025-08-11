@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 83,
+  "timestamp": "20250811_204041_879",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "橘Orenji 收乾淨CD圖, 無爭議, 30雪,要的密我, 我過去.",
+    "is_match": false,
+    "player_name": "橘Orenji",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8121855970807228,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "橘Orenji",
+    "rear_text": "收乾淨CD圖, 無爭議, 30雪,要的密我, 我過去.",
+    "full_text": "橘Orenji 收乾淨CD圖, 無爭議, 30雪,要的密我, 我過去.",
+    "ocr_results": [
+      {
+        "text": "橘Orenji",
+        "confidence": 0.9643285869527477,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            100,
+            4
+          ],
+          [
+            100,
+            36
+          ],
+          [
+            8,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "收乾淨CD圖, 無爭議, 30雪,要的密我, 我過去.",
+        "confidence": 0.660042607208698,
+        "bbox": [
+          [
+            178,
+            0
+          ],
+          [
+            641,
+            0
+          ],
+          [
+            641,
+            36
+          ],
+          [
+            178,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        95,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_083_20250811_204041_413.png"
+}

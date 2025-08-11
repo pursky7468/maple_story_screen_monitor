@@ -1,0 +1,141 @@
+{
+  "monitoring_id": 420,
+  "timestamp": "20250811_205541_314",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "丹楓 l0% 100雪 30% 680雪 60%250雪",
+    "is_match": false,
+    "player_name": "丹楓",
+    "channel_number": "100",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.821617451949256,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "丹楓",
+    "rear_text": "l0% 100雪 30% 680雪 60%250雪",
+    "full_text": "丹楓 l0% 100雪 30% 680雪 60%250雪",
+    "ocr_results": [
+      {
+        "text": "丹楓",
+        "confidence": 0.9955008438366486,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            60,
+            4
+          ],
+          [
+            60,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "1030>收墜飾力量/敏捷卷軸",
+        "confidence": 0.7465468623558261,
+        "bbox": [
+          [
+            141,
+            1
+          ],
+          [
+            413,
+            1
+          ],
+          [
+            413,
+            36
+          ],
+          [
+            141,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "l0% 100雪",
+        "confidence": 0.7013191363107093,
+        "bbox": [
+          [
+            424,
+            4
+          ],
+          [
+            538,
+            4
+          ],
+          [
+            538,
+            34
+          ],
+          [
+            424,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "30% 680雪",
+        "confidence": 0.6649287221875142,
+        "bbox": [
+          [
+            550,
+            4
+          ],
+          [
+            664,
+            4
+          ],
+          [
+            664,
+            34
+          ],
+          [
+            550,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "60%250雪",
+        "confidence": 0.9997916950555817,
+        "bbox": [
+          [
+            676,
+            4
+          ],
+          [
+            786,
+            4
+          ],
+          [
+            786,
+            34
+          ],
+          [
+            676,
+            34
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_420_20250811_205540_645.png"
+}

@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 202,
+  "timestamp": "20250811_204557_755",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Is津 賣突襲券7張54 大廣10:58 瞬移石1.7護身符1.9 55攻克利思900雪97攻飛翔斧2雪",
+    "is_match": false,
+    "player_name": "Is津",
+    "channel_number": "900",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8399454023712878,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Is津",
+    "rear_text": "賣突襲券7張54 大廣10:58 瞬移石1.7護身符1.9 55攻克利思900雪97攻飛翔斧2雪",
+    "full_text": "Is津 賣突襲券7張54 大廣10:58 瞬移石1.7護身符1.9 55攻克利思900雪97攻飛翔斧2雪",
+    "ocr_results": [
+      {
+        "text": "Is津",
+        "confidence": 0.9372648260277796,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            56,
+            4
+          ],
+          [
+            56,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "賣突襲券7張54 大廣10:58 瞬移石1.7護身符1.9 55攻克利思900雪97攻飛翔斧2雪",
+        "confidence": 0.7426259787147959,
+        "bbox": [
+          [
+            137,
+            0
+          ],
+          [
+            893,
+            0
+          ],
+          [
+            893,
+            36
+          ],
+          [
+            137,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        52,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_202_20250811_204557_140.png"
+}

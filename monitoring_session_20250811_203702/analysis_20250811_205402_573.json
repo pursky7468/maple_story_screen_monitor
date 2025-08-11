@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 383,
+  "timestamp": "20250811_205402_573",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "理想情人 482賣WC20:1雪誠信 收長仗魔力60%2:1雪482賣WC20:1雪誠信 收長仗魔力60%",
+    "is_match": false,
+    "player_name": "理想情人",
+    "channel_number": "482",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8030786317694181,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "理想情人",
+    "rear_text": "482賣WC20:1雪誠信 收長仗魔力60%2:1雪482賣WC20:1雪誠信 收長仗魔力60%",
+    "full_text": "理想情人 482賣WC20:1雪誠信 收長仗魔力60%2:1雪482賣WC20:1雪誠信 收長仗魔力60%",
+    "ocr_results": [
+      {
+        "text": "理想情人",
+        "confidence": 0.9741489887237549,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            100,
+            4
+          ],
+          [
+            100,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "482賣WC20:1雪誠信 收長仗魔力60%2:1雪482賣WC20:1雪誠信 收長仗魔力60%",
+        "confidence": 0.6320082748150812,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            943,
+            1
+          ],
+          [
+            943,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_383_20250811_205401_896.png"
+}

@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 358,
+  "timestamp": "20250811_205254_277",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "涼太 收一個15AP耳環60雪直接來交易",
+    "is_match": false,
+    "player_name": "涼太",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9957578994366326,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "涼太",
+    "rear_text": "收一個15AP耳環60雪直接來交易",
+    "full_text": "涼太 收一個15AP耳環60雪直接來交易",
+    "ocr_results": [
+      {
+        "text": "涼太",
+        "confidence": 0.999336504505131,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            64,
+            4
+          ],
+          [
+            64,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收一個15AP耳環60雪直接來交易",
+        "confidence": 0.9921792943681342,
+        "bbox": [
+          [
+            139,
+            1
+          ],
+          [
+            461,
+            1
+          ],
+          [
+            461,
+            36
+          ],
+          [
+            139,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_358_20250811_205253_873.png"
+}

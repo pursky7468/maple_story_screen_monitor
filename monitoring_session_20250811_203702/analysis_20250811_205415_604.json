@@ -1,0 +1,53 @@
+{
+  "monitoring_id": 388,
+  "timestamp": "20250811_205415_604",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "538出售鞋跳10%0.9雪卜頭敏60%70雪+套敏60%4.6雪耳智60%3.5",
+    "is_match": false,
+    "player_name": "538出售鞋跳10%0.9雪卜頭敏60%70雪+套敏60%4.6雪耳智60%3.5",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6530389092661346,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "538出售鞋跳10%0.9雪卜頭敏60%70雪+套敏60%4.6雪耳智60%3.5",
+    "rear_text": "",
+    "full_text": "538出售鞋跳10%0.9雪卜頭敏60%70雪+套敏60%4.6雪耳智60%3.5",
+    "ocr_results": [
+      {
+        "text": "538出售鞋跳10%0.9雪卜頭敏60%70雪+套敏60%4.6雪耳智60%3.5",
+        "confidence": 0.6530389092661346,
+        "bbox": [
+          [
+            365,
+            1
+          ],
+          [
+            1009,
+            1
+          ],
+          [
+            1009,
+            36
+          ],
+          [
+            365,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        282,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_388_20250811_205414_744.png"
+}

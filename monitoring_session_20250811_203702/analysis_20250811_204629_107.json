@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 214,
+  "timestamp": "20250811_204629_107",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "逃逸 收CD圖 密我直接去拿",
+    "is_match": false,
+    "player_name": "逃逸",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9724257215953265,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "逃逸",
+    "rear_text": "收CD圖 密我直接去拿",
+    "full_text": "逃逸 收CD圖 密我直接去拿",
+    "ocr_results": [
+      {
+        "text": "逃逸",
+        "confidence": 0.9993075975095355,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            60,
+            4
+          ],
+          [
+            60,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收CD圖 密我直接去拿",
+        "confidence": 0.9455438456811175,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            389,
+            1
+          ],
+          [
+            389,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_214_20250811_204628_803.png"
+}

@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 113,
+  "timestamp": "20250811_204202_103",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Ray 頻道006 [大小創始店888Bank娛樂^100-10000雪 歡迎光臨輪贏-請認公會]",
+    "is_match": false,
+    "player_name": "Ray",
+    "channel_number": "006",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7575935372090798,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Ray",
+    "rear_text": "頻道006 [大小創始店888Bank娛樂^100-10000雪 歡迎光臨輪贏-請認公會]",
+    "full_text": "Ray 頻道006 [大小創始店888Bank娛樂^100-10000雪 歡迎光臨輪贏-請認公會]",
+    "ocr_results": [
+      {
+        "text": "Ray",
+        "confidence": 0.9999146568488037,
+        "bbox": [
+          [
+            10,
+            6
+          ],
+          [
+            54,
+            6
+          ],
+          [
+            54,
+            36
+          ],
+          [
+            10,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "頻道006 [大小創始店888Bank娛樂^100-10000雪",
+        "confidence": 0.5658800548219814,
+        "bbox": [
+          [
+            155,
+            1
+          ],
+          [
+            666,
+            1
+          ],
+          [
+            666,
+            36
+          ],
+          [
+            155,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "歡迎光臨輪贏-請認公會]",
+        "confidence": 0.7069858999564547,
+        "bbox": [
+          [
+            677,
+            1
+          ],
+          [
+            911,
+            1
+          ],
+          [
+            911,
+            36
+          ],
+          [
+            677,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        51,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_113_20250811_204201_414.png"
+}

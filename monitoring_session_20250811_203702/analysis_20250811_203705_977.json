@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 2,
+  "timestamp": "20250811_203705_977",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "偕宣從我 30屬法套1800 26屬法套250 確定沒人要?各只有1件先到先交易 退坑清倉了",
+    "is_match": false,
+    "player_name": "偕宣從我",
+    "channel_number": "1800",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7653038328071794,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "偕宣從我",
+    "rear_text": "30屬法套1800 26屬法套250 確定沒人要?各只有1件先到先交易 退坑清倉了",
+    "full_text": "偕宣從我 30屬法套1800 26屬法套250 確定沒人要?各只有1件先到先交易 退坑清倉了",
+    "ocr_results": [
+      {
+        "text": "偕宣從我",
+        "confidence": 0.9975955486297607,
+        "bbox": [
+          [
+            6,
+            0
+          ],
+          [
+            103,
+            0
+          ],
+          [
+            103,
+            36
+          ],
+          [
+            6,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "30屬法套1800 26屬法套250 確定沒人要?各只有1件先到先交易 退坑清倉了",
+        "confidence": 0.533012116984598,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            889,
+            1
+          ],
+          [
+            889,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_002_20250811_203705_344.png"
+}

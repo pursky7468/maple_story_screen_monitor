@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 103,
+  "timestamp": "20250811_204135_338",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "小法師錡錡 l179 收手工60 1:7 頭敏100 1:2 褲敏100 1:4",
+    "is_match": false,
+    "player_name": "小法師錡錡",
+    "channel_number": "179",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8092520521643356,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "小法師錡錡",
+    "rear_text": "l179 收手工60 1:7 頭敏100 1:2 褲敏100 1:4",
+    "full_text": "小法師錡錡 l179 收手工60 1:7 頭敏100 1:2 褲敏100 1:4",
+    "ocr_results": [
+      {
+        "text": "小法師錡錡",
+        "confidence": 0.9887672605487645,
+        "bbox": [
+          [
+            10,
+            2
+          ],
+          [
+            120,
+            2
+          ],
+          [
+            120,
+            34
+          ],
+          [
+            10,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "l179 收手工60 1:7 頭敏100 1:2 褲敏100 1:4",
+        "confidence": 0.6297368437799068,
+        "bbox": [
+          [
+            201,
+            1
+          ],
+          [
+            631,
+            1
+          ],
+          [
+            631,
+            36
+          ],
+          [
+            201,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        118,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_103_20250811_204134_852.png"
+}

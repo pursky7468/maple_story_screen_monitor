@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 252,
+  "timestamp": "20250811_204808_824",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "祈禱祭女 621 收乾淨披風三件2雪",
+    "is_match": false,
+    "player_name": "祈禱祭女",
+    "channel_number": "621",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8697631944273386,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "祈禱祭女",
+    "rear_text": "621 收乾淨披風三件2雪",
+    "full_text": "祈禱祭女 621 收乾淨披風三件2雪",
+    "ocr_results": [
+      {
+        "text": "祈禱祭女",
+        "confidence": 0.9973153471946716,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            100,
+            4
+          ],
+          [
+            100,
+            36
+          ],
+          [
+            8,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "621 收乾淨披風三件2雪",
+        "confidence": 0.7422110416600056,
+        "bbox": [
+          [
+            181,
+            0
+          ],
+          [
+            413,
+            0
+          ],
+          [
+            413,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_252_20250811_204808_473.png"
+}

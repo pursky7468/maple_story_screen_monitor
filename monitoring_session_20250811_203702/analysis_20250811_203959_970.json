@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 67,
+  "timestamp": "20250811_203959_970",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "LEmon_T 收cd圖30雪收",
+    "is_match": false,
+    "player_name": "LEmon_T",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8530157740620243,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "LEmon_T",
+    "rear_text": "收cd圖30雪收",
+    "full_text": "LEmon_T 收cd圖30雪收",
+    "ocr_results": [
+      {
+        "text": "LEmon_T",
+        "confidence": 0.7134517516395138,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            110,
+            4
+          ],
+          [
+            110,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收cd圖30雪收",
+        "confidence": 0.9925797964845348,
+        "bbox": [
+          [
+            204,
+            2
+          ],
+          [
+            344,
+            2
+          ],
+          [
+            344,
+            34
+          ],
+          [
+            204,
+            34
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        119,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_067_20250811_203959_615.png"
+}

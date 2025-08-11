@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 270,
+  "timestamp": "20250811_204856_651",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Illlian 362自由 (出售) 耳智10% 11雪 (過十張10.8) (過百10.5) 披幸10%0.6雪",
+    "is_match": false,
+    "player_name": "Illlian",
+    "channel_number": "362",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8759248447151341,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Illlian",
+    "rear_text": "362自由 (出售) 耳智10% 11雪 (過十張10.8) (過百10.5) 披幸10%0.6雪",
+    "full_text": "Illlian 362自由 (出售) 耳智10% 11雪 (過十張10.8) (過百10.5) 披幸10%0.6雪",
+    "ocr_results": [
+      {
+        "text": "Illlian",
+        "confidence": 0.9544405122423536,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            76,
+            4
+          ],
+          [
+            76,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "362自由 (出售) 耳智10% 11雪 (過十張10.8)",
+        "confidence": 0.6859256554027103,
+        "bbox": [
+          [
+            155,
+            1
+          ],
+          [
+            601,
+            1
+          ],
+          [
+            601,
+            36
+          ],
+          [
+            155,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "(過百10.5) 披幸10%0.6雪",
+        "confidence": 0.9874083665003381,
+        "bbox": [
+          [
+            613,
+            1
+          ],
+          [
+            873,
+            1
+          ],
+          [
+            873,
+            36
+          ],
+          [
+            613,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        72,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_270_20250811_204855_990.png"
+}

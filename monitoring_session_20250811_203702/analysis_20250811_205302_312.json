@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 361,
+  "timestamp": "20250811_205302_312",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "愛你沒差 150頻售售披力101.5雪耳幸60|70雪披幸10|0.8雪套敏60|4.5雪",
+    "is_match": false,
+    "player_name": "愛你沒差",
+    "channel_number": "150",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6849907492839944,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "愛你沒差",
+    "rear_text": "150頻售售披力101.5雪耳幸60|70雪披幸10|0.8雪套敏60|4.5雪",
+    "full_text": "愛你沒差 150頻售售披力101.5雪耳幸60|70雪披幸10|0.8雪套敏60|4.5雪",
+    "ocr_results": [
+      {
+        "text": "愛你沒差",
+        "confidence": 0.7756419658653714,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            101,
+            1
+          ],
+          [
+            101,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "150頻售售披力101.5雪耳幸60|70雪披幸10|0.8雪套敏60|4.5雪",
+        "confidence": 0.5943395327026173,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            783,
+            1
+          ],
+          [
+            783,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_361_20250811_205301_741.png"
+}

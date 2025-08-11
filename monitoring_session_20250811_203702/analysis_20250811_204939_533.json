@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 286,
+  "timestamp": "20250811_204939_533",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Bear 343售盾幸60|4鞋跳10/0.9耳幸披智10拳攻短劍60|2衣幸60|110耳幸頭敏60/70",
+    "is_match": false,
+    "player_name": "Bear",
+    "channel_number": "343",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8309006446931866,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Bear",
+    "rear_text": "343售盾幸60|4鞋跳10/0.9耳幸披智10拳攻短劍60|2衣幸60|110耳幸頭敏60/70",
+    "full_text": "Bear 343售盾幸60|4鞋跳10/0.9耳幸披智10拳攻短劍60|2衣幸60|110耳幸頭敏60/70",
+    "ocr_results": [
+      {
+        "text": "Bear",
+        "confidence": 0.9998880624771118,
+        "bbox": [
+          [
+            10,
+            6
+          ],
+          [
+            62,
+            6
+          ],
+          [
+            62,
+            32
+          ],
+          [
+            10,
+            32
+          ]
+        ]
+      },
+      {
+        "text": "343售盾幸60|4鞋跳10/0.9耳幸披智10拳攻短劍60|2衣幸60|110耳幸頭敏60/70",
+        "confidence": 0.6619132269092615,
+        "bbox": [
+          [
+            145,
+            1
+          ],
+          [
+            887,
+            1
+          ],
+          [
+            887,
+            36
+          ],
+          [
+            145,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        61,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_286_20250811_204938_903.png"
+}

@@ -1,0 +1,53 @@
+{
+  "monitoring_id": 98,
+  "timestamp": "20250811_204121_917",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "賣+7所羅門巨劍7力109攻800雪/伊卡路斯迴披10力15迴300雪收手攻60%5雪自由229",
+    "is_match": false,
+    "player_name": "賣+7所羅門巨劍7力109攻800雪/伊卡路斯迴披10力15迴300雪收手攻60%5雪自由229",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.965267733452097,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "賣+7所羅門巨劍7力109攻800雪/伊卡路斯迴披10力15迴300雪收手攻60%5雪自由229",
+    "rear_text": "",
+    "full_text": "賣+7所羅門巨劍7力109攻800雪/伊卡路斯迴披10力15迴300雪收手攻60%5雪自由229",
+    "ocr_results": [
+      {
+        "text": "賣+7所羅門巨劍7力109攻800雪/伊卡路斯迴披10力15迴300雪收手攻60%5雪自由229",
+        "confidence": 0.965267733452097,
+        "bbox": [
+          [
+            140,
+            2
+          ],
+          [
+            937,
+            2
+          ],
+          [
+            937,
+            35
+          ],
+          [
+            140,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_098_20250811_204121_148.png"
+}

@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 227,
+  "timestamp": "20250811_204702_678",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "彈指之間 收PW圖沒回就是有找到了",
+    "is_match": false,
+    "player_name": "彈指之間",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.980003859653093,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "彈指之間",
+    "rear_text": "收PW圖沒回就是有找到了",
+    "full_text": "彈指之間 收PW圖沒回就是有找到了",
+    "ocr_results": [
+      {
+        "text": "彈指之間",
+        "confidence": 0.9975088834762573,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            101,
+            1
+          ],
+          [
+            101,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "收PW圖沒回就是有找到了",
+        "confidence": 0.9624988358299287,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            431,
+            1
+          ],
+          [
+            431,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_227_20250811_204702_290.png"
+}

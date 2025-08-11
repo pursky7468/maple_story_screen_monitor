@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 335,
+  "timestamp": "20250811_205151_256",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "槳平人 甩雷之標(金錢標)戰士15厲干淨套服 收套敏604雪要6張出干淨骷髏頭10雪",
+    "is_match": false,
+    "player_name": "槳平人",
+    "channel_number": "604",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.5022889283690449,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "槳平人",
+    "rear_text": "甩雷之標(金錢標)戰士15厲干淨套服 收套敏604雪要6張出干淨骷髏頭10雪",
+    "full_text": "槳平人 甩雷之標(金錢標)戰士15厲干淨套服 收套敏604雪要6張出干淨骷髏頭10雪",
+    "ocr_results": [
+      {
+        "text": "槳平人",
+        "confidence": 0.21925086278129657,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            82,
+            4
+          ],
+          [
+            82,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "甩雷之標(金錢標)戰士15厲干淨套服 收套敏604雪要6張出干淨骷髏頭10雪",
+        "confidence": 0.7853269939567933,
+        "bbox": [
+          [
+            161,
+            1
+          ],
+          [
+            861,
+            1
+          ],
+          [
+            861,
+            36
+          ],
+          [
+            161,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_335_20250811_205150_640.png"
+}

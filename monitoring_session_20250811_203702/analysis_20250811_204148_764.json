@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 108,
+  "timestamp": "20250811_204148_764",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "狄老爹 賣8力速披 200雪劍士80等套服33屬130雪 直接來",
+    "is_match": false,
+    "player_name": "狄老爹",
+    "channel_number": "200",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7782747859277044,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "狄老爹",
+    "rear_text": "賣8力速披 200雪劍士80等套服33屬130雪 直接來",
+    "full_text": "狄老爹 賣8力速披 200雪劍士80等套服33屬130雪 直接來",
+    "ocr_results": [
+      {
+        "text": "狄老爹",
+        "confidence": 0.9988409307024079,
+        "bbox": [
+          [
+            5,
+            0
+          ],
+          [
+            81,
+            0
+          ],
+          [
+            81,
+            36
+          ],
+          [
+            5,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "賣8力速披 200雪劍士80等套服33屬130雪 直接來",
+        "confidence": 0.5577086411530008,
+        "bbox": [
+          [
+            160,
+            1
+          ],
+          [
+            637,
+            1
+          ],
+          [
+            637,
+            36
+          ],
+          [
+            160,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_108_20250811_204148_266.png"
+}

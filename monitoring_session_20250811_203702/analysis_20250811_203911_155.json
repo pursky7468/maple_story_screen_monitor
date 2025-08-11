@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 49,
+  "timestamp": "20250811_203911_155",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Jyun 賣木盾 11幸18雪12幸36雪13幸90雪 T收100張盾幸60%350雪) 直接來120自由",
+    "is_match": false,
+    "player_name": "Jyun",
+    "channel_number": "100",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8094567154355882,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Jyun",
+    "rear_text": "賣木盾 11幸18雪12幸36雪13幸90雪 T收100張盾幸60%350雪) 直接來120自由",
+    "full_text": "Jyun 賣木盾 11幸18雪12幸36雪13幸90雪 T收100張盾幸60%350雪) 直接來120自由",
+    "ocr_results": [
+      {
+        "text": "Jyun",
+        "confidence": 0.9965267181396484,
+        "bbox": [
+          [
+            10,
+            6
+          ],
+          [
+            68,
+            6
+          ],
+          [
+            68,
+            36
+          ],
+          [
+            10,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "賣木盾 11幸18雪12幸36雪13幸90雪 T收100張盾幸60%350雪) 直接來120自由",
+        "confidence": 0.6223867127315279,
+        "bbox": [
+          [
+            147,
+            1
+          ],
+          [
+            907,
+            1
+          ],
+          [
+            907,
+            36
+          ],
+          [
+            147,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        63,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_049_20250811_203910_482.png"
+}

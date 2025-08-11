@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 389,
+  "timestamp": "20250811_205418_029",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "荷包蛋 收6屬弓手鞋10雪",
+    "is_match": false,
+    "player_name": "荷包蛋",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9912540203651732,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "荷包蛋",
+    "rear_text": "收6屬弓手鞋10雪",
+    "full_text": "荷包蛋 收6屬弓手鞋10雪",
+    "ocr_results": [
+      {
+        "text": "荷包蛋",
+        "confidence": 0.9886164435399236,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收6屬弓手鞋10雪",
+        "confidence": 0.9938915971904229,
+        "bbox": [
+          [
+            161,
+            1
+          ],
+          [
+            331,
+            1
+          ],
+          [
+            331,
+            36
+          ],
+          [
+            161,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_389_20250811_205417_711.png"
+}

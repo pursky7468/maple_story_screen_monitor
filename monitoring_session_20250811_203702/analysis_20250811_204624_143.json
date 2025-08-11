@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 212,
+  "timestamp": "20250811_204624_143",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "花開花落時 324收收披敏60%120w耳幸.敏60%550W/套智.幸60%550w手攻60%150w",
+    "is_match": false,
+    "player_name": "花開花落時",
+    "channel_number": "324",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9643707056761264,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "花開花落時",
+    "rear_text": "324收收披敏60%120w耳幸.敏60%550W/套智.幸60%550w手攻60%150w",
+    "full_text": "花開花落時 324收收披敏60%120w耳幸.敏60%550W/套智.幸60%550w手攻60%150w",
+    "ocr_results": [
+      {
+        "text": "花開花落時",
+        "confidence": 0.9990044995517616,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            123,
+            1
+          ],
+          [
+            123,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "324收收披敏60%120w耳幸.敏60%550W/套智.幸60%550w手攻60%150w",
+        "confidence": 0.9297369118004911,
+        "bbox": [
+          [
+            201,
+            1
+          ],
+          [
+            919,
+            1
+          ],
+          [
+            919,
+            36
+          ],
+          [
+            201,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        118,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_212_20250811_204623_486.png"
+}

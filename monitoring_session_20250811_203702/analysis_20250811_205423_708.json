@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 391,
+  "timestamp": "20250811_205423_708",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "舉杯望明月 賣冰屋.龍蛋.沐浴20雪/帳篷.魔女.熊貓30雪/月亮.金鉤.小熊.神獸.玻璃50雪賣企鵝或換世",
+    "is_match": false,
+    "player_name": "舉杯望明月",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8446455012446026,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "舉杯望明月",
+    "rear_text": "賣冰屋.龍蛋.沐浴20雪/帳篷.魔女.熊貓30雪/月亮.金鉤.小熊.神獸.玻璃50雪賣企鵝或換世",
+    "full_text": "舉杯望明月 賣冰屋.龍蛋.沐浴20雪/帳篷.魔女.熊貓30雪/月亮.金鉤.小熊.神獸.玻璃50雪賣企鵝或換世",
+    "ocr_results": [
+      {
+        "text": "舉杯望明月",
+        "confidence": 0.9990908214114269,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            118,
+            4
+          ],
+          [
+            118,
+            36
+          ],
+          [
+            8,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "賣冰屋.龍蛋.沐浴20雪/帳篷.魔女.熊貓30雪/月亮.金鉤.小熊.神獸.玻璃50雪賣企鵝或換世",
+        "confidence": 0.6902001810777783,
+        "bbox": [
+          [
+            202,
+            2
+          ],
+          [
+            1009,
+            2
+          ],
+          [
+            1009,
+            35
+          ],
+          [
+            202,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        118,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_391_20250811_205422_975.png"
+}

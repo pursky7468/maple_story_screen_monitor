@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 126,
+  "timestamp": "20250811_204236_646",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "HW_看板小弟 570弓訓1比大小妞妞5O-2000雪全程錄影 THousewing 歡迎挑戰洛雪老闆 !",
+    "is_match": false,
+    "player_name": "HW_看板小弟",
+    "channel_number": "570",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7419186782096184,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "HW_看板小弟",
+    "rear_text": "570弓訓1比大小妞妞5O-2000雪全程錄影 THousewing 歡迎挑戰洛雪老闆 !",
+    "full_text": "HW_看板小弟 570弓訓1比大小妞妞5O-2000雪全程錄影 THousewing 歡迎挑戰洛雪老闆 !",
+    "ocr_results": [
+      {
+        "text": "HW_看板小弟",
+        "confidence": 0.9852358643988622,
+        "bbox": [
+          [
+            9,
+            0
+          ],
+          [
+            145,
+            0
+          ],
+          [
+            145,
+            36
+          ],
+          [
+            9,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "570弓訓1比大小妞妞5O-2000雪全程錄影 THousewing 歡迎挑戰洛雪老闆 !",
+        "confidence": 0.4986014920203747,
+        "bbox": [
+          [
+            225,
+            1
+          ],
+          [
+            938,
+            1
+          ],
+          [
+            938,
+            36
+          ],
+          [
+            225,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        142,
+        16,
+        75,
+        12
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_126_20250811_204235_966.png"
+}

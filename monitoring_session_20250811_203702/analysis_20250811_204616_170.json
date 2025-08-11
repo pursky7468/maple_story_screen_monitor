@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 209,
+  "timestamp": "20250811_204616_170",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "永蘭叫貢久逃 自由2234 售1智8幸鑽盾 20雪1智8幸鑽盾 20雪1智8幸鑽盾 20雪",
+    "is_match": false,
+    "player_name": "永蘭叫貢久逃",
+    "channel_number": "2234",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.906344851684814,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "永蘭叫貢久逃",
+    "rear_text": "自由2234 售1智8幸鑽盾 20雪1智8幸鑽盾 20雪1智8幸鑽盾 20雪",
+    "full_text": "永蘭叫貢久逃 自由2234 售1智8幸鑽盾 20雪1智8幸鑽盾 20雪1智8幸鑽盾 20雪",
+    "ocr_results": [
+      {
+        "text": "永蘭叫貢久逃",
+        "confidence": 0.9970338282833813,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            142,
+            4
+          ],
+          [
+            142,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "自由2234 售1智8幸鑽盾 20雪1智8幸鑽盾 20雪1智8幸鑽盾 20雪",
+        "confidence": 0.8156558750862468,
+        "bbox": [
+          [
+            223,
+            0
+          ],
+          [
+            829,
+            0
+          ],
+          [
+            829,
+            36
+          ],
+          [
+            223,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        138,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_209_20250811_204615_572.png"
+}

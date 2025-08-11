@@ -153,7 +153,7 @@ class OCRRectangleAnalyzer(TextAnalyzer):
             gray = img_array
         
         # 二值化處理（門檻值255，只保留純白色）
-        _, binary = cv2.threshold(gray, 250, 255, cv2.THRESH_BINARY)
+        _, binary = cv2.threshold(gray, 245, 255, cv2.THRESH_BINARY)
         
         return binary, processed_image
     

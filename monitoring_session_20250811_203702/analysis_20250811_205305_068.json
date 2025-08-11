@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 362,
+  "timestamp": "20250811_205305_068",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "砸卷冒金光 賣速披=110頭敏100=1.5跳披=15迴避披=35雪耳智套敏60=4.5頭敏60=75",
+    "is_match": false,
+    "player_name": "砸卷冒金光",
+    "channel_number": "110",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.961636363669901,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "砸卷冒金光",
+    "rear_text": "賣速披=110頭敏100=1.5跳披=15迴避披=35雪耳智套敏60=4.5頭敏60=75",
+    "full_text": "砸卷冒金光 賣速披=110頭敏100=1.5跳披=15迴避披=35雪耳智套敏60=4.5頭敏60=75",
+    "ocr_results": [
+      {
+        "text": "砸卷冒金光",
+        "confidence": 0.9939449608674217,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            122,
+            2
+          ],
+          [
+            122,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "賣速披=110頭敏100=1.5跳披=15迴避披=35雪耳智套敏60=4.5頭敏60=75",
+        "confidence": 0.9293277664723805,
+        "bbox": [
+          [
+            201,
+            1
+          ],
+          [
+            891,
+            1
+          ],
+          [
+            891,
+            36
+          ],
+          [
+            201,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        118,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_362_20250811_205304_409.png"
+}

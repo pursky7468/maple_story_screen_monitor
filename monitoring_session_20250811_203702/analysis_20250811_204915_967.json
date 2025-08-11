@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 277,
+  "timestamp": "20250811_204915_967",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "槍擊要飯 賣+4深淵射手敏2攻77命8 30等分裂子彈50等強力子彈都便宜賣請報價 2207自由",
+    "is_match": false,
+    "player_name": "槍擊要飯",
+    "channel_number": "2207",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8624462698177231,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "槍擊要飯",
+    "rear_text": "賣+4深淵射手敏2攻77命8 30等分裂子彈50等強力子彈都便宜賣請報價 2207自由",
+    "full_text": "槍擊要飯 賣+4深淵射手敏2攻77命8 30等分裂子彈50等強力子彈都便宜賣請報價 2207自由",
+    "ocr_results": [
+      {
+        "text": "槍擊要飯",
+        "confidence": 0.9945464730262756,
+        "bbox": [
+          [
+            6,
+            0
+          ],
+          [
+            103,
+            0
+          ],
+          [
+            103,
+            36
+          ],
+          [
+            6,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "賣+4深淵射手敏2攻77命8 30等分裂子彈50等強力子彈都便宜賣請報價 2207自由",
+        "confidence": 0.7303460666091707,
+        "bbox": [
+          [
+            179,
+            1
+          ],
+          [
+            959,
+            1
+          ],
+          [
+            959,
+            36
+          ],
+          [
+            179,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_277_20250811_204915_273.png"
+}

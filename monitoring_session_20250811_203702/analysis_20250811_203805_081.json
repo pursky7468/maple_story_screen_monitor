@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 24,
+  "timestamp": "20250811_203805_081",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "炸雞商行[ 377 [賣] 鞋跳10%1雪/手槍10%5雪/拳攻60%2雪/套敏60%5雪/弓10%3.5雪",
+    "is_match": false,
+    "player_name": "炸雞商行[",
+    "channel_number": "377",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6145510101451009,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "炸雞商行[",
+    "rear_text": "377 [賣] 鞋跳10%1雪/手槍10%5雪/拳攻60%2雪/套敏60%5雪/弓10%3.5雪",
+    "full_text": "炸雞商行[ 377 [賣] 鞋跳10%1雪/手槍10%5雪/拳攻60%2雪/套敏60%5雪/弓10%3.5雪",
+    "ocr_results": [
+      {
+        "text": "炸雞商行[",
+        "confidence": 0.6153627407011847,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            99,
+            2
+          ],
+          [
+            99,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "377 [賣] 鞋跳10%1雪/手槍10%5雪/拳攻60%2雪/套敏60%5雪/弓10%3.5雪",
+        "confidence": 0.6137392795890172,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            909,
+            1
+          ],
+          [
+            909,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_024_20250811_203804_461.png"
+}

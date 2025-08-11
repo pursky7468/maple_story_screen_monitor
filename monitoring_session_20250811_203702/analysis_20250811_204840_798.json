@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 264,
+  "timestamp": "20250811_204840_798",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "輕鳥龍 收手攻卷60%1:7雪頻道2洞點我",
+    "is_match": false,
+    "player_name": "輕鳥龍",
+    "channel_number": "2",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9916894598592312,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "輕鳥龍",
+    "rear_text": "收手攻卷60%1:7雪頻道2洞點我",
+    "full_text": "輕鳥龍 收手攻卷60%1:7雪頻道2洞點我",
+    "ocr_results": [
+      {
+        "text": "輕鳥龍",
+        "confidence": 0.9903561585516076,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收手攻卷60%1:7雪頻道2洞點我",
+        "confidence": 0.9930227611668547,
+        "bbox": [
+          [
+            161,
+            2
+          ],
+          [
+            463,
+            2
+          ],
+          [
+            463,
+            35
+          ],
+          [
+            161,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_264_20250811_204840_376.png"
+}

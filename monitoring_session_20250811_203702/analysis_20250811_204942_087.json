@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 287,
+  "timestamp": "20250811_204942_087",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "蘇蘇卡拉雞 雪收全圖cd私我",
+    "is_match": false,
+    "player_name": "蘇蘇卡拉雞",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9970383516989921,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "蘇蘇卡拉雞",
+    "rear_text": "雪收全圖cd私我",
+    "full_text": "蘇蘇卡拉雞 雪收全圖cd私我",
+    "ocr_results": [
+      {
+        "text": "蘇蘇卡拉雞",
+        "confidence": 0.9983338356137277,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            122,
+            4
+          ],
+          [
+            122,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "雪收全圖cd私我",
+        "confidence": 0.9957428677842566,
+        "bbox": [
+          [
+            202,
+            4
+          ],
+          [
+            364,
+            4
+          ],
+          [
+            364,
+            36
+          ],
+          [
+            202,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        118,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_287_20250811_204941_629.png"
+}

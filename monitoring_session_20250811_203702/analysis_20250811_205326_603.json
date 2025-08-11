@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 370,
+  "timestamp": "20250811_205326_603",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "念念 收無爭議cd全圖 em",
+    "is_match": false,
+    "player_name": "念念",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8683959875475911,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "念念",
+    "rear_text": "收無爭議cd全圖 em",
+    "full_text": "念念 收無爭議cd全圖 em",
+    "ocr_results": [
+      {
+        "text": "念念",
+        "confidence": 0.9767543541399744,
+        "bbox": [
+          [
+            10,
+            4
+          ],
+          [
+            60,
+            4
+          ],
+          [
+            60,
+            34
+          ],
+          [
+            10,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收無爭議cd全圖 em",
+        "confidence": 0.7600376209552079,
+        "bbox": [
+          [
+            139,
+            1
+          ],
+          [
+            331,
+            1
+          ],
+          [
+            331,
+            36
+          ],
+          [
+            139,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_370_20250811_205326_293.png"
+}

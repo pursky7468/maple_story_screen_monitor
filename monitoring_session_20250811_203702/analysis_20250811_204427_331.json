@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 168,
+  "timestamp": "20250811_204427_331",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "0 2665收弓-戰士-海盜-盜賊/手套-鞋子/6厲2雪7厲7雪8厲10雪-賣60弩攻擊卷200張60雪",
+    "is_match": false,
+    "player_name": "0",
+    "channel_number": "2665",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7807935185710648,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "0",
+    "rear_text": "2665收弓-戰士-海盜-盜賊/手套-鞋子/6厲2雪7厲7雪8厲10雪-賣60弩攻擊卷200張60雪",
+    "full_text": "0 2665收弓-戰士-海盜-盜賊/手套-鞋子/6厲2雪7厲7雪8厲10雪-賣60弩攻擊卷200張60雪",
+    "ocr_results": [
+      {
+        "text": "0",
+        "confidence": 0.9991996698168784,
+        "bbox": [
+          [
+            29,
+            11
+          ],
+          [
+            43,
+            11
+          ],
+          [
+            43,
+            29
+          ],
+          [
+            29,
+            29
+          ]
+        ]
+      },
+      {
+        "text": "2665收弓-戰士-海盜-盜賊/手套-鞋子/6厲2雪7厲7雪8厲10雪-賣60弩攻擊卷200張60雪",
+        "confidence": 0.5623873673252512,
+        "bbox": [
+          [
+            127,
+            1
+          ],
+          [
+            925,
+            1
+          ],
+          [
+            925,
+            36
+          ],
+          [
+            127,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        44,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_168_20250811_204426_700.png"
+}

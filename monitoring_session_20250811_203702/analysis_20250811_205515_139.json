@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 410,
+  "timestamp": "20250811_205515_139",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "在遠方 2567頻道賣青銅-鋼鐵箭矢100-670 賣80級6厲賊手套18雪9箇17雪手攻60% 8雪",
+    "is_match": false,
+    "player_name": "在遠方",
+    "channel_number": "2567",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8332555831830954,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "在遠方",
+    "rear_text": "2567頻道賣青銅-鋼鐵箭矢100-670 賣80級6厲賊手套18雪9箇17雪手攻60% 8雪",
+    "full_text": "在遠方 2567頻道賣青銅-鋼鐵箭矢100-670 賣80級6厲賊手套18雪9箇17雪手攻60% 8雪",
+    "ocr_results": [
+      {
+        "text": "在遠方",
+        "confidence": 0.9946136666670063,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            78,
+            4
+          ],
+          [
+            78,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "2567頻道賣青銅-鋼鐵箭矢100-670 賣80級6厲賊手套18雪9箇17雪手攻60% 8雪",
+        "confidence": 0.6718974996991847,
+        "bbox": [
+          [
+            161,
+            1
+          ],
+          [
+            915,
+            1
+          ],
+          [
+            915,
+            36
+          ],
+          [
+            161,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_410_20250811_205514_497.png"
+}

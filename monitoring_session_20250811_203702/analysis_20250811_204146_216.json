@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 107,
+  "timestamp": "20250811_204146_216",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "CClemon 幹你娘哪個畜生拿衝過+0當全新香菇 祝你死全家",
+    "is_match": false,
+    "player_name": "CClemon",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9490518056926561,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "CClemon",
+    "rear_text": "幹你娘哪個畜生拿衝過+0當全新香菇 祝你死全家",
+    "full_text": "CClemon 幹你娘哪個畜生拿衝過+0當全新香菇 祝你死全家",
+    "ocr_results": [
+      {
+        "text": "CClemon",
+        "confidence": 0.9993600361157223,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            106,
+            4
+          ],
+          [
+            106,
+            32
+          ],
+          [
+            8,
+            32
+          ]
+        ]
+      },
+      {
+        "text": "幹你娘哪個畜生拿衝過+0當全新香菇 祝你死全家",
+        "confidence": 0.8987435752695899,
+        "bbox": [
+          [
+            189,
+            1
+          ],
+          [
+            645,
+            1
+          ],
+          [
+            645,
+            36
+          ],
+          [
+            189,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        104,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_107_20250811_204145_697.png"
+}

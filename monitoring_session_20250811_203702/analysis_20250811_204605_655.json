@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 205,
+  "timestamp": "20250811_204605_655",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "魏昆 10雪收一層帶戰斗7的CD圄, 有的私",
+    "is_match": false,
+    "player_name": "魏昆",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8141628203353627,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "魏昆",
+    "rear_text": "10雪收一層帶戰斗7的CD圄, 有的私",
+    "full_text": "魏昆 10雪收一層帶戰斗7的CD圄, 有的私",
+    "ocr_results": [
+      {
+        "text": "魏昆",
+        "confidence": 0.9914723276517418,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            60,
+            4
+          ],
+          [
+            60,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "10雪收一層帶戰斗7的CD圄, 有的私",
+        "confidence": 0.6368533130189836,
+        "bbox": [
+          [
+            141,
+            1
+          ],
+          [
+            491,
+            1
+          ],
+          [
+            491,
+            36
+          ],
+          [
+            141,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_205_20250811_204605_257.png"
+}

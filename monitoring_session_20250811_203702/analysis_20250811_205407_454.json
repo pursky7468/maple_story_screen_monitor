@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 385,
+  "timestamp": "20250811_205407_454",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "王爹是我 收cd圖 報價來直接飛",
+    "is_match": false,
+    "player_name": "王爹是我",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8906995364762246,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "王爹是我",
+    "rear_text": "收cd圖 報價來直接飛",
+    "full_text": "王爹是我 收cd圖 報價來直接飛",
+    "ocr_results": [
+      {
+        "text": "王爹是我",
+        "confidence": 0.9971258640289307,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            103,
+            1
+          ],
+          [
+            103,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "收cd圖 報價來直接飛",
+        "confidence": 0.7842732089235185,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            385,
+            1
+          ],
+          [
+            385,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_385_20250811_205407_110.png"
+}

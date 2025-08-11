@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 115,
+  "timestamp": "20250811_204207_246",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "個Q0米 2373收雙手劍攻擊10%1:2雪 破百張2.5 大小量都收",
+    "is_match": false,
+    "player_name": "個Q0米",
+    "channel_number": "2373",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6788265708320884,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "個Q0米",
+    "rear_text": "2373收雙手劍攻擊10%1:2雪 破百張2.5 大小量都收",
+    "full_text": "個Q0米 2373收雙手劍攻擊10%1:2雪 破百張2.5 大小量都收",
+    "ocr_results": [
+      {
+        "text": "個Q0米",
+        "confidence": 0.41355589032173157,
+        "bbox": [
+          [
+            30,
+            4
+          ],
+          [
+            112,
+            4
+          ],
+          [
+            112,
+            36
+          ],
+          [
+            30,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "2373收雙手劍攻擊10%1:2雪 破百張2.5 大小量都收",
+        "confidence": 0.9440972513424452,
+        "bbox": [
+          [
+            193,
+            1
+          ],
+          [
+            685,
+            1
+          ],
+          [
+            685,
+            36
+          ],
+          [
+            193,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        108,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_115_20250811_204206_716.png"
+}

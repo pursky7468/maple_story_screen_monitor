@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 366,
+  "timestamp": "20250811_205316_182",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "小菜商行 785[售] 手攻60 8雪/套敏60 5雪/耳智1013雪60 4雪/頭敏100 2雪七張12雪",
+    "is_match": false,
+    "player_name": "小菜商行",
+    "channel_number": "785",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8038987442593339,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "小菜商行",
+    "rear_text": "785[售] 手攻60 8雪/套敏60 5雪/耳智1013雪60 4雪/頭敏100 2雪七張12雪",
+    "full_text": "小菜商行 785[售] 手攻60 8雪/套敏60 5雪/耳智1013雪60 4雪/頭敏100 2雪七張12雪",
+    "ocr_results": [
+      {
+        "text": "小菜商行",
+        "confidence": 0.9977577328681946,
+        "bbox": [
+          [
+            10,
+            2
+          ],
+          [
+            100,
+            2
+          ],
+          [
+            100,
+            34
+          ],
+          [
+            10,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "785[售] 手攻60 8雪/套敏60 5雪/耳智1013雪60 4雪/頭敏100 2雪七張12雪",
+        "confidence": 0.6100397556504733,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            903,
+            1
+          ],
+          [
+            903,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_366_20250811_205315_457.png"
+}

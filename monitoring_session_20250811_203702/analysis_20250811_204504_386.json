@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 182,
+  "timestamp": "20250811_204504_386",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "笙默 EHoese 296收螺絲釘 1:2o00 收滿1000就不收",
+    "is_match": false,
+    "player_name": "笙默 EHoese",
+    "channel_number": "296",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.4460400628259654,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "笙默 EHoese",
+    "rear_text": "296收螺絲釘 1:2o00 收滿1000就不收",
+    "full_text": "笙默 EHoese 296收螺絲釘 1:2o00 收滿1000就不收",
+    "ocr_results": [
+      {
+        "text": "笙默 EHoese",
+        "confidence": 0.19714962123011887,
+        "bbox": [
+          [
+            10,
+            4
+          ],
+          [
+            114,
+            4
+          ],
+          [
+            114,
+            34
+          ],
+          [
+            10,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "296收螺絲釘 1:2o00 收滿1000就不收",
+        "confidence": 0.694930504421812,
+        "bbox": [
+          [
+            140,
+            4
+          ],
+          [
+            498,
+            4
+          ],
+          [
+            498,
+            36
+          ],
+          [
+            140,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        112,
+        9,
+        11,
+        17
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_182_20250811_204503_900.png"
+}

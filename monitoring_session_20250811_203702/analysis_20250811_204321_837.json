@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 143,
+  "timestamp": "20250811_204321_837",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "頗寶( 收特殊藥水50瓶:1雪, 不足50瓶 1:lo000楓幣, 自由7洞",
+    "is_match": false,
+    "player_name": "頗寶(",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7368461398786488,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "頗寶(",
+    "rear_text": "收特殊藥水50瓶:1雪, 不足50瓶 1:lo000楓幣, 自由7洞",
+    "full_text": "頗寶( 收特殊藥水50瓶:1雪, 不足50瓶 1:lo000楓幣, 自由7洞",
+    "ocr_results": [
+      {
+        "text": "頗寶(",
+        "confidence": 0.8137009809606852,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            72,
+            4
+          ],
+          [
+            72,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收特殊藥水50瓶:1雪, 不足50瓶 1:lo000楓幣, 自由7洞",
+        "confidence": 0.6599912987966124,
+        "bbox": [
+          [
+            151,
+            1
+          ],
+          [
+            679,
+            1
+          ],
+          [
+            679,
+            36
+          ],
+          [
+            151,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        66,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_143_20250811_204321_297.png"
+}

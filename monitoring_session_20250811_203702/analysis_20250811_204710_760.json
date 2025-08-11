@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 230,
+  "timestamp": "20250811_204710_760",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "周芷若 690. 售多箇干淨賊手80級6厲/4運2敏. 22雪. 手套胚子9個起買20雪. 8雪售60手攻卷.",
+    "is_match": false,
+    "player_name": "周芷若",
+    "channel_number": "690",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7530271396923864,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "周芷若",
+    "rear_text": "690. 售多箇干淨賊手80級6厲/4運2敏. 22雪. 手套胚子9個起買20雪. 8雪售60手攻卷.",
+    "full_text": "周芷若 690. 售多箇干淨賊手80級6厲/4運2敏. 22雪. 手套胚子9個起買20雪. 8雪售60手攻卷.",
+    "ocr_results": [
+      {
+        "text": "周芷若",
+        "confidence": 0.9982002234281541,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "690. 售多箇干淨賊手80級6厲/4運2敏. 22雪. 手套胚子9個起買20雪. 8雪售60手攻卷.",
+        "confidence": 0.5078540559566188,
+        "bbox": [
+          [
+            161,
+            1
+          ],
+          [
+            979,
+            1
+          ],
+          [
+            979,
+            36
+          ],
+          [
+            161,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_230_20250811_204710_068.png"
+}

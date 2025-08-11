@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 373,
+  "timestamp": "20250811_205335_115",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "森尚枚虔 2678-3洞售雪 1:50萬有300個(分批交易10個 組給4,999,999 )可散買",
+    "is_match": false,
+    "player_name": "森尚枚虔",
+    "channel_number": "2678",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9195942085529638,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "森尚枚虔",
+    "rear_text": "2678-3洞售雪 1:50萬有300個(分批交易10個 組給4,999,999 )可散買",
+    "full_text": "森尚枚虔 2678-3洞售雪 1:50萬有300個(分批交易10個 組給4,999,999 )可散買",
+    "ocr_results": [
+      {
+        "text": "森尚枚虔",
+        "confidence": 0.9983789324760437,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            99,
+            2
+          ],
+          [
+            99,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "2678-3洞售雪 1:50萬有300個(分批交易10個",
+        "confidence": 0.8667205440633722,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            611,
+            1
+          ],
+          [
+            611,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "組給4,999,999 )可散買",
+        "confidence": 0.8936831491194758,
+        "bbox": [
+          [
+            620,
+            4
+          ],
+          [
+            844,
+            4
+          ],
+          [
+            844,
+            36
+          ],
+          [
+            620,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_373_20250811_205334_342.png"
+}

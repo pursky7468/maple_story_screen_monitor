@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 372,
+  "timestamp": "20250811_205332_218",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "為了讓名牌戒指更明顯只好改名 845自由收弓箭手手套8屬20雪手套攻擊10%8雪 60%6雪",
+    "is_match": false,
+    "player_name": "為了讓名牌戒指更明顯只好改名",
+    "channel_number": "845",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.992094443833089,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "為了讓名牌戒指更明顯只好改名",
+    "rear_text": "845自由收弓箭手手套8屬20雪手套攻擊10%8雪 60%6雪",
+    "full_text": "為了讓名牌戒指更明顯只好改名 845自由收弓箭手手套8屬20雪手套攻擊10%8雪 60%6雪",
+    "ocr_results": [
+      {
+        "text": "為了讓名牌戒指更明顯只好改名",
+        "confidence": 0.9905080127225883,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            307,
+            1
+          ],
+          [
+            307,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "845自由收弓箭手手套8屬20雪手套攻擊10%8雪 60%6雪",
+        "confidence": 0.9936808749435897,
+        "bbox": [
+          [
+            386,
+            0
+          ],
+          [
+            925,
+            0
+          ],
+          [
+            925,
+            36
+          ],
+          [
+            386,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        303,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_372_20250811_205331_424.png"
+}

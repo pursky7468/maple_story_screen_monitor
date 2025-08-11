@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 109,
+  "timestamp": "20250811_204151_432",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "路過的采藥女 頻道447收劍士鞋/劍士手套6/7|8|9屬=5|10|15|25雪, 人多請稍等",
+    "is_match": false,
+    "player_name": "路過的采藥女",
+    "channel_number": "447",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7753762508683388,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "路過的采藥女",
+    "rear_text": "頻道447收劍士鞋/劍士手套6/7|8|9屬=5|10|15|25雪, 人多請稍等",
+    "full_text": "路過的采藥女 頻道447收劍士鞋/劍士手套6/7|8|9屬=5|10|15|25雪, 人多請稍等",
+    "ocr_results": [
+      {
+        "text": "路過的采藥女",
+        "confidence": 0.9878014401698463,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            142,
+            2
+          ],
+          [
+            142,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "頻道447收劍士鞋/劍士手套6/7|8|9屬=5|10|15|25雪, 人多請稍等",
+        "confidence": 0.5629510615668315,
+        "bbox": [
+          [
+            221,
+            1
+          ],
+          [
+            845,
+            1
+          ],
+          [
+            845,
+            36
+          ],
+          [
+            221,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        138,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_109_20250811_204150_815.png"
+}

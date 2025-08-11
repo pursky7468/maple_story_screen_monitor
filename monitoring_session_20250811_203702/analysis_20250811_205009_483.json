@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 297,
+  "timestamp": "20250811_205009_483",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "IVAN 甩賣1O5AD 5幸血腥短劍 12O0雪/甩賣105AD 5幸血腥短劍 1200雪",
+    "is_match": false,
+    "player_name": "IVAN",
+    "channel_number": "105",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.4921667937136236,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "IVAN",
+    "rear_text": "甩賣1O5AD 5幸血腥短劍 12O0雪/甩賣105AD 5幸血腥短劍 1200雪",
+    "full_text": "IVAN 甩賣1O5AD 5幸血腥短劍 12O0雪/甩賣105AD 5幸血腥短劍 1200雪",
+    "ocr_results": [
+      {
+        "text": "IVAN",
+        "confidence": 0.6382420659065247,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            64,
+            4
+          ],
+          [
+            64,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "甩賣1O5AD 5幸血腥短劍 12O0雪/甩賣105AD 5幸血腥短劍 1200雪",
+        "confidence": 0.3460915215207226,
+        "bbox": [
+          [
+            146,
+            4
+          ],
+          [
+            768,
+            4
+          ],
+          [
+            768,
+            35
+          ],
+          [
+            146,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        61,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_297_20250811_205008_856.png"
+}

@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 21,
+  "timestamp": "20250811_203757_077",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "珊迪小泡芙 757收盜賊手套5幸10雪6幸15雪7幸40雪",
+    "is_match": false,
+    "player_name": "珊迪小泡芙",
+    "channel_number": "757",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9979862605322486,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "珊迪小泡芙",
+    "rear_text": "757收盜賊手套5幸10雪6幸15雪7幸40雪",
+    "full_text": "珊迪小泡芙 757收盜賊手套5幸10雪6幸15雪7幸40雪",
+    "ocr_results": [
+      {
+        "text": "珊迪小泡芙",
+        "confidence": 0.9983780398584509,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            122,
+            2
+          ],
+          [
+            122,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "757收盜賊手套5幸10雪6幸15雪7幸40雪",
+        "confidence": 0.9975944812060463,
+        "bbox": [
+          [
+            201,
+            0
+          ],
+          [
+            599,
+            0
+          ],
+          [
+            599,
+            36
+          ],
+          [
+            201,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        118,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_021_20250811_203755_846.png"
+}

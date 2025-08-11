@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 434,
+  "timestamp": "20250811_205619_353",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "囍0煙花 收一層CD圖 10雪 私訊第一個",
+    "is_match": false,
+    "player_name": "囍0煙花",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9329381173314946,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "囍0煙花",
+    "rear_text": "收一層CD圖 10雪 私訊第一個",
+    "full_text": "囍0煙花 收一層CD圖 10雪 私訊第一個",
+    "ocr_results": [
+      {
+        "text": "囍0煙花",
+        "confidence": 0.9167136549949646,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            95,
+            1
+          ],
+          [
+            95,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "收一層CD圖 10雪 私訊第一個",
+        "confidence": 0.9491625796680246,
+        "bbox": [
+          [
+            174,
+            4
+          ],
+          [
+            460,
+            4
+          ],
+          [
+            460,
+            36
+          ],
+          [
+            174,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        89,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_434_20250811_205618_946.png"
+}

@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 344,
+  "timestamp": "20250811_205216_732",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "好奇寶寶[ 收CD圖, 無爭議, 直接飛最低, 不回私",
+    "is_match": false,
+    "player_name": "好奇寶寶[",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.808653700148782,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "好奇寶寶[",
+    "rear_text": "收CD圖, 無爭議, 直接飛最低, 不回私",
+    "full_text": "好奇寶寶[ 收CD圖, 無爭議, 直接飛最低, 不回私",
+    "ocr_results": [
+      {
+        "text": "好奇寶寶[",
+        "confidence": 0.9033686868002728,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            99,
+            2
+          ],
+          [
+            99,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "收CD圖, 無爭議, 直接飛最低, 不回私",
+        "confidence": 0.7139387134972912,
+        "bbox": [
+          [
+            180,
+            0
+          ],
+          [
+            547,
+            0
+          ],
+          [
+            547,
+            36
+          ],
+          [
+            180,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_344_20250811_205216_307.png"
+}

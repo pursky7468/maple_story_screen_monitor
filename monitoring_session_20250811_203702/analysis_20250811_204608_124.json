@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 206,
+  "timestamp": "20250811_204608_124",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "荷包蛋 收6屬弓手鞋10雪,收大量,勿蹭",
+    "is_match": false,
+    "player_name": "荷包蛋",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9907955029014657,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "荷包蛋",
+    "rear_text": "收6屬弓手鞋10雪,收大量,勿蹭",
+    "full_text": "荷包蛋 收6屬弓手鞋10雪,收大量,勿蹭",
+    "ocr_results": [
+      {
+        "text": "荷包蛋",
+        "confidence": 0.9889105711210354,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收6屬弓手鞋10雪,收大量,勿蹭",
+        "confidence": 0.992680434681896,
+        "bbox": [
+          [
+            160,
+            1
+          ],
+          [
+            457,
+            1
+          ],
+          [
+            457,
+            36
+          ],
+          [
+            160,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_206_20250811_204607_722.png"
+}

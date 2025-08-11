@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 9,
+  "timestamp": "20250811_203723_925",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "裝睡的人叫不醒 984售伊卡路速P+8敏 230雪 直接點交易",
+    "is_match": false,
+    "player_name": "裝睡的人叫不醒",
+    "channel_number": "984",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9642949782589831,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "裝睡的人叫不醒",
+    "rear_text": "984售伊卡路速P+8敏 230雪 直接點交易",
+    "full_text": "裝睡的人叫不醒 984售伊卡路速P+8敏 230雪 直接點交易",
+    "ocr_results": [
+      {
+        "text": "裝睡的人叫不醒",
+        "confidence": 0.9465031158503173,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            162,
+            4
+          ],
+          [
+            162,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "984售伊卡路速P+8敏 230雪 直接點交易",
+        "confidence": 0.9820868406676488,
+        "bbox": [
+          [
+            244,
+            4
+          ],
+          [
+            642,
+            4
+          ],
+          [
+            642,
+            36
+          ],
+          [
+            244,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        159,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_009_20250811_203723_376.png"
+}

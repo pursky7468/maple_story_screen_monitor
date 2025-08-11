@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 1,
+  "timestamp": "20250811_203703_306",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "花無缺 售調停者 87AD2敏| 86AD2敏 1200|850 直接來談",
+    "is_match": false,
+    "player_name": "花無缺",
+    "channel_number": "1200",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.786207027403983,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "花無缺",
+    "rear_text": "售調停者 87AD2敏| 86AD2敏 1200|850 直接來談",
+    "full_text": "花無缺 售調停者 87AD2敏| 86AD2敏 1200|850 直接來談",
+    "ocr_results": [
+      {
+        "text": "花無缺",
+        "confidence": 0.999288240464617,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            80,
+            2
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "售調停者 87AD2敏| 86AD2敏 1200|850 直接來談",
+        "confidence": 0.573125814343349,
+        "bbox": [
+          [
+            159,
+            1
+          ],
+          [
+            649,
+            1
+          ],
+          [
+            649,
+            36
+          ],
+          [
+            159,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_001_20250811_203702_787.png"
+}

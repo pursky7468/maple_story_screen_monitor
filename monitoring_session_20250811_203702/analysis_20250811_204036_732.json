@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 81,
+  "timestamp": "20250811_204036_732",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "ITOFAFA 收CD圖 無爭議25雪",
+    "is_match": false,
+    "player_name": "ITOFAFA",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9105571575223528,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "ITOFAFA",
+    "rear_text": "收CD圖 無爭議25雪",
+    "full_text": "ITOFAFA 收CD圖 無爭議25雪",
+    "ocr_results": [
+      {
+        "text": "ITOFAFA",
+        "confidence": 0.9982645084340056,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            102,
+            4
+          ],
+          [
+            102,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收CD圖 無爭議25雪",
+        "confidence": 0.8228498066107001,
+        "bbox": [
+          [
+            184,
+            2
+          ],
+          [
+            375,
+            2
+          ],
+          [
+            375,
+            34
+          ],
+          [
+            184,
+            34
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        98,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_081_20250811_204036_380.png"
+}

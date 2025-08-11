@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 184,
+  "timestamp": "20250811_204509_730",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "輕語的商城道具 125頻3洞售傳送1.7雪/護身符1.9雪/喇叭5.8雪/背包11雪",
+    "is_match": false,
+    "player_name": "輕語的商城道具",
+    "channel_number": "125",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9647638700362654,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "輕語的商城道具",
+    "rear_text": "125頻3洞售傳送1.7雪/護身符1.9雪/喇叭5.8雪/背包11雪",
+    "full_text": "輕語的商城道具 125頻3洞售傳送1.7雪/護身符1.9雪/喇叭5.8雪/背包11雪",
+    "ocr_results": [
+      {
+        "text": "輕語的商城道具",
+        "confidence": 0.9979642918014731,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            162,
+            2
+          ],
+          [
+            162,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "125頻3洞售傳送1.7雪/護身符1.9雪/喇叭5.8雪/背包11雪",
+        "confidence": 0.9315634482710577,
+        "bbox": [
+          [
+            244,
+            2
+          ],
+          [
+            771,
+            2
+          ],
+          [
+            771,
+            35
+          ],
+          [
+            244,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        159,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_184_20250811_204509_150.png"
+}

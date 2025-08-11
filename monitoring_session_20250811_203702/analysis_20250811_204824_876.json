@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 258,
+  "timestamp": "20250811_204824_876",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "我命由我不由天 2638盜賊手套售4屬1Oad 240雪 全場最便宜 快來喔盜賊手套",
+    "is_match": false,
+    "player_name": "我命由我不由天",
+    "channel_number": "2638",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9480932167655421,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "我命由我不由天",
+    "rear_text": "2638盜賊手套售4屬1Oad 240雪 全場最便宜 快來喔盜賊手套",
+    "full_text": "我命由我不由天 2638盜賊手套售4屬1Oad 240雪 全場最便宜 快來喔盜賊手套",
+    "ocr_results": [
+      {
+        "text": "我命由我不由天",
+        "confidence": 0.999336511474991,
+        "bbox": [
+          [
+            7,
+            1
+          ],
+          [
+            163,
+            1
+          ],
+          [
+            163,
+            36
+          ],
+          [
+            7,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "2638盜賊手套售4屬1Oad 240雪 全場最便宜 快來喔盜賊手套",
+        "confidence": 0.8968499220560933,
+        "bbox": [
+          [
+            243,
+            1
+          ],
+          [
+            828,
+            1
+          ],
+          [
+            828,
+            36
+          ],
+          [
+            243,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        159,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_258_20250811_204824_271.png"
+}

@@ -1,0 +1,53 @@
+{
+  "monitoring_id": 238,
+  "timestamp": "20250811_204732_389",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "537自由賣耳智10|10.5雪,長魔60|1雪,上幸100 5雪/7張,頭智100 6雪/7張",
+    "is_match": false,
+    "player_name": "537自由賣耳智10|10.5雪,長魔60|1雪,上幸100 5雪/7張,頭智100 6雪/7張",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.72070923484819,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "537自由賣耳智10|10.5雪,長魔60|1雪,上幸100 5雪/7張,頭智100 6雪/7張",
+    "rear_text": "",
+    "full_text": "537自由賣耳智10|10.5雪,長魔60|1雪,上幸100 5雪/7張,頭智100 6雪/7張",
+    "ocr_results": [
+      {
+        "text": "537自由賣耳智10|10.5雪,長魔60|1雪,上幸100 5雪/7張,頭智100 6雪/7張",
+        "confidence": 0.72070923484819,
+        "bbox": [
+          [
+            138,
+            0
+          ],
+          [
+            829,
+            0
+          ],
+          [
+            829,
+            36
+          ],
+          [
+            138,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        56,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_238_20250811_204731_739.png"
+}

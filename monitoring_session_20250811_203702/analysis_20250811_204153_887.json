@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 110,
+  "timestamp": "20250811_204153_887",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "鮪魚罐頭 收乾淨無爭議cd圖 私訊直飛最低",
+    "is_match": false,
+    "player_name": "鮪魚罐頭",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6462149380476739,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "鮪魚罐頭",
+    "rear_text": "收乾淨無爭議cd圖 私訊直飛最低",
+    "full_text": "鮪魚罐頭 收乾淨無爭議cd圖 私訊直飛最低",
+    "ocr_results": [
+      {
+        "text": "鮪魚罐頭",
+        "confidence": 0.6338511162613898,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            99,
+            2
+          ],
+          [
+            99,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "收乾淨無爭議cd圖 私訊直飛最低",
+        "confidence": 0.6585787598339581,
+        "bbox": [
+          [
+            181,
+            0
+          ],
+          [
+            489,
+            0
+          ],
+          [
+            489,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_110_20250811_204153_481.png"
+}

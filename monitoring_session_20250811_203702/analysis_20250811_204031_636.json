@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 79,
+  "timestamp": "20250811_204031_636",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "蝶豆花 收60等法師手套8屬性以上密我素質與價格感謝 ~~~~",
+    "is_match": false,
+    "player_name": "蝶豆花",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9861028196482469,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "蝶豆花",
+    "rear_text": "收60等法師手套8屬性以上密我素質與價格感謝 ~~~~",
+    "full_text": "蝶豆花 收60等法師手套8屬性以上密我素質與價格感謝 ~~~~",
+    "ocr_results": [
+      {
+        "text": "蝶豆花",
+        "confidence": 0.9996668231168749,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "收60等法師手套8屬性以上密我素質與價格感謝",
+        "confidence": 0.99576042836174,
+        "bbox": [
+          [
+            160,
+            0
+          ],
+          [
+            615,
+            0
+          ],
+          [
+            615,
+            36
+          ],
+          [
+            160,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "~~~~",
+        "confidence": 0.9628812074661255,
+        "bbox": [
+          [
+            607,
+            13
+          ],
+          [
+            657,
+            13
+          ],
+          [
+            657,
+            25
+          ],
+          [
+            607,
+            25
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_079_20250811_204030_864.png"
+}

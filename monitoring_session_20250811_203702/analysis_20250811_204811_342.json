@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 253,
+  "timestamp": "20250811_204811_342",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "秋山曉 賣項鍊幸運60%1張 2O0雪直接來自由",
+    "is_match": false,
+    "player_name": "秋山曉",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9123659233876074,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "秋山曉",
+    "rear_text": "賣項鍊幸運60%1張 2O0雪直接來自由",
+    "full_text": "秋山曉 賣項鍊幸運60%1張 2O0雪直接來自由",
+    "ocr_results": [
+      {
+        "text": "秋山曉",
+        "confidence": 0.9991297521058945,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            80,
+            4
+          ],
+          [
+            80,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "賣項鍊幸運60%1張 2O0雪直接來自由",
+        "confidence": 0.8256020946693203,
+        "bbox": [
+          [
+            161,
+            2
+          ],
+          [
+            524,
+            2
+          ],
+          [
+            524,
+            35
+          ],
+          [
+            161,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        76,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_253_20250811_204810_903.png"
+}

@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 350,
+  "timestamp": "20250811_205233_225",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "火爆香菇00 楓界競標搜尋/競標+抽雪 頂級畢業黃金耳環/黃金耳環24ap餘2卷/今晚11點截標",
+    "is_match": false,
+    "player_name": "火爆香菇00",
+    "channel_number": "未知",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.5591054144162538,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "火爆香菇00",
+    "rear_text": "楓界競標搜尋/競標+抽雪 頂級畢業黃金耳環/黃金耳環24ap餘2卷/今晚11點截標",
+    "full_text": "火爆香菇00 楓界競標搜尋/競標+抽雪 頂級畢業黃金耳環/黃金耳環24ap餘2卷/今晚11點截標",
+    "ocr_results": [
+      {
+        "text": "火爆香菇00",
+        "confidence": 0.43144385302049487,
+        "bbox": [
+          [
+            9,
+            1
+          ],
+          [
+            135,
+            1
+          ],
+          [
+            135,
+            36
+          ],
+          [
+            9,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "楓界競標搜尋/競標+抽雪 頂級畢業黃金耳環/黃金耳環24ap餘2卷/今晚11點截標",
+        "confidence": 0.6867669758120128,
+        "bbox": [
+          [
+            213,
+            1
+          ],
+          [
+            957,
+            1
+          ],
+          [
+            957,
+            36
+          ],
+          [
+            213,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        129,
+        5,
+        74,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_350_20250811_205232_345.png"
+}

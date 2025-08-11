@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 207,
+  "timestamp": "20250811_204610_925",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "渣渣輝1688| 895收臉部力量/敏捷100/60/30%700雪895收臉部力量/敏捷100/60/30%700雪",
+    "is_match": false,
+    "player_name": "渣渣輝1688|",
+    "channel_number": "895",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8309142698800611,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "渣渣輝1688|",
+    "rear_text": "895收臉部力量/敏捷100/60/30%700雪895收臉部力量/敏捷100/60/30%700雪",
+    "full_text": "渣渣輝1688| 895收臉部力量/敏捷100/60/30%700雪895收臉部力量/敏捷100/60/30%700雪",
+    "ocr_results": [
+      {
+        "text": "渣渣輝1688|",
+        "confidence": 0.7766438791554676,
+        "bbox": [
+          [
+            8,
+            2
+          ],
+          [
+            129,
+            2
+          ],
+          [
+            129,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "895收臉部力量/敏捷100/60/30%700雪895收臉部力量/敏捷100/60/30%700雪",
+        "confidence": 0.8851846606046547,
+        "bbox": [
+          [
+            209,
+            1
+          ],
+          [
+            953,
+            1
+          ],
+          [
+            953,
+            36
+          ],
+          [
+            209,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        125,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_207_20250811_204610_206.png"
+}

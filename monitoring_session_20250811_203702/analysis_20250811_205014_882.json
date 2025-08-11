@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 299,
+  "timestamp": "20250811_205014_882",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "懷念0 抽抽樂一次1000楓各種獎項隨機有10智披風2OAP耳環等各種清昌裝",
+    "is_match": false,
+    "player_name": "懷念0",
+    "channel_number": "1000",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8555980487704444,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "懷念0",
+    "rear_text": "抽抽樂一次1000楓各種獎項隨機有10智披風2OAP耳環等各種清昌裝",
+    "full_text": "懷念0 抽抽樂一次1000楓各種獎項隨機有10智披風2OAP耳環等各種清昌裝",
+    "ocr_results": [
+      {
+        "text": "懷念0",
+        "confidence": 0.973506382126341,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            74,
+            4
+          ],
+          [
+            74,
+            34
+          ],
+          [
+            8,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "抽抽樂一次1000楓各種獎項隨機有10智披風2OAP耳環等各種清昌裝",
+        "confidence": 0.7376897154145478,
+        "bbox": [
+          [
+            154,
+            2
+          ],
+          [
+            779,
+            2
+          ],
+          [
+            779,
+            35
+          ],
+          [
+            154,
+            35
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        69,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_299_20250811_205014_270.png"
+}

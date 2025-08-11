@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python test_rectangle_ocr.py:*)",
+      "Bash(python:*)",
+      "Bash(del quick_test_rectangle.py)",
+      "Bash(rm:*)",
+      "Bash(del \"C:\\Users\\User\\Desktop\\螢幕監控程式\\test_rectangle_detection_integration.py\")",
+      "Bash(git add:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": []
+  }
+}

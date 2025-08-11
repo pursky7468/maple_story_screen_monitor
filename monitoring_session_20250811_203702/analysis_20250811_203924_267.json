@@ -1,0 +1,119 @@
+{
+  "monitoring_id": 54,
+  "timestamp": "20250811_203924_267",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "織田信奈 2 2 4 8賣1 0 1AD梅杜斯210雪 10 0AD120雪 挑戰最低價不幫留",
+    "is_match": false,
+    "player_name": "織田信奈",
+    "channel_number": "210",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.7296050412693783,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "織田信奈",
+    "rear_text": "2 2 4 8賣1 0 1AD梅杜斯210雪 10 0AD120雪 挑戰最低價不幫留",
+    "full_text": "織田信奈 2 2 4 8賣1 0 1AD梅杜斯210雪 10 0AD120雪 挑戰最低價不幫留",
+    "ocr_results": [
+      {
+        "text": "織田信奈",
+        "confidence": 0.9984580278396606,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            100,
+            4
+          ],
+          [
+            100,
+            36
+          ],
+          [
+            8,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "2 2 4 8賣1 0 1AD梅杜斯210雪",
+        "confidence": 0.503538516187068,
+        "bbox": [
+          [
+            186,
+            4
+          ],
+          [
+            540,
+            4
+          ],
+          [
+            540,
+            34
+          ],
+          [
+            186,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "10 0AD120雪",
+        "confidence": 0.7761274496332186,
+        "bbox": [
+          [
+            554,
+            4
+          ],
+          [
+            746,
+            4
+          ],
+          [
+            746,
+            34
+          ],
+          [
+            554,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "挑戰最低價不幫留",
+        "confidence": 0.6402961714175661,
+        "bbox": [
+          [
+            756,
+            4
+          ],
+          [
+            930,
+            4
+          ],
+          [
+            930,
+            36
+          ],
+          [
+            756,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_054_20250811_203923_463.png"
+}

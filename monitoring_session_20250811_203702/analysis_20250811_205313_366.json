@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 365,
+  "timestamp": "20250811_205313_366",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Apex 2472賣護身2雪=120W/傳送1.7=102W/ 包11.5=690W突襲一組54雪可楓幣購買",
+    "is_match": false,
+    "player_name": "Apex",
+    "channel_number": "2472",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.6375027935188233,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Apex",
+    "rear_text": "2472賣護身2雪=120W/傳送1.7=102W/ 包11.5=690W突襲一組54雪可楓幣購買",
+    "full_text": "Apex 2472賣護身2雪=120W/傳送1.7=102W/ 包11.5=690W突襲一組54雪可楓幣購買",
+    "ocr_results": [
+      {
+        "text": "Apex",
+        "confidence": 0.5472616743627047,
+        "bbox": [
+          [
+            10,
+            6
+          ],
+          [
+            68,
+            6
+          ],
+          [
+            68,
+            34
+          ],
+          [
+            10,
+            34
+          ]
+        ]
+      },
+      {
+        "text": "2472賣護身2雪=120W/傳送1.7=102W/ 包11.5=690W突襲一組54雪可楓幣購買",
+        "confidence": 0.727743912674942,
+        "bbox": [
+          [
+            147,
+            1
+          ],
+          [
+            881,
+            1
+          ],
+          [
+            881,
+            36
+          ],
+          [
+            147,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        63,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_365_20250811_205312_723.png"
+}

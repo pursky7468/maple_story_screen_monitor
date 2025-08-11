@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 189,
+  "timestamp": "20250811_204523_437",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "躲體河馬 2310收80劍套服[命算數]10~13屬2/4/7/11雪_收手攻60%6雪_槍攻10%5雪",
+    "is_match": false,
+    "player_name": "躲體河馬",
+    "channel_number": "2310",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.5403268830455891,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "躲體河馬",
+    "rear_text": "2310收80劍套服[命算數]10~13屬2/4/7/11雪_收手攻60%6雪_槍攻10%5雪",
+    "full_text": "躲體河馬 2310收80劍套服[命算數]10~13屬2/4/7/11雪_收手攻60%6雪_槍攻10%5雪",
+    "ocr_results": [
+      {
+        "text": "躲體河馬",
+        "confidence": 0.3234560787677765,
+        "bbox": [
+          [
+            8,
+            4
+          ],
+          [
+            99,
+            4
+          ],
+          [
+            99,
+            33
+          ],
+          [
+            8,
+            33
+          ]
+        ]
+      },
+      {
+        "text": "2310收80劍套服[命算數]10~13屬2/4/7/11雪_收手攻60%6雪_槍攻10%5雪",
+        "confidence": 0.7571976873234016,
+        "bbox": [
+          [
+            181,
+            1
+          ],
+          [
+            891,
+            1
+          ],
+          [
+            891,
+            36
+          ],
+          [
+            181,
+            36
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        97,
+        5,
+        75,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": "monitoring_session_20250811_203702\\monitor_189_20250811_204522_783.png"
+}
