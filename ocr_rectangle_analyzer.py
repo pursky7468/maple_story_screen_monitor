@@ -274,7 +274,7 @@ class OCRRectangleAnalyzer(TextAnalyzer):
         return cleaned_text if cleaned_text else "未知"
     
     def process_rear_segment(self, rear_text: str) -> Tuple[str, bool, List[dict], List[str]]:
-        """處理後段文字，提取頻道編號、檢查收購意圖和匹配商品"""
+        """處理後段文字，提取頻道編號、檢查收購意圖和匹配商品（使用上下文分析）"""
         if not rear_text:
             return "未知", False, [], []
         
@@ -284,13 +284,216 @@ class OCRRectangleAnalyzer(TextAnalyzer):
         # 1. 提取頻道編號（從原始文字中提取，因為頻道可能在冒號前）
         channel_number = self.extract_channel_number(rear_text)
         
-        # 2. 檢查收購意圖（使用清理後的文字）
-        has_purchase_intent = self.check_purchase_intent(cleaned_rear_text)
+        # 2. 使用新的上下文分析進行智能匹配
+        is_match, matched_items, matched_keywords, context_info = self.analyze_context_matching(cleaned_rear_text)
         
-        # 3. 尋找匹配商品（使用清理後的文字）
-        matched_items, matched_keywords = self.find_matching_items(cleaned_rear_text)
+        return channel_number, is_match, matched_items, matched_keywords
+    
+    def check_selling_intent(self, text: str) -> tuple[bool, list]:
+        """檢查文字是否包含出售意圖，返回(是否有出售意圖, 出售關鍵字位置列表)"""
+        selling_keywords = [
+            "出售", "賣", "售", "銷售", "便宜賣", "急售",
+            "WTS", "wts", "Want to sell", "selling",
+            "處理", "清倉", "割愛"
+        ]
         
-        return channel_number, has_purchase_intent, matched_items, matched_keywords
+        text_upper = text.upper()
+        positions = []
+        
+        for keyword in selling_keywords:
+            start_pos = 0
+            while True:
+                pos = text_upper.find(keyword.upper(), start_pos)
+                if pos == -1:
+                    break
+                positions.append({
+                    'keyword': keyword,
+                    'start': pos,
+                    'end': pos + len(keyword),
+                    'type': 'sell'
+                })
+                start_pos = pos + 1
+        
+        return len(positions) > 0, positions
+    
+    def check_purchase_intent_with_positions(self, text: str) -> tuple[bool, list]:
+        """檢查文字是否包含收購意圖，返回(是否有收購意圖, 收購關鍵字位置列表)"""
+        purchase_keywords = [
+            "收購", "收", "買", "要", "需要", 
+            "WTB", "wtb", "Want to buy",
+            "徵", "徵收", "求購"
+        ]
+        
+        text_upper = text.upper()
+        positions = []
+        
+        for keyword in purchase_keywords:
+            start_pos = 0
+            while True:
+                pos = text_upper.find(keyword.upper(), start_pos)
+                if pos == -1:
+                    break
+                positions.append({
+                    'keyword': keyword,
+                    'start': pos,
+                    'end': pos + len(keyword),
+                    'type': 'buy'
+                })
+                start_pos = pos + 1
+        
+        return len(positions) > 0, positions
+    
+    def find_matching_items_with_positions(self, text: str) -> tuple[list, list, list]:
+        """在文字中尋找匹配的商品，返回(匹配商品, 關鍵字, 商品位置)"""
+        matched_items = []
+        all_matched_keywords = []
+        item_positions = []
+        
+        text_upper = text.upper()
+        
+        for item_name, keywords in self.selling_items.items():
+            found_keywords = []
+            
+            for keyword in keywords:
+                start_pos = 0
+                while True:
+                    pos = text_upper.find(keyword.upper(), start_pos)
+                    if pos == -1:
+                        break
+                    
+                    found_keywords.append(keyword)
+                    all_matched_keywords.append(keyword)
+                    item_positions.append({
+                        'item_name': item_name,
+                        'keyword': keyword,
+                        'start': pos,
+                        'end': pos + len(keyword)
+                    })
+                    start_pos = pos + 1
+            
+            if found_keywords:
+                matched_items.append({
+                    "item_name": item_name,
+                    "keywords_found": list(set(found_keywords))  # 去重
+                })
+        
+        return matched_items, list(set(all_matched_keywords)), item_positions
+    
+    def analyze_context_matching(self, text: str) -> tuple[bool, list, list, dict]:
+        """使用上下文分析進行智能匹配"""
+        # 1. 獲取買賣意圖和位置
+        has_purchase, purchase_positions = self.check_purchase_intent_with_positions(text)
+        has_selling, selling_positions = self.check_selling_intent(text)
+        
+        # 2. 獲取商品匹配和位置
+        matched_items, matched_keywords, item_positions = self.find_matching_items_with_positions(text)
+        
+        # 3. 如果沒有匹配的商品，直接返回
+        if not matched_items:
+            return False, [], [], {
+                'analysis': 'no_items_found',
+                'purchase_positions': purchase_positions,
+                'selling_positions': selling_positions,
+                'item_positions': item_positions
+            }
+        
+        # 4. 如果只有收購意圖，沒有出售意圖
+        if has_purchase and not has_selling:
+            return True, matched_items, matched_keywords, {
+                'analysis': 'purchase_only',
+                'purchase_positions': purchase_positions,
+                'selling_positions': selling_positions,
+                'item_positions': item_positions
+            }
+        
+        # 5. 如果只有出售意圖，沒有收購意圖
+        if has_selling and not has_purchase:
+            return False, [], [], {
+                'analysis': 'selling_only',
+                'purchase_positions': purchase_positions,
+                'selling_positions': selling_positions,
+                'item_positions': item_positions
+            }
+        
+        # 6. 如果兩種意圖都有，需要分析商品在哪個section
+        if has_purchase and has_selling:
+            valid_items = []
+            valid_keywords = []
+            
+            for item_pos in item_positions:
+                item_start = item_pos['start']
+                
+                # 找到最近的收購和出售關鍵字
+                closest_purchase = self.find_closest_intent(item_start, purchase_positions)
+                closest_selling = self.find_closest_intent(item_start, selling_positions)
+                
+                # 判斷商品更靠近哪種意圖
+                if closest_purchase and closest_selling:
+                    purchase_distance = abs(item_start - closest_purchase['start'])
+                    selling_distance = abs(item_start - closest_selling['start'])
+                    
+                    # 如果商品更靠近收購關鍵字，且距離明顯更近
+                    if purchase_distance < selling_distance:
+                        self.add_valid_item(item_pos, valid_items, valid_keywords)
+                elif closest_purchase:  # 只找到收購關鍵字
+                    self.add_valid_item(item_pos, valid_items, valid_keywords)
+                # 如果只找到出售關鍵字或者更靠近出售關鍵字，不添加
+            
+            return len(valid_items) > 0, valid_items, valid_keywords, {
+                'analysis': 'mixed_intents',
+                'purchase_positions': purchase_positions,
+                'selling_positions': selling_positions,
+                'item_positions': item_positions,
+                'valid_items': valid_items
+            }
+        
+        # 7. 如果沒有任何買賣意圖
+        return False, [], [], {
+            'analysis': 'no_intent',
+            'purchase_positions': purchase_positions,
+            'selling_positions': selling_positions,
+            'item_positions': item_positions
+        }
+    
+    def find_closest_intent(self, item_position: int, intent_positions: list) -> dict:
+        """找到最接近商品位置的意圖關鍵字"""
+        if not intent_positions:
+            return None
+        
+        closest = None
+        min_distance = float('inf')
+        
+        for intent in intent_positions:
+            distance = abs(item_position - intent['start'])
+            if distance < min_distance:
+                min_distance = distance
+                closest = intent
+        
+        return closest
+    
+    def add_valid_item(self, item_pos: dict, valid_items: list, valid_keywords: list):
+        """添加有效的商品到結果列表"""
+        item_name = item_pos['item_name']
+        keyword = item_pos['keyword']
+        
+        # 檢查是否已經有這個商品
+        existing_item = None
+        for item in valid_items:
+            if item['item_name'] == item_name:
+                existing_item = item
+                break
+        
+        if existing_item:
+            if keyword not in existing_item['keywords_found']:
+                existing_item['keywords_found'].append(keyword)
+        else:
+            valid_items.append({
+                'item_name': item_name,
+                'keywords_found': [keyword]
+            })
+        
+        if keyword not in valid_keywords:
+            valid_keywords.append(keyword)
     
     def extract_channel_number(self, text: str) -> str:
         """從文字中提取頻道編號（OCR_Rectangle版本，只返回純數字）"""
