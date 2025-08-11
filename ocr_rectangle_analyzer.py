@@ -317,12 +317,15 @@ class OCRRectangleAnalyzer(TextAnalyzer):
                 return channel_num
         
         # 如果沒有找到格式化的頻道，嘗試找獨立的數字
-        # 尋找3位數字（常見的頻道範圍）
-        standalone_numbers = re.findall(r'\b(\d{1,4})\b', text)
+        # 修正：使用更適合中文環境的數字匹配模式
+        # 匹配3-4位數字，後面跟非數字字符或字串結尾
+        standalone_numbers = re.findall(r'(\d{3,4})(?=[^\d]|$)', text)
         if standalone_numbers:
-            # 返回第一個合理範圍的數字（1-9999）
+            # 返回第一個合理範圍的數字（100-9999，排除過小的數字）
             for num in standalone_numbers:
-                if 1 <= int(num) <= 9999:
+                channel_int = int(num)
+                # 頻道編號通常在100-9999範圍內
+                if 100 <= channel_int <= 9999:
                     return num
         
         return "未知"
