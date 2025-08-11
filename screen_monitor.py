@@ -11,6 +11,7 @@ from roi_selector import ROISelector
 from text_analyzer import AnalysisResult
 from gemini_analyzer import GeminiAnalyzer
 from ocr_analyzer import OCRAnalyzer
+from ocr_rectangle_analyzer import OCRRectangleAnalyzer
 from real_time_merger import RealTimeMerger, log_test_result
 import webbrowser
 
@@ -593,23 +594,31 @@ class ScreenMonitor:
             self.finalize_session()
 
 def get_analyzer_choice():
-    """獲取分析器選擇"""
-    print("\n請選擇文字分析方法：")
-    print("1. Gemini AI (需要API Key，準確度高)")
-    print("2. OCR (本地處理，速度快)")
-    
-    while True:
-        choice = input("請輸入選項 (1 或 2): ").strip()
-        if choice == "1":
-            return "gemini"
-        elif choice == "2":
-            return "ocr"
-        else:
-            print("請輸入 1 或 2")
+    """自動使用OCR_Rectangle分析器"""
+    print("\n使用 OCR_Rectangle 分析引擎 (白框檢測視覺分割)")
+    return "ocr_rectangle"
 
 def create_analyzer(analyzer_type: str):
     """創建分析器實例"""
-    if analyzer_type == "gemini":
+    if analyzer_type == "ocr_rectangle":
+        try:
+            # 從config.py讀取調試設定
+            from config import OCR_DEBUG_CONFIG
+            save_debug = OCR_DEBUG_CONFIG.get("ENABLE_RECTANGLE_DEBUG", False)
+            debug_dir = OCR_DEBUG_CONFIG.get("DEBUG_OUTPUT_DIR", "rectangle_debug")
+            return OCRRectangleAnalyzer(SELLING_ITEMS, save_debug_images=save_debug, debug_folder=debug_dir)
+        except ImportError as e:
+            print(f"❌ OCR_Rectangle依賴缺失: {e}")
+            print("\n安裝OCR依賴：")
+            print("方法1 (推薦)：pip install -r requirements.txt")
+            print("方法2 (手動安裝)：pip install easyocr opencv-python")
+            print("\n注意：首次使用OCR會自動下載語言模型，需要網路連線")
+            return None
+        except Exception as e:
+            print(f"❌ OCR_Rectangle初始化失敗: {e}")
+            return None
+    
+    elif analyzer_type == "gemini":
         if GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_HERE":
             print("錯誤：請先在 config.py 中設置您的 Gemini API Key")
             return None
