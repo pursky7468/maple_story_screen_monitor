@@ -391,7 +391,7 @@ class ScreenMonitor:
         }}
         .analysis-info {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 15px;
         }}
@@ -431,11 +431,6 @@ class ScreenMonitor:
         @media (max-width: 768px) {{
             .analysis-info {{
                 grid-template-columns: 1fr;
-            }}
-        }}
-        @media (max-width: 1024px) {{
-            .analysis-info {{
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             }}
         }}
         .modal {{
@@ -573,10 +568,6 @@ class ScreenMonitor:
                         <div class="info-value">{channel_number}</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">當前時間</div>
-                        <div class="info-value">{formatted_time}</div>
-                    </div>
-                    <div class="info-item">
                         <div class="info-label">信心度</div>
                         <div class="info-value">{confidence:.3f}</div>
                     </div>
@@ -589,7 +580,12 @@ class ScreenMonitor:
                 
                 if matched_items:
                     items_text = ", ".join([item.get('item_name', '未知') for item in matched_items])
-                    analysis_html += f'<div class="match-details"><strong>匹配物品:</strong> {items_text}</div>'
+                    # 為匹配成功的情況添加匹配時間
+                    match_details_html = f'<div class="match-details">'
+                    match_details_html += f'<strong>匹配物品:</strong> {items_text}<br>'
+                    match_details_html += f'<strong>匹配時間:</strong> {formatted_time}'
+                    match_details_html += '</div>'
+                    analysis_html += match_details_html
                 
                 if full_text:
                     analysis_html += f'<div class="full-text">{full_text}</div>'
