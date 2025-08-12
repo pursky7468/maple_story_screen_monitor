@@ -391,7 +391,7 @@ class ScreenMonitor:
         }}
         .analysis-info {{
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin-bottom: 15px;
         }}
@@ -431,6 +431,11 @@ class ScreenMonitor:
         @media (max-width: 768px) {{
             .analysis-info {{
                 grid-template-columns: 1fr;
+            }}
+        }}
+        @media (max-width: 1024px) {{
+            .analysis-info {{
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             }}
         }}
         .modal {{
@@ -536,6 +541,27 @@ class ScreenMonitor:
                 full_text = result.get('full_text', '')
                 matched_items = result.get('matched_items', [])
                 
+                # 格式化時間戳為可讀的時間
+                timestamp = data.get('timestamp', '')
+                formatted_time = '未知時間'
+                if timestamp:
+                    try:
+                        # 嘗試解析時間戳格式 YYYYMMDD_HHMMSS_mmm
+                        if '_' in timestamp:
+                            date_part, time_part = timestamp.split('_', 1)
+                            if len(date_part) == 8 and len(time_part) >= 6:
+                                year = date_part[:4]
+                                month = date_part[4:6] 
+                                day = date_part[6:8]
+                                hour = time_part[:2]
+                                minute = time_part[2:4]
+                                second = time_part[4:6]
+                                formatted_time = f"{year}/{month}/{day} {hour}:{minute}:{second}"
+                        else:
+                            formatted_time = timestamp
+                    except:
+                        formatted_time = timestamp
+                
                 analysis_html = f"""
                 <div class="analysis-info">
                     <div class="info-item">
@@ -545,6 +571,10 @@ class ScreenMonitor:
                     <div class="info-item">
                         <div class="info-label">頻道編號</div>
                         <div class="info-value">{channel_number}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">當前時間</div>
+                        <div class="info-value">{formatted_time}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">信心度</div>
