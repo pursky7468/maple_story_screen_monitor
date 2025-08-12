@@ -40,6 +40,11 @@ screenshots/
 *.jpg
 *.jpeg
 
+# Monitoring session data and debug files
+monitoring_session_*/
+integration_test_*/
+rectangle_debug/
+
 # Config files with sensitive data
 config_local.py
 
