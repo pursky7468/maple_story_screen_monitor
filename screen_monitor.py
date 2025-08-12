@@ -413,6 +413,16 @@ class ScreenMonitor:
             padding: 15px;
             border-radius: 5px;
             border: 1px solid #4CAF50;
+            margin-bottom: 10px;
+        }}
+        .match-time {{
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #2196F3;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
         }}
         .error-details {{
             background-color: #fff3e0;
@@ -580,15 +590,14 @@ class ScreenMonitor:
                 
                 if matched_items:
                     items_text = ", ".join([item.get('item_name', '未知') for item in matched_items])
-                    # 為匹配成功的情況添加匹配時間
-                    match_details_html = f'<div class="match-details">'
-                    match_details_html += f'<strong>匹配物品:</strong> {items_text}<br>'
-                    match_details_html += f'<strong>匹配時間:</strong> {formatted_time}'
-                    match_details_html += '</div>'
-                    analysis_html += match_details_html
+                    analysis_html += f'<div class="match-details"><strong>匹配物品:</strong> {items_text}</div>'
+                
+                # 在商品內容和完整廣播之間添加時間欄位
+                if result.get('is_match', False):  # 只在匹配成功時顯示
+                    analysis_html += f'<div class="match-time"><strong>匹配時間:</strong> {formatted_time}</div>'
                 
                 if full_text:
-                    analysis_html += f'<div class="full-text">{full_text}</div>'
+                    analysis_html += f'<div class="full-text"><strong>完整廣播:</strong><br>{full_text}</div>'
             elif error_info:
                 analysis_html = f'<div class="error-details"><strong>錯誤詳情:</strong> {error_info.get("error", "未知錯誤")}</div>'
             
