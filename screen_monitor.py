@@ -55,9 +55,9 @@ class ScreenMonitor:
         
         print(f"監控會話資料夾: {self.monitoring_session_folder}")
         if self.save_screenshots:
-            print(f"截圖保存: 所有截圖將被保存")
+            print(f"檔案保存: 所有截圖和JSON將被保存（完整debug模式）")
         else:
-            print(f"截圖保存: 僅在匹配成功時保存")
+            print(f"檔案保存: 僅在匹配成功時保存截圖和JSON（精簡模式）")
         print(f"HTML合併報告將自動生成並開啟")
         
     def capture_roi(self):
@@ -102,7 +102,7 @@ class ScreenMonitor:
             
             items_text = '\n'.join(items_info) if items_info else "  - 無具體商品資訊"
             
-            match_info = f"""✓ 找到匹配！
+            match_info = f"""[MATCH] 找到匹配！
 分析方法: {result.analysis_method}
 信心度: {result.confidence:.2f}
 玩家名稱: {result.player_name}
@@ -115,7 +115,7 @@ class ScreenMonitor:
 {result.full_text}"""
             return match_info
         else:
-            no_match_info = f"""⋅ 未找到匹配
+            no_match_info = f"""[SCAN] 未找到匹配
 分析方法: {result.analysis_method}
 信心度: {result.confidence:.2f}
 頻道編號: {result.channel_number}
@@ -129,21 +129,28 @@ class ScreenMonitor:
         if self.real_time_merger:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # 包含毫秒
             
-            # 保存結構化結果
-            result_path = os.path.join(self.monitoring_session_folder, f"analysis_{timestamp}.json")
-            analysis_data = {
-                "monitoring_id": self.monitoring_counter,
-                "timestamp": timestamp,
-                "analysis_method": result.analysis_method,
-                "result": convert_to_json_serializable(result.to_dict()),
-                "raw_response": convert_to_json_serializable(raw_response),
-                "screenshot_path": screenshot_path
-            }
+            # 只在以下情況保存JSON文件：
+            # 1. 開啟了完整截圖保存模式（debug/完整記錄模式）
+            # 2. 或者匹配成功（重要結果必須保存）
+            should_save_json = self.save_screenshots or result.is_match
             
-            with open(result_path, 'w', encoding='utf-8') as f:
-                json.dump(analysis_data, f, ensure_ascii=False, indent=2)
+            result_path = None
+            if should_save_json:
+                # 保存結構化結果
+                result_path = os.path.join(self.monitoring_session_folder, f"analysis_{timestamp}.json")
+                analysis_data = {
+                    "monitoring_id": self.monitoring_counter,
+                    "timestamp": timestamp,
+                    "analysis_method": result.analysis_method,
+                    "result": convert_to_json_serializable(result.to_dict()),
+                    "raw_response": convert_to_json_serializable(raw_response),
+                    "screenshot_path": screenshot_path
+                }
+                
+                with open(result_path, 'w', encoding='utf-8') as f:
+                    json.dump(analysis_data, f, ensure_ascii=False, indent=2)
             
-            # 記錄到實時合併器
+            # 記錄到實時合併器（用於HTML報告生成）
             result_dict = result.to_dict() if hasattr(result, 'to_dict') else result
             error_info = None
             
@@ -157,9 +164,15 @@ class ScreenMonitor:
             
             log_test_result(self.real_time_merger, self.monitoring_counter, screenshot_path, result_dict, error_info)
             
+            # 生成狀態提示
             match_status = "匹配成功" if result.is_match else "未匹配"
             save_status = "已保存截圖" if screenshot_saved else "未保存截圖"
-            print(f"已記錄分析結果 #{self.monitoring_counter} ({match_status}, {save_status})")
+            json_status = "已保存JSON" if should_save_json else "未保存JSON"
+            
+            if result.is_match:
+                print(f"[MATCH] 分析 #{self.monitoring_counter}: {match_status} ({save_status}, {json_status})")
+            else:
+                print(f"[SCAN] 分析 #{self.monitoring_counter}: {match_status} ({save_status}, {json_status})")
     
     def show_alert(self, message):
         if self.show_alerts:
@@ -212,11 +225,11 @@ class ScreenMonitor:
                     match_details = self.format_match_info(result)
                     
                     if result.is_match:
-                        print(f"[#{self.monitoring_counter}] ✓ 找到匹配！")
+                        print(f"[#{self.monitoring_counter}] [MATCH] 找到匹配！")
                         print(f"玩家: {result.player_name}, 物品: {', '.join([item['item_name'] for item in result.matched_items])}")
                         self.show_alert(match_details)
                     else:
-                        print(f"[#{self.monitoring_counter}] ⋅ 未找到匹配 (方法: {result.analysis_method}, 信心度: {result.confidence:.2f})")
+                        print(f"[#{self.monitoring_counter}] [SCAN] 未找到匹配 (方法: {result.analysis_method}, 信心度: {result.confidence:.2f})")
                 
                 time.sleep(SCAN_INTERVAL)
                 
