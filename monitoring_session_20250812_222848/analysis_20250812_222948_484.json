@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 23,
+  "timestamp": "20250812_222948_484",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Rice 2486-2 售黑雪鞋+8敏35雪+7敏30雪+6敏5雪. 骷髏頭盔+7敏5雪. +10敏桑拿服5雪",
+    "is_match": false,
+    "player_name": "Rice",
+    "channel_number": "2486",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.9444663658504475,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Rice",
+    "rear_text": "2486-2 售黑雪鞋+8敏35雪+7敏30雪+6敏5雪. 骷髏頭盔+7敏5雪. +10敏桑拿服5雪",
+    "full_text": "Rice 2486-2 售黑雪鞋+8敏35雪+7敏30雪+6敏5雪. 骷髏頭盔+7敏5雪. +10敏桑拿服5雪",
+    "ocr_results": [
+      {
+        "text": "Rice",
+        "confidence": 0.9998880624771118,
+        "bbox": [
+          [
+            6,
+            6
+          ],
+          [
+            56,
+            6
+          ],
+          [
+            56,
+            36
+          ],
+          [
+            6,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "2486-2 售黑雪鞋+8敏35雪+7敏30雪+6敏5雪. 骷髏頭盔+7敏5雪. +10敏桑拿服5雪",
+        "confidence": 0.8890446692237832,
+        "bbox": [
+          [
+            137,
+            3
+          ],
+          [
+            933,
+            3
+          ],
+          [
+            933,
+            38
+          ],
+          [
+            137,
+            38
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        52,
+        7,
+        76,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": null
+}

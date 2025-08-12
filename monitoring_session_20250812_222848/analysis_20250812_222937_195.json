@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 19,
+  "timestamp": "20250812_222937_195",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "Hsu 2379售盾幸60% 1:3.8雪",
+    "is_match": false,
+    "player_name": "Hsu",
+    "channel_number": "2379",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.8910926470274909,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "Hsu",
+    "rear_text": "2379售盾幸60% 1:3.8雪",
+    "full_text": "Hsu 2379售盾幸60% 1:3.8雪",
+    "ocr_results": [
+      {
+        "text": "Hsu",
+        "confidence": 0.9999358548952683,
+        "bbox": [
+          [
+            6,
+            6
+          ],
+          [
+            54,
+            6
+          ],
+          [
+            54,
+            36
+          ],
+          [
+            6,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "2379售盾幸60% 1:3.8雪",
+        "confidence": 0.7822494391597136,
+        "bbox": [
+          [
+            135,
+            3
+          ],
+          [
+            379,
+            3
+          ],
+          [
+            379,
+            38
+          ],
+          [
+            135,
+            38
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        50,
+        7,
+        76,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": null
+}

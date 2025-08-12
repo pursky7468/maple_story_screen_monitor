@@ -1,0 +1,448 @@
+{
+  "generation_info": {
+    "created_at": "2025-08-12T22:29:48.485735",
+    "total_tests": 23,
+    "successful_tests": 23,
+    "error_tests": 0,
+    "matched_tests": 0
+  },
+  "results": [
+    {
+      "test_id": 1,
+      "timestamp": "20250812_222849_294",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "小劍惑 兔子鬆餅#R5zQF你媽死了是嘛 不借你50是在靠杯沙小幹迫你娘",
+        "is_match": false,
+        "player_name": "小劍惑",
+        "channel_number": "未知",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.9254918742141474,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 2,
+      "timestamp": "20250812_222851_856",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "小劍惑 兔子鬆餅#R5zQF你媽死了是嘛 不借你50是在靠杯沙小幹迫你娘",
+        "is_match": false,
+        "player_name": "小劍惑",
+        "channel_number": "未知",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.9254918742141474,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 3,
+      "timestamp": "20250812_222854_547",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "hanxinz 726頻休閒公會 STARTEAR只收台灣人/有LNE社群130人+/拉圖斯|CD團歡迎愛聊天",
+        "is_match": false,
+        "player_name": "hanxinz",
+        "channel_number": "726",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.6475082076550267,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 4,
+      "timestamp": "20250812_222857_220",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "hanxinz 726頻休閒公會 STARTEAR只收台灣人/有LNE社群130人+/拉圖斯|CD團歡迎愛聊天",
+        "is_match": false,
+        "player_name": "hanxinz",
+        "channel_number": "726",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.6475082076550267,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 5,
+      "timestamp": "20250812_222859_905",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "hanxinz 726頻休閒公會 STARTEAR只收台灣人/有LNE社群130人+/拉圖斯|CD團歡迎愛聊天",
+        "is_match": false,
+        "player_name": "hanxinz",
+        "channel_number": "726",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.6475082076550267,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 6,
+      "timestamp": "20250812_222902_589",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "hanxinz 726頻休閒公會 STARTEAR只收台灣人/有LNE社群130人+/拉圖斯|CD團歡迎愛聊天",
+        "is_match": false,
+        "player_name": "hanxinz",
+        "channel_number": "726",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.6475082076550267,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 7,
+      "timestamp": "20250812_222905_315",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "AACasino 374弓訓場1 IHtt小] O50-5000娛樂小遊戲( 500送500認準公會 ( AACasino)",
+        "is_match": false,
+        "player_name": "AACasino",
+        "channel_number": "374",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.621361238466667,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 8,
+      "timestamp": "20250812_222908_038",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "AACasino 374弓訓場1 IHtt小] O50-5000娛樂小遊戲( 500送500認準公會 ( AACasino)",
+        "is_match": false,
+        "player_name": "AACasino",
+        "channel_number": "374",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.621361238466667,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 9,
+      "timestamp": "20250812_222910_630",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "小芝 自由1012賣 (克利斯拳套)7幸46攻 1400雪私訊或直接來談議價~~~~",
+        "is_match": false,
+        "player_name": "小芝",
+        "channel_number": "1012",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.829105482934937,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 10,
+      "timestamp": "20250812_222913_251",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "小芝巴巴 自由1012賣 (克利斯拳套)7幸46攻 1400雪私訊或直接來談議價~~~~",
+        "is_match": false,
+        "player_name": "小芝巴巴",
+        "channel_number": "1012",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.9181061861884334,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 11,
+      "timestamp": "20250812_222915_993",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "小芝巴巴 自由1012賣 (克利斯拳套)7幸46攻 1400雪私訊或直接來談議價~~~~",
+        "is_match": false,
+        "player_name": "小芝巴巴",
+        "channel_number": "1012",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.9181061861884334,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 12,
+      "timestamp": "20250812_222918_670",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "墨禹 1781自由賣弓攻10% 200張<1:3.5雪>法師88等套服<10屬3雪>伊卡回披<6敏/50雪",
+        "is_match": false,
+        "player_name": "墨禹",
+        "channel_number": "1781",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.979966461213746,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 13,
+      "timestamp": "20250812_222921_343",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "Eric 402頻弓訓場10比大小l00~1500雪0Eric老牌娛樂0請認casino公會歡迎來走走看看0",
+        "is_match": false,
+        "player_name": "Eric",
+        "channel_number": "402",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.7935628205958916,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 14,
+      "timestamp": "20250812_222924_110",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "Baby鯊啣啣唧 750雪腰帶幸運1 250雪腰帶敏捷1 500雪自點交易",
+        "is_match": false,
+        "player_name": "Baby鯊啣啣唧",
+        "channel_number": "750",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.6888753071014435,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 15,
+      "timestamp": "20250812_222926_896",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "Baby鯊啣啣唧 750雪腰帶幸運1 250雪腰帶敏捷1 500雪自點交易",
+        "is_match": false,
+        "player_name": "Baby鯊啣啣唧",
+        "channel_number": "750",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.6888753071014435,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 16,
+      "timestamp": "20250812_222929_561",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "錢多多 267 弓手訓練場 [老字號誠信穩定(100-3000雪)牛牛,大小0-9認準XssH888H] 首送5",
+        "is_match": false,
+        "player_name": "錢多多",
+        "channel_number": "267",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.8716738401669528,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 17,
+      "timestamp": "20250812_222932_185",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "在下毛毛雨 1330自由1洞賣2智8幸鑽盾 50雪 8AD工地手套35雪7敏骷髏頭盔 15雪",
+        "is_match": false,
+        "player_name": "在下毛毛雨",
+        "channel_number": "1330",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.9044128012952295,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 18,
+      "timestamp": "20250812_222934_860",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "Loze 專門開腳本搶圖的有名垃圾公會 ITwoPiece]在2075頻道搶圖, 歡迎大家一起來打.",
+        "is_match": false,
+        "player_name": "Loze",
+        "channel_number": "2075",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.7963886946031224,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 19,
+      "timestamp": "20250812_222937_196",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "Hsu 2379售盾幸60% 1:3.8雪",
+        "is_match": false,
+        "player_name": "Hsu",
+        "channel_number": "2379",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.8910926470274909,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 20,
+      "timestamp": "20250812_222939_836",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "fagwa 1818賣一堆弓箭手套服手套艾倫弓/套服10屬^手套5屬箇弓85個打包不挑",
+        "is_match": false,
+        "player_name": "fagwa",
+        "channel_number": "1818",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.5853368247693145,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 21,
+      "timestamp": "20250812_222942_681",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "那我也要睡啦 C:1890弓手訓練場:@:低507高500雪認證公會 Idelinquel",
+        "is_match": false,
+        "player_name": "那我也要睡啦",
+        "channel_number": "1890",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.7954869868702209,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 22,
+      "timestamp": "20250812_222945_805",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "賭神高進 賭神^首儲500送",
+        "is_match": false,
+        "player_name": "賭神高進",
+        "channel_number": "500",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.8114268672991922,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    },
+    {
+      "test_id": 23,
+      "timestamp": "20250812_222948_485",
+      "screenshot_filename": null,
+      "image_base64": null,
+      "analysis_result": {
+        "full_text": "Rice 2486-2 售黑雪鞋+8敏35雪+7敏30雪+6敏5雪. 骷髏頭盔+7敏5雪. +10敏桑拿服5雪",
+        "is_match": false,
+        "player_name": "Rice",
+        "channel_number": "2486",
+        "matched_items": [],
+        "matched_keywords": [],
+        "confidence": 0.9444663658504475,
+        "analysis_method": "OCR_Rectangle"
+      },
+      "error_info": null,
+      "has_match": false,
+      "match_details": null
+    }
+  ]
+}

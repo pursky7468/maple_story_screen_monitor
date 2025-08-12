@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 20,
+  "timestamp": "20250812_222939_835",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "fagwa 1818賣一堆弓箭手套服手套艾倫弓/套服10屬^手套5屬箇弓85個打包不挑",
+    "is_match": false,
+    "player_name": "fagwa",
+    "channel_number": "1818",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.5853368247693145,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "fagwa",
+    "rear_text": "1818賣一堆弓箭手套服手套艾倫弓/套服10屬^手套5屬箇弓85個打包不挑",
+    "full_text": "fagwa 1818賣一堆弓箭手套服手套艾倫弓/套服10屬^手套5屬箇弓85個打包不挑",
+    "ocr_results": [
+      {
+        "text": "fagwa",
+        "confidence": 0.9950998906568024,
+        "bbox": [
+          [
+            1,
+            3
+          ],
+          [
+            78,
+            3
+          ],
+          [
+            78,
+            38
+          ],
+          [
+            1,
+            38
+          ]
+        ]
+      },
+      {
+        "text": "1818賣一堆弓箭手套服手套艾倫弓/套服10屬^手套5屬箇弓85個打包不挑",
+        "confidence": 0.17557375888182652,
+        "bbox": [
+          [
+            159,
+            3
+          ],
+          [
+            861,
+            3
+          ],
+          [
+            861,
+            38
+          ],
+          [
+            159,
+            38
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        73,
+        7,
+        76,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": null
+}

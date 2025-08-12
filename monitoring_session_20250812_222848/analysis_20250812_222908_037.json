@@ -1,0 +1,97 @@
+{
+  "monitoring_id": 8,
+  "timestamp": "20250812_222908_037",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "AACasino 374弓訓場1 IHtt小] O50-5000娛樂小遊戲( 500送500認準公會 ( AACasino)",
+    "is_match": false,
+    "player_name": "AACasino",
+    "channel_number": "374",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.621361238466667,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "AACasino",
+    "rear_text": "374弓訓場1 IHtt小] O50-5000娛樂小遊戲( 500送500認準公會 ( AACasino)",
+    "full_text": "AACasino 374弓訓場1 IHtt小] O50-5000娛樂小遊戲( 500送500認準公會 ( AACasino)",
+    "ocr_results": [
+      {
+        "text": "AACasino",
+        "confidence": 0.9995983833132429,
+        "bbox": [
+          [
+            6,
+            6
+          ],
+          [
+            110,
+            6
+          ],
+          [
+            110,
+            36
+          ],
+          [
+            6,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "374弓訓場1 IHtt小] O50-5000娛樂小遊戲(",
+        "confidence": 0.2408927547334353,
+        "bbox": [
+          [
+            193,
+            2
+          ],
+          [
+            640,
+            2
+          ],
+          [
+            640,
+            38
+          ],
+          [
+            193,
+            38
+          ]
+        ]
+      },
+      {
+        "text": "500送500認準公會 ( AACasino)",
+        "confidence": 0.6235925773533227,
+        "bbox": [
+          [
+            647,
+            1
+          ],
+          [
+            993,
+            1
+          ],
+          [
+            993,
+            38
+          ],
+          [
+            647,
+            38
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        106,
+        7,
+        76,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": null
+}

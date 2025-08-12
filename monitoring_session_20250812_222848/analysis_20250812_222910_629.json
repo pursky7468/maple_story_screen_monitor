@@ -1,0 +1,75 @@
+{
+  "monitoring_id": 9,
+  "timestamp": "20250812_222910_629",
+  "analysis_method": "OCR_Rectangle",
+  "result": {
+    "full_text": "小芝 自由1012賣 (克利斯拳套)7幸46攻 1400雪私訊或直接來談議價~~~~",
+    "is_match": false,
+    "player_name": "小芝",
+    "channel_number": "1012",
+    "matched_items": [],
+    "matched_keywords": [],
+    "confidence": 0.829105482934937,
+    "analysis_method": "OCR_Rectangle"
+  },
+  "raw_response": {
+    "front_text": "小芝",
+    "rear_text": "自由1012賣 (克利斯拳套)7幸46攻 1400雪私訊或直接來談議價~~~~",
+    "full_text": "小芝 自由1012賣 (克利斯拳套)7幸46攻 1400雪私訊或直接來談議價~~~~",
+    "ocr_results": [
+      {
+        "text": "小芝",
+        "confidence": 0.9993477134060522,
+        "bbox": [
+          [
+            6,
+            4
+          ],
+          [
+            56,
+            4
+          ],
+          [
+            56,
+            36
+          ],
+          [
+            6,
+            36
+          ]
+        ]
+      },
+      {
+        "text": "自由1012賣 (克利斯拳套)7幸46攻 1400雪私訊或直接來談議價~~~~",
+        "confidence": 0.6588632524638218,
+        "bbox": [
+          [
+            181,
+            3
+          ],
+          [
+            885,
+            3
+          ],
+          [
+            885,
+            38
+          ],
+          [
+            181,
+            38
+          ]
+        ]
+      }
+    ],
+    "white_rectangles": [
+      [
+        53,
+        7,
+        76,
+        23
+      ]
+    ]
+  },
+  "screenshot_path": null
+}
