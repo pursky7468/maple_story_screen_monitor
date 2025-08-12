@@ -43,19 +43,22 @@ class ScreenMonitor:
         self.real_time_merger = None
         self.monitoring_session_folder = None
         
-        # 如果需要保存截圖，創建資料夾和實時合併器
+        # 始終創建會話資料夾和實時合併器（為了支援HTML報告生成）
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.monitoring_session_folder = f"monitoring_session_{timestamp}"
+        
+        if not os.path.exists(self.monitoring_session_folder):
+            os.makedirs(self.monitoring_session_folder)
+        
+        # 初始化實時合併器
+        self.real_time_merger = RealTimeMerger(self.monitoring_session_folder)
+        
+        print(f"監控會話資料夾: {self.monitoring_session_folder}")
         if self.save_screenshots:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            self.monitoring_session_folder = f"monitoring_session_{timestamp}"
-            
-            if not os.path.exists(self.monitoring_session_folder):
-                os.makedirs(self.monitoring_session_folder)
-            
-            # 初始化實時合併器
-            self.real_time_merger = RealTimeMerger(self.monitoring_session_folder)
-            
-            print(f"監控會話資料夾: {self.monitoring_session_folder}")
-            print(f"HTML合併報告將自動生成並開啟")
+            print(f"截圖保存: 所有截圖將被保存")
+        else:
+            print(f"截圖保存: 僅在匹配成功時保存")
+        print(f"HTML合併報告將自動生成並開啟")
         
     def capture_roi(self):
         try:
@@ -121,9 +124,9 @@ class ScreenMonitor:
 {result.full_text}"""
             return no_match_info
     
-    def save_analysis_result(self, result: AnalysisResult, raw_response: str, screenshot_path: str):
+    def save_analysis_result(self, result: AnalysisResult, raw_response: str, screenshot_path: str, screenshot_saved: bool = True):
         """保存分析結果並記錄到合併器"""
-        if self.save_screenshots and self.real_time_merger:
+        if self.real_time_merger:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # 包含毫秒
             
             # 保存結構化結果
@@ -154,7 +157,9 @@ class ScreenMonitor:
             
             log_test_result(self.real_time_merger, self.monitoring_counter, screenshot_path, result_dict, error_info)
             
-            print(f"已記錄分析結果 #{self.monitoring_counter}")
+            match_status = "匹配成功" if result.is_match else "未匹配"
+            save_status = "已保存截圖" if screenshot_saved else "未保存截圖"
+            print(f"已記錄分析結果 #{self.monitoring_counter} ({match_status}, {save_status})")
     
     def show_alert(self, message):
         if self.show_alerts:
@@ -191,9 +196,17 @@ class ScreenMonitor:
                     
                     result, raw_response = self.analyze_with_strategy(roi_image)
                     
-                    # 保存分析結果
-                    if screenshot_path:
-                        self.save_analysis_result(result, raw_response, screenshot_path)
+                    # 檢查是否匹配成功，如果未保存截圖但匹配成功，強制保存
+                    should_save_screenshot = self.save_screenshots or result.is_match
+                    
+                    # 如果需要保存但還未保存，現在保存
+                    if should_save_screenshot and not screenshot_path:
+                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
+                        screenshot_path = os.path.join(self.monitoring_session_folder, f"monitor_{self.monitoring_counter:03d}_{timestamp}.png")
+                        roi_image.save(screenshot_path)
+                    
+                    # 保存分析結果（始終保存以支援HTML報告）
+                    self.save_analysis_result(result, raw_response, screenshot_path, should_save_screenshot)
                     
                     # 格式化顯示資訊
                     match_details = self.format_match_info(result)
@@ -214,7 +227,7 @@ class ScreenMonitor:
     
     def finalize_session(self):
         """結束會話並生成報告"""
-        if self.save_screenshots and self.real_time_merger:
+        if self.real_time_merger:
             print("\n正在生成HTML合併報告...")
             
             # 生成完整的HTML報告（不限制條目數量）
