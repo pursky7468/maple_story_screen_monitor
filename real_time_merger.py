@@ -211,12 +211,34 @@ class RealTimeMerger:
             # 完整廣播內容
             full_text = analysis.get('full_text', '無法取得完整內容')
             
-            # 時間戳
+            # 時間戳 - 轉換為完整格式
             timestamp = result.get('timestamp', '')
-            if len(timestamp) >= 13:  # 包含毫秒的格式
-                time_display = f"{timestamp[8:10]}:{timestamp[10:12]}:{timestamp[12:14]}"
+            formatted_time = '未知時間'
+            if timestamp:
+                try:
+                    # 解析時間戳格式 YYYYMMDD_HHMMSS_mmm
+                    if '_' in timestamp:
+                        date_part, time_part = timestamp.split('_', 1)
+                        if len(date_part) == 8 and len(time_part) >= 6:
+                            year = date_part[:4]
+                            month = date_part[4:6] 
+                            day = date_part[6:8]
+                            hour = time_part[:2]
+                            minute = time_part[2:4]
+                            second = time_part[4:6]
+                            formatted_time = f"{year}/{month}/{day} {hour}:{minute}:{second}"
+                            time_display = f"{hour}:{minute}:{second}"  # 用於標題欄的簡短格式
+                        else:
+                            formatted_time = timestamp
+                            time_display = timestamp
+                    else:
+                        formatted_time = timestamp
+                        time_display = timestamp
+                except:
+                    formatted_time = timestamp
+                    time_display = timestamp
             else:
-                time_display = timestamp
+                time_display = '未知'
             
             card_html = f"""
         <div class="match-card">
@@ -240,6 +262,11 @@ class RealTimeMerger:
                 <div class="field-row">
                     <span class="field-label">商品內容:</span>
                     <span class="field-value items-list">{items_text}</span>
+                </div>
+                
+                <div class="field-row">
+                    <span class="field-label">匹配時間:</span>
+                    <span class="field-value" style="color: #3498db; font-weight: bold;">{formatted_time}</span>
                 </div>
                 
                 <div class="field-row">
