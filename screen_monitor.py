@@ -13,7 +13,10 @@ from gemini_analyzer import GeminiAnalyzer
 from ocr_analyzer import OCRAnalyzer
 from ocr_rectangle_analyzer import OCRRectangleAnalyzer
 from real_time_merger import RealTimeMerger, log_test_result
+from html_template_with_real_config import get_enhanced_html_template, get_current_config
 import webbrowser
+import threading
+from config_api import start_config_api_server
 
 def convert_to_json_serializable(obj):
     """將物件轉換為JSON可序列化的格式"""
@@ -33,15 +36,18 @@ def convert_to_json_serializable(obj):
 class ScreenMonitor:
     """使用策略模式的螢幕監控器"""
     
-    def __init__(self, roi_coordinates, analyzer, save_screenshots=False, show_alerts=True):
+    def __init__(self, roi_coordinates, analyzer, save_screenshots=False, show_alerts=True, auto_open_html=True):
         self.roi_coordinates = roi_coordinates
         self.analyzer = analyzer
         self.save_screenshots = save_screenshots
         self.show_alerts = show_alerts
+        self.auto_open_html = auto_open_html
         self.running = False
         self.monitoring_counter = 0
         self.real_time_merger = None
         self.monitoring_session_folder = None
+        self.html_opened = False
+        self.api_server_thread = None
         
         # 始終創建會話資料夾和實時合併器（為了支援HTML報告生成）
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -58,7 +64,74 @@ class ScreenMonitor:
             print(f"檔案保存: 所有截圖和JSON將被保存（完整debug模式）")
         else:
             print(f"檔案保存: 僅在匹配成功時保存截圖和JSON（精簡模式）")
-        print(f"HTML合併報告將自動生成並開啟")
+        print(f"HTML合併報告將自動生成{'並開啟' if self.auto_open_html else ''}")
+        
+        # 啟動配置API服務器
+        self.start_config_api_server()
+        
+        # 創建初始HTML文件
+        self.create_initial_html()
+        
+    def start_config_api_server(self):
+        """啟動配置API服務器"""
+        try:
+            def run_api_server():
+                start_config_api_server(port=8899)
+            
+            self.api_server_thread = threading.Thread(target=run_api_server, daemon=True)
+            self.api_server_thread.start()
+            print("[OK] 配置API服務器已在背景啟動 (port 8899)")
+        except Exception as e:
+            print(f"[WARN] 無法啟動配置API服務器: {e}")
+    
+    def create_initial_html(self):
+        """創建初始HTML報告文件 - 使用增強模板"""
+        try:
+            html_path = os.path.join(self.monitoring_session_folder, "quick_view.html")
+            
+            # 獲取當前配置
+            current_config = get_current_config()
+            
+            # 使用增強HTML模板
+            html_template = get_enhanced_html_template()
+            initial_html = html_template.format(
+                total_tests=0,
+                matched_count=0,
+                match_rate=0.0,
+                match_cards='<div style="text-align: center; padding: 40px; color: #666;">系統正在監控中，找到匹配交易時會顯示在此處...</div>',
+                current_config=json.dumps(current_config, ensure_ascii=False),
+                refresh_interval=30
+            )
+            
+            with open(html_path, 'w', encoding='utf-8') as f:
+                f.write(initial_html)
+                
+            print(f"[OK] 增強HTML界面已創建: {html_path}")
+            
+        except Exception as e:
+            print(f"[WARN] 創建HTML界面失敗 - {e}")
+    
+    def open_html_in_browser(self):
+        """在瀏覽器中開啟HTML報告"""
+        if not self.auto_open_html or self.html_opened:
+            return
+            
+        try:
+            html_path = os.path.join(self.monitoring_session_folder, "quick_view.html")
+            if os.path.exists(html_path):
+                # 轉換為絕對路徑和file:// URL
+                abs_path = os.path.abspath(html_path)
+                file_url = f"file:///{abs_path.replace(os.sep, '/')}"
+                
+                print(f"[INFO] 正在開啟HTML報告...")
+                webbrowser.open(file_url)
+                self.html_opened = True
+                print("[OK] HTML報告已在預設瀏覽器中開啟")
+            else:
+                print(f"[WARN] 找不到HTML文件: {html_path}")
+                
+        except Exception as e:
+            print(f"[WARN] 開啟瀏覽器失敗 - {e}")
         
     def capture_roi(self):
         try:
@@ -193,6 +266,10 @@ class ScreenMonitor:
         print(f"截圖保存: {'開啟' if self.save_screenshots else '關閉'}")
         print(f"提示窗顯示: {'開啟' if self.show_alerts else '關閉'}")
         print("按 Ctrl+C 停止監控")
+        
+        # 自動開啟HTML報告
+        if self.auto_open_html:
+            self.open_html_in_browser()
         
         try:
             while self.running:
@@ -737,6 +814,9 @@ def get_user_settings():
         else:
             print("請輸入 y 或 n")
     
+    # 預設自動開啟HTML報告
+    auto_open_html = True
+    
     # ROI選擇
     print("\n請選擇監控區域（ROI）...")
     print("即將顯示全螢幕截圖，請用滑鼠拖拉選擇監控區域")
@@ -747,19 +827,20 @@ def get_user_settings():
     
     if roi_coordinates is None:
         print("未選擇ROI區域，程式結束")
-        return None, None, None, None
+        return None, None, None, None, None
     
     print(f"\n已選擇ROI: {roi_coordinates}")
     print(f"分析方法: {analyzer_type}")
     print(f"截圖保存: {'開啟' if save_screenshots else '關閉'}")
     print(f"提示窗顯示: {'開啟' if show_alerts else '關閉'}")
+    print("HTML報告: 自動開啟 (預設)")
     
-    return roi_coordinates, analyzer_type, save_screenshots, show_alerts
+    return roi_coordinates, analyzer_type, save_screenshots, show_alerts, auto_open_html
 
 def main():
     """主程式"""
     # 獲取使用者設定
-    roi_coordinates, analyzer_type, save_screenshots, show_alerts = get_user_settings()
+    roi_coordinates, analyzer_type, save_screenshots, show_alerts, auto_open_html = get_user_settings()
     if roi_coordinates is None:
         return
     
@@ -769,7 +850,7 @@ def main():
         return
     
     # 創建監控器
-    monitor = ScreenMonitor(roi_coordinates, analyzer, save_screenshots, show_alerts)
+    monitor = ScreenMonitor(roi_coordinates, analyzer, save_screenshots, show_alerts, auto_open_html)
     
     print("\n螢幕監控程式")
     print("=" * 40)

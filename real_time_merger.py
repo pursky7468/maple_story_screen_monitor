@@ -7,6 +7,7 @@ import json
 import base64
 from datetime import datetime
 from pathlib import Path
+from html_template_with_real_config import get_enhanced_html_template, get_current_config
 
 class RealTimeMerger:
     """實時測試結果合併器"""
@@ -83,95 +84,34 @@ class RealTimeMerger:
             print(f"警告：保存合併結果失敗 - {e}")
     
     def generate_quick_html(self):
-        """生成快速HTML查看器 - 只顯示有匹配的結果"""
-        if not self.merged_results:
-            return
-        
-        # 只取有匹配的結果，並按時間倒序排列
-        matched_results = [r for r in self.merged_results if r['has_match']]
-        matched_results.reverse()  # 最新的在上面
-        
-        if not matched_results:
-            print("沒有找到匹配結果，不生成HTML報告")
-            return
-        
+        """生成快速HTML查看器 - 使用增強模板包含配置界面"""
         html_file = self.test_folder / "quick_view.html"
         
         # 統計信息
         total_tests = len(self.merged_results)
+        matched_results = [r for r in self.merged_results if r['has_match']]
         matched_count = len(matched_results)
+        match_rate = (matched_count / total_tests * 100) if total_tests > 0 else 0
         
-        html_content = f"""
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>交易匹配監控結果</title>
-    <style>
-        body {{ font-family: 'Microsoft JhengHei', Arial, sans-serif; margin: 20px; background: #f5f5f5; }}
-        .header {{ background: #2c3e50; color: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; }}
-        .stats {{ display: flex; gap: 15px; margin-bottom: 20px; }}
-        .stat {{ background: white; padding: 15px; border-radius: 8px; text-align: center; flex: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
-        .stat-number {{ font-size: 1.5em; font-weight: bold; color: #e74c3c; }}
-        .match-list {{ display: flex; flex-direction: column; gap: 15px; }}
-        .match-card {{ background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 4px solid #e74c3c; }}
-        .match-header {{ background: #fff3cd; padding: 12px 15px; border-bottom: 1px solid #f39c12; }}
-        .match-content {{ padding: 15px; }}
-        .field-row {{ margin-bottom: 12px; }}
-        .field-label {{ font-weight: bold; color: #2c3e50; min-width: 80px; display: inline-block; }}
-        .field-value {{ color: #34495e; }}
-        .player-name {{ color: #2980b9; font-weight: bold; }}
-        .channel-name {{ color: #27ae60; font-weight: bold; }}
-        .items-list {{ color: #e74c3c; font-weight: bold; }}
-        .full-text {{ background: #ecf0f1; padding: 10px; border-radius: 4px; font-family: Consolas, monospace; font-size: 12px; line-height: 1.4; }}
-        .screenshot {{ max-width: 200px; max-height: 100px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; float: right; margin-left: 15px; }}
-        .timestamp {{ color: #7f8c8d; font-size: 0.9em; float: right; }}
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h2>🎯 交易匹配監控結果</h2>
-        <p>生成時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | 找到 {matched_count} 個匹配交易</p>
-    </div>
-    
-    <div class="stats">
-        <div class="stat">
-            <div class="stat-number">{total_tests}</div>
-            <div>總測試數</div>
-        </div>
-        <div class="stat">
-            <div class="stat-number">{matched_count}</div>
-            <div>匹配交易</div>
-        </div>
-        <div class="stat">
-            <div class="stat-number">{(matched_count/total_tests*100):.1f}%</div>
-            <div>匹配率</div>
-        </div>
-    </div>
-    
-    <div class="match-list">
-        {self.generate_match_cards(matched_results)}
-    </div>
-    
-    <script>
-        // 點擊圖片放大
-        document.querySelectorAll('.screenshot').forEach(img => {{
-            img.onclick = function() {{
-                const modal = document.createElement('div');
-                modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:flex;justify-content:center;align-items:center;cursor:pointer;';
-                const bigImg = document.createElement('img');
-                bigImg.src = this.src;
-                bigImg.style.cssText = 'max-width:90%;max-height:90%;';
-                modal.appendChild(bigImg);
-                modal.onclick = () => document.body.removeChild(modal);
-                document.body.appendChild(modal);
-            }};
-        }});
-    </script>
-</body>
-</html>
-"""
+        # 按時間倒序排列匹配結果
+        matched_results.reverse()  # 最新的在上面
+        
+        # 獲取當前配置
+        current_config = get_current_config()
+        
+        # 生成匹配卡片HTML
+        match_cards = self.generate_match_cards(matched_results) if matched_results else '<div style="text-align: center; padding: 40px; color: #666;">暫無匹配交易，系統正在監控中...</div>'
+        
+        # 使用增強HTML模板
+        html_template = get_enhanced_html_template()
+        html_content = html_template.format(
+            total_tests=total_tests,
+            matched_count=matched_count,
+            match_rate=match_rate,
+            match_cards=match_cards,
+            current_config=json.dumps(current_config, ensure_ascii=False),
+            refresh_interval=30
+        )
         
         try:
             with open(html_file, 'w', encoding='utf-8') as f:
