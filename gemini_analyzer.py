@@ -6,9 +6,10 @@ from text_analyzer import TextAnalyzer, AnalysisResult
 class GeminiAnalyzer(TextAnalyzer):
     """使用Gemini API的文字分析器"""
     
-    def __init__(self, api_key: str, selling_items: dict):
+    def __init__(self, api_key: str, selling_items: dict, buying_items: dict = None):
         super().__init__(selling_items)
         self.strategy_type = "GEMINI"
+        self.buying_items = buying_items or {}
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel('gemini-1.5-flash')
         
@@ -24,12 +25,21 @@ class GeminiAnalyzer(TextAnalyzer):
             selling_list = '\n'.join([f"- {item_name}: {', '.join(keywords)}" 
                                     for item_name, keywords in self.selling_items.items()])
             
+            buying_list = '\n'.join([f"- {item_name}: {', '.join(keywords)}" 
+                                   for item_name, keywords in self.buying_items.items()])
+            
             prompt = f"""
             你是一位楓之谷遊戲中的商人，
+            
             你手中有以下商品要賣出：
             {selling_list}
             
-            請分析這張圖片中的所有文字內容，並檢查是否有玩家在收購你手中的任何商品。
+            你想要收購以下商品：
+            {buying_list}
+            
+            請分析這張圖片中的所有文字內容，並檢查是否有以下交易機會：
+            1. 玩家在收購你手中的商品（你要賣給他們）
+            2. 玩家在出售你想要的商品（你要向他們購買）
             請以JSON格式回傳分析結果，格式如下：
             {{
                 "full_text": "圖片中的完整文字內容",
@@ -39,7 +49,8 @@ class GeminiAnalyzer(TextAnalyzer):
                 "matched_items": [
                     {{
                         "item_name": "商品名稱",
-                        "keywords_found": ["找到的相關關鍵字"]
+                        "keywords_found": ["找到的相關關鍵字"],
+                        "trade_type": "sell" or "buy"  // 交易類型：賣出或購買
                     }}
                 ],
                 "matched_keywords": ["所有找到的關鍵字"]
@@ -47,7 +58,8 @@ class GeminiAnalyzer(TextAnalyzer):
             
             注意事項：
             - full_text 必須包含圖片中所有識別到的文字
-            - is_match 判斷是否有人在收購你手中的任何商品
+            - is_match 判斷是否有任何交易機會（賣出或購買）
+            - trade_type 在matched_items中標記每個匹配項目的交易類型："sell"（你賣給對方）或"buy"（你向對方購買）
             - player_name 提取說話者的玩家名稱
             - channel_number 提取頻道編號（通常格式如 [頻道1] 或 ch1 等）
             - matched_items 列出匹配的商品及其找到的關鍵字

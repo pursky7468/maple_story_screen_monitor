@@ -22,10 +22,11 @@ import re
 class OCRRectangleAnalyzer(TextAnalyzer):
     """使用白框檢測的OCR分析策略"""
     
-    def __init__(self, selling_items: dict, languages: List[str] = None, 
+    def __init__(self, selling_items: dict, buying_items: dict = None, languages: List[str] = None, 
                  save_debug_images: bool = False, debug_folder: str = "rectangle_debug"):
         super().__init__(selling_items)
         self.strategy_type = "OCR_RECTANGLE"
+        self.buying_items = buying_items or {}
         self.save_debug_images = save_debug_images
         self.debug_folder = debug_folder
         

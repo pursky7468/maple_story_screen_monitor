@@ -31,12 +31,23 @@ class ConfigManager:
             return {
                 'SELLING_ITEMS': config.SELLING_ITEMS,
                 'INACTIVE_ITEMS': getattr(config, 'INACTIVE_ITEMS', {}),
+                'BUYING_ITEMS': getattr(config, 'BUYING_ITEMS', {}),
+                'INACTIVE_BUYING_ITEMS': getattr(config, 'INACTIVE_BUYING_ITEMS', {}),
+                'TRADING_KEYWORDS': getattr(config, 'TRADING_KEYWORDS', {}),
                 'SCAN_INTERVAL': config.SCAN_INTERVAL,
                 'GEMINI_API_KEY': config.GEMINI_API_KEY[:10] + '...' if len(config.GEMINI_API_KEY) > 10 else config.GEMINI_API_KEY
             }
         except Exception as e:
             print(f"獲取配置失敗: {e}")
-            return {'SELLING_ITEMS': {}, 'INACTIVE_ITEMS': {}, 'SCAN_INTERVAL': 2, 'GEMINI_API_KEY': ''}
+            return {
+                'SELLING_ITEMS': {}, 
+                'INACTIVE_ITEMS': {}, 
+                'BUYING_ITEMS': {}, 
+                'INACTIVE_BUYING_ITEMS': {},
+                'TRADING_KEYWORDS': {},
+                'SCAN_INTERVAL': 2, 
+                'GEMINI_API_KEY': ''
+            }
     
     def update_config_section(self, section_name, items_dict):
         """更新配置文件中的指定區域"""
@@ -83,81 +94,189 @@ class ConfigManager:
         """更新INACTIVE_ITEMS配置"""
         return self.update_config_section('INACTIVE_ITEMS', inactive_items)
     
-    def add_item(self, item_name, keywords):
+    def update_buying_items(self, buying_items):
+        """更新BUYING_ITEMS配置"""
+        return self.update_config_section('BUYING_ITEMS', buying_items)
+    
+    def update_inactive_buying_items(self, inactive_buying_items):
+        """更新INACTIVE_BUYING_ITEMS配置"""
+        return self.update_config_section('INACTIVE_BUYING_ITEMS', inactive_buying_items)
+    
+    def add_item(self, item_name, keywords, item_type='sell'):
         """添加新的監控物品"""
         current_config = self.get_config()
-        selling_items = current_config.get('SELLING_ITEMS', {})
-        selling_items[item_name] = keywords
-        return self.update_selling_items(selling_items)
+        
+        if item_type == 'buy':
+            buying_items = current_config.get('BUYING_ITEMS', {})
+            buying_items[item_name] = keywords
+            return self.update_buying_items(buying_items)
+        else:  # sell
+            selling_items = current_config.get('SELLING_ITEMS', {})
+            selling_items[item_name] = keywords
+            return self.update_selling_items(selling_items)
     
-    def remove_item(self, item_name):
+    def remove_item(self, item_name, item_type=None):
         """刪除監控物品"""
         current_config = self.get_config()
-        selling_items = current_config.get('SELLING_ITEMS', {})
-        inactive_items = current_config.get('INACTIVE_ITEMS', {})
-        
         removed = False
-        if item_name in selling_items:
-            del selling_items[item_name]
-            self.update_selling_items(selling_items)
-            removed = True
-        if item_name in inactive_items:
-            del inactive_items[item_name]
-            self.update_inactive_items(inactive_items)
-            removed = True
+        
+        # 如果指定了類型，只從指定類型中刪除
+        if item_type == 'buy':
+            buying_items = current_config.get('BUYING_ITEMS', {})
+            inactive_buying_items = current_config.get('INACTIVE_BUYING_ITEMS', {})
+            
+            if item_name in buying_items:
+                del buying_items[item_name]
+                self.update_buying_items(buying_items)
+                removed = True
+            if item_name in inactive_buying_items:
+                del inactive_buying_items[item_name]
+                self.update_inactive_buying_items(inactive_buying_items)
+                removed = True
+        elif item_type == 'sell':
+            selling_items = current_config.get('SELLING_ITEMS', {})
+            inactive_items = current_config.get('INACTIVE_ITEMS', {})
+            
+            if item_name in selling_items:
+                del selling_items[item_name]
+                self.update_selling_items(selling_items)
+                removed = True
+            if item_name in inactive_items:
+                del inactive_items[item_name]
+                self.update_inactive_items(inactive_items)
+                removed = True
+        else:
+            # 未指定類型，從所有區域刪除（向後相容）
+            selling_items = current_config.get('SELLING_ITEMS', {})
+            inactive_items = current_config.get('INACTIVE_ITEMS', {})
+            buying_items = current_config.get('BUYING_ITEMS', {})
+            inactive_buying_items = current_config.get('INACTIVE_BUYING_ITEMS', {})
+            
+            if item_name in selling_items:
+                del selling_items[item_name]
+                self.update_selling_items(selling_items)
+                removed = True
+            if item_name in inactive_items:
+                del inactive_items[item_name]
+                self.update_inactive_items(inactive_items)
+                removed = True
+            if item_name in buying_items:
+                del buying_items[item_name]
+                self.update_buying_items(buying_items)
+                removed = True
+            if item_name in inactive_buying_items:
+                del inactive_buying_items[item_name]
+                self.update_inactive_buying_items(inactive_buying_items)
+                removed = True
         
         return removed
     
-    def update_item(self, item_name, keywords):
+    def update_item(self, item_name, keywords, item_type=None):
         """更新物品關鍵字"""
         current_config = self.get_config()
-        selling_items = current_config.get('SELLING_ITEMS', {})
-        inactive_items = current_config.get('INACTIVE_ITEMS', {})
         
-        if item_name in selling_items:
-            selling_items[item_name] = keywords
-            return self.update_selling_items(selling_items)
-        elif item_name in inactive_items:
-            inactive_items[item_name] = keywords
-            return self.update_inactive_items(inactive_items)
+        # 如果指定了類型，只在指定類型中查找
+        if item_type == 'buy':
+            buying_items = current_config.get('BUYING_ITEMS', {})
+            inactive_buying_items = current_config.get('INACTIVE_BUYING_ITEMS', {})
+            
+            if item_name in buying_items:
+                buying_items[item_name] = keywords
+                return self.update_buying_items(buying_items)
+            elif item_name in inactive_buying_items:
+                inactive_buying_items[item_name] = keywords
+                return self.update_inactive_buying_items(inactive_buying_items)
+        elif item_type == 'sell':
+            selling_items = current_config.get('SELLING_ITEMS', {})
+            inactive_items = current_config.get('INACTIVE_ITEMS', {})
+            
+            if item_name in selling_items:
+                selling_items[item_name] = keywords
+                return self.update_selling_items(selling_items)
+            elif item_name in inactive_items:
+                inactive_items[item_name] = keywords
+                return self.update_inactive_items(inactive_items)
+        else:
+            # 未指定類型，按原有逻輯查找（先找賣物品）
+            selling_items = current_config.get('SELLING_ITEMS', {})
+            inactive_items = current_config.get('INACTIVE_ITEMS', {})
+            buying_items = current_config.get('BUYING_ITEMS', {})
+            inactive_buying_items = current_config.get('INACTIVE_BUYING_ITEMS', {})
+            
+            if item_name in selling_items:
+                selling_items[item_name] = keywords
+                return self.update_selling_items(selling_items)
+            elif item_name in inactive_items:
+                inactive_items[item_name] = keywords
+                return self.update_inactive_items(inactive_items)
+            elif item_name in buying_items:
+                buying_items[item_name] = keywords
+                return self.update_buying_items(buying_items)
+            elif item_name in inactive_buying_items:
+                inactive_buying_items[item_name] = keywords
+                return self.update_inactive_buying_items(inactive_buying_items)
         
         return False
     
-    def pause_item(self, item_name):
-        """暫停物品監控 - 從SELLING_ITEMS移到INACTIVE_ITEMS"""
+    def pause_item(self, item_name, item_type='sell'):
+        """暫停物品監控"""
         current_config = self.get_config()
-        selling_items = current_config.get('SELLING_ITEMS', {})
-        inactive_items = current_config.get('INACTIVE_ITEMS', {})
         
-        if item_name in selling_items:
-            # 移動物品到暫停區域
-            inactive_items[item_name] = selling_items[item_name]
-            del selling_items[item_name]
+        if item_type == 'buy':
+            # 暫停買物品監控 - 從BUYING_ITEMS移到INACTIVE_BUYING_ITEMS
+            buying_items = current_config.get('BUYING_ITEMS', {})
+            inactive_buying_items = current_config.get('INACTIVE_BUYING_ITEMS', {})
             
-            # 更新兩個區域
-            success1 = self.update_selling_items(selling_items)
-            success2 = self.update_inactive_items(inactive_items)
+            if item_name in buying_items:
+                inactive_buying_items[item_name] = buying_items[item_name]
+                del buying_items[item_name]
+                
+                success1 = self.update_buying_items(buying_items)
+                success2 = self.update_inactive_buying_items(inactive_buying_items)
+                return success1 and success2
+        else:
+            # 暫停賣物品監控 - 從SELLING_ITEMS移到INACTIVE_ITEMS
+            selling_items = current_config.get('SELLING_ITEMS', {})
+            inactive_items = current_config.get('INACTIVE_ITEMS', {})
             
-            return success1 and success2
+            if item_name in selling_items:
+                inactive_items[item_name] = selling_items[item_name]
+                del selling_items[item_name]
+                
+                success1 = self.update_selling_items(selling_items)
+                success2 = self.update_inactive_items(inactive_items)
+                return success1 and success2
         
         return False
     
-    def resume_item(self, item_name):
-        """恢復物品監控 - 從INACTIVE_ITEMS移到SELLING_ITEMS"""
+    def resume_item(self, item_name, item_type='sell'):
+        """恢復物品監控"""
         current_config = self.get_config()
-        selling_items = current_config.get('SELLING_ITEMS', {})
-        inactive_items = current_config.get('INACTIVE_ITEMS', {})
         
-        if item_name in inactive_items:
-            # 移動物品到活躍區域
-            selling_items[item_name] = inactive_items[item_name]
-            del inactive_items[item_name]
+        if item_type == 'buy':
+            # 恢復買物品監控 - 從INACTIVE_BUYING_ITEMS移到BUYING_ITEMS
+            buying_items = current_config.get('BUYING_ITEMS', {})
+            inactive_buying_items = current_config.get('INACTIVE_BUYING_ITEMS', {})
             
-            # 更新兩個區域
-            success1 = self.update_selling_items(selling_items)
-            success2 = self.update_inactive_items(inactive_items)
+            if item_name in inactive_buying_items:
+                buying_items[item_name] = inactive_buying_items[item_name]
+                del inactive_buying_items[item_name]
+                
+                success1 = self.update_buying_items(buying_items)
+                success2 = self.update_inactive_buying_items(inactive_buying_items)
+                return success1 and success2
+        else:
+            # 恢復賣物品監控 - 從INACTIVE_ITEMS移到SELLING_ITEMS
+            selling_items = current_config.get('SELLING_ITEMS', {})
+            inactive_items = current_config.get('INACTIVE_ITEMS', {})
             
-            return success1 and success2
+            if item_name in inactive_items:
+                selling_items[item_name] = inactive_items[item_name]
+                del inactive_items[item_name]
+                
+                success1 = self.update_selling_items(selling_items)
+                success2 = self.update_inactive_items(inactive_items)
+                return success1 and success2
         
         return False
 
@@ -222,6 +341,7 @@ class ConfigAPIHandler(BaseHTTPRequestHandler):
                 # 添加新物品
                 item_name = data.get('itemName', '').strip()
                 keywords = data.get('keywords', [])
+                item_type = data.get('itemType', 'sell')  # 預設為賣物品
                 
                 if not item_name:
                     self._send_error_response('物品名稱不能為空')
@@ -231,25 +351,27 @@ class ConfigAPIHandler(BaseHTTPRequestHandler):
                     self._send_error_response('關鍵字不能為空')
                     return
                 
-                success = self.config_manager.add_item(item_name, keywords)
+                success = self.config_manager.add_item(item_name, keywords, item_type)
+                type_name = '收購物品' if item_type == 'buy' else '出售物品'
                 if success:
                     self._send_json_response({
-                        'message': f'物品 "{item_name}" 已添加',
+                        'message': f'{type_name} "{item_name}" 已添加',
                         'success': True
                     })
                 else:
-                    self._send_error_response('添加物品失敗')
+                    self._send_error_response(f'添加{type_name}失敗')
             
             elif parsed_path.path == '/api/items/update':
                 # 更新物品
                 item_name = data.get('itemName', '').strip()
                 keywords = data.get('keywords', [])
+                item_type = data.get('itemType')  # 可選的類型
                 
                 if not item_name:
                     self._send_error_response('物品名稱不能為空')
                     return
                 
-                success = self.config_manager.update_item(item_name, keywords)
+                success = self.config_manager.update_item(item_name, keywords, item_type)
                 if success:
                     self._send_json_response({
                         'message': f'物品 "{item_name}" 已更新',
@@ -261,36 +383,40 @@ class ConfigAPIHandler(BaseHTTPRequestHandler):
             elif parsed_path.path == '/api/items/pause':
                 # 暫停物品監控
                 item_name = data.get('itemName', '').strip()
+                item_type = data.get('itemType', 'sell')
                 
                 if not item_name:
                     self._send_error_response('物品名稱不能為空')
                     return
                 
-                success = self.config_manager.pause_item(item_name)
+                success = self.config_manager.pause_item(item_name, item_type)
+                type_name = '收購監控' if item_type == 'buy' else '出售監控'
                 if success:
                     self._send_json_response({
-                        'message': f'物品 "{item_name}" 已暫停監控',
+                        'message': f'物品 "{item_name}" 已暫停{type_name}',
                         'success': True
                     })
                 else:
-                    self._send_error_response('暫停監控失敗')
+                    self._send_error_response(f'暫停{type_name}失敗')
                     
             elif parsed_path.path == '/api/items/resume':
                 # 恢復物品監控
                 item_name = data.get('itemName', '').strip()
+                item_type = data.get('itemType', 'sell')
                 
                 if not item_name:
                     self._send_error_response('物品名稱不能為空')
                     return
                 
-                success = self.config_manager.resume_item(item_name)
+                success = self.config_manager.resume_item(item_name, item_type)
+                type_name = '收購監控' if item_type == 'buy' else '出售監控'
                 if success:
                     self._send_json_response({
-                        'message': f'物品 "{item_name}" 已恢復監控',
+                        'message': f'物品 "{item_name}" 已恢復{type_name}',
                         'success': True
                     })
                 else:
-                    self._send_error_response('恢復監控失敗')
+                    self._send_error_response(f'恢復{type_name}失敗')
             
             else:
                 self._send_error_response('Not Found', 404)
@@ -307,15 +433,17 @@ class ConfigAPIHandler(BaseHTTPRequestHandler):
             
             if parsed_path.path == '/api/items/delete':
                 item_name = query_params.get('itemName', [None])[0]
+                item_type = query_params.get('itemType', [None])[0]  # 可選的類型
                 
                 if not item_name:
                     self._send_error_response('物品名稱不能為空')
                     return
                 
-                success = self.config_manager.remove_item(item_name)
+                success = self.config_manager.remove_item(item_name, item_type)
                 if success:
+                    type_text = f'({item_type})' if item_type else ''
                     self._send_json_response({
-                        'message': f'物品 "{item_name}" 已刪除',
+                        'message': f'物品 "{item_name}"{type_text} 已刪除',
                         'success': True
                     })
                 else:

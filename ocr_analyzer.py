@@ -12,9 +12,10 @@ from typing import List, Tuple
 class OCRAnalyzer(TextAnalyzer):
     """使用EasyOCR的文字分析器"""
     
-    def __init__(self, selling_items: dict, languages: List[str] = None):
+    def __init__(self, selling_items: dict, buying_items: dict = None, languages: List[str] = None):
         super().__init__(selling_items)
         self.strategy_type = "OCR"
+        self.buying_items = buying_items or {}
         
         if not EASYOCR_AVAILABLE:
             raise ImportError("EasyOCR未安裝。請執行: pip install easyocr")

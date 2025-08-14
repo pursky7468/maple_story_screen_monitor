@@ -50,6 +50,18 @@ def get_enhanced_html_template():
         /* 暫停提示 */
         .pause-hint {{ color: #7f8c8d; font-size: 0.85em; text-align: center; padding: 20px; }}
         
+        /* 買物品樣式 */
+        .buying-item-card {{ border: 1px solid #ddd; border-radius: 6px; padding: 15px; background: #f0f8ff; transition: border-color 0.3s; border-left: 4px solid #3498db; }}
+        .buying-item-card:hover {{ border-color: #3498db; }}
+        .buying-item-name {{ font-weight: bold; color: #2980b9; margin-bottom: 8px; font-size: 1.1em; }}
+        .buying-item-keywords {{ font-size: 0.9em; color: #34495e; line-height: 1.4; margin-bottom: 10px; }}
+        
+        /* 暫停買物品樣式 */
+        .inactive-buying-item-card {{ border: 1px solid #ddd; border-radius: 6px; padding: 15px; background: #f0f0f0; opacity: 0.7; transition: all 0.3s; border-left: 4px solid #95a5a6; }}
+        .inactive-buying-item-card:hover {{ opacity: 1; border-color: #f39c12; }}
+        .inactive-buying-item-name {{ font-weight: bold; color: #7f8c8d; margin-bottom: 8px; font-size: 1.1em; }}
+        .inactive-buying-item-keywords {{ font-size: 0.9em; color: #95a5a6; line-height: 1.4; margin-bottom: 10px; }}
+        
         /* 按鈕樣式 */
         .btn {{ padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85em; transition: all 0.3s; }}
         .btn:hover {{ transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }}
@@ -113,19 +125,33 @@ def get_enhanced_html_template():
         </div>
         <div class="config-content" id="configContent">
             <div class="config-section">
-                <h4>📋 當前監控物品</h4>
+                <h4>💰 出售物品監控</h4>
                 <div id="currentItemsSection">
                     <!-- 動態生成物品清單 -->
                 </div>
                 
-                <h4 style="margin-top: 30px;">⏸️ 暫停監控物品</h4>
+                <h4 style="margin-top: 30px;">⏸️ 暫停出售監控</h4>
                 <div id="inactiveItemsSection">
                     <!-- 動態生成暫停物品清單 -->
+                </div>
+                
+                <h4 style="margin-top: 30px;">🛒 收購物品監控</h4>
+                <div id="currentBuyingItemsSection">
+                    <!-- 動態生成收購物品清單 -->
+                </div>
+                
+                <h4 style="margin-top: 30px;">⏸️ 暫停收購監控</h4>
+                <div id="inactiveBuyingItemsSection">
+                    <!-- 動態生成暫停收購物品清單 -->
                 </div>
                 
                 <!-- 添加新物品表單 -->
                 <div class="add-item-form" id="addItemForm">
                     <div class="form-row">
+                        <select name="itemType" class="form-input" style="min-width: 100px;">
+                            <option value="sell">💰 出售</option>
+                            <option value="buy">🛒 收購</option>
+                        </select>
                         <input type="text" name="itemName" class="form-input" placeholder="物品名稱" maxlength="50">
                         <input type="text" name="keywords" class="form-input" placeholder="關鍵字 (用逗號分隔)" maxlength="200">
                         <button class="btn btn-success" onclick="saveNewItem()">✓ 保存</button>
@@ -188,9 +214,13 @@ def get_enhanced_html_template():
         async function loadCurrentItems() {{
             const activeContainer = document.getElementById('currentItemsSection');
             const inactiveContainer = document.getElementById('inactiveItemsSection');
+            const buyingContainer = document.getElementById('currentBuyingItemsSection');
+            const inactiveBuyingContainer = document.getElementById('inactiveBuyingItemsSection');
             
             activeContainer.innerHTML = '<p style="text-align: center; color: #666;">載入中...</p>';
             inactiveContainer.innerHTML = '<p style="text-align: center; color: #666;">載入中...</p>';
+            buyingContainer.innerHTML = '<p style="text-align: center; color: #666;">載入中...</p>';
+            inactiveBuyingContainer.innerHTML = '<p style="text-align: center; color: #666;">載入中...</p>';
             
             try {{
                 const response = await fetch(`${{API_BASE}}/api/config`);
@@ -200,17 +230,27 @@ def get_enhanced_html_template():
                     const config = result.config;
                     currentConfig.SELLING_ITEMS = config.SELLING_ITEMS || {{}};
                     currentConfig.INACTIVE_ITEMS = config.INACTIVE_ITEMS || {{}};
+                    currentConfig.BUYING_ITEMS = config.BUYING_ITEMS || {{}};
+                    currentConfig.INACTIVE_BUYING_ITEMS = config.INACTIVE_BUYING_ITEMS || {{}};
                     
                     renderActiveItemsList(config.SELLING_ITEMS || {{}});
                     renderInactiveItemsList(config.INACTIVE_ITEMS || {{}});
+                    renderBuyingItemsList(config.BUYING_ITEMS || {{}});
+                    renderInactiveBuyingItemsList(config.INACTIVE_BUYING_ITEMS || {{}});
                 }} else {{
-                    activeContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">載入配置失敗</p>';
-                    inactiveContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">載入配置失敗</p>';
+                    const errorMsg = '<p style=\"color: #e74c3c; text-align: center;\">載入配置失敗</p>';
+                    activeContainer.innerHTML = errorMsg;
+                    inactiveContainer.innerHTML = errorMsg;
+                    buyingContainer.innerHTML = errorMsg;
+                    inactiveBuyingContainer.innerHTML = errorMsg;
                 }}
             }} catch (error) {{
                 console.error('載入配置失敗:', error);
-                activeContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">無法連接到配置服務</p>';
-                inactiveContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">無法連接到配置服務</p>';
+                const errorMsg = '<p style=\"color: #e74c3c; text-align: center;\">無法連接到配置服務</p>';
+                activeContainer.innerHTML = errorMsg;
+                inactiveContainer.innerHTML = errorMsg;
+                buyingContainer.innerHTML = errorMsg;
+                inactiveBuyingContainer.innerHTML = errorMsg;
             }}
         }}
         
@@ -286,6 +326,78 @@ def get_enhanced_html_template():
             container.appendChild(itemsGrid);
         }}
         
+        // 渲染買物品清單
+        function renderBuyingItemsList(items) {{
+            const container = document.getElementById('currentBuyingItemsSection');
+            container.innerHTML = '';
+            
+            if (!items || Object.keys(items).length === 0) {{
+                container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">尚未設定收購物品</p>';
+                return;
+            }}
+            
+            const itemsGrid = document.createElement('div');
+            itemsGrid.className = 'items-grid';
+            
+            for (const [itemName, keywords] of Object.entries(items)) {{
+                const itemCard = document.createElement('div');
+                itemCard.className = 'buying-item-card';
+                itemCard.innerHTML = `
+                    <div class="buying-item-name">🛒 ${{itemName}}</div>
+                    <div class="buying-item-keywords">關鍵字: ${{keywords.join(', ')}}</div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning" onclick="editBuyingItem('${{itemName}}')">📝 編輯</button>
+                        <button class="btn" style="background: #f39c12; color: white;" onclick="pauseBuyingItem('${{itemName}}')">⏸️ 暫停</button>
+                        <button class="btn btn-danger" onclick="deleteBuyingItem('${{itemName}}')">🗑️ 刪除</button>
+                    </div>
+                    <div class="edit-form" id="editForm_buy_${{itemName}}" style="display: none;">
+                        <input type="text" value="${{keywords.join(', ')}}" id="editKeywords_buy_${{itemName}}" placeholder="關鍵字 (用逗號分隔)">
+                        <button class="btn btn-success" onclick="saveBuyingEdit('${{itemName}}')">✓ 保存</button>
+                        <button class="btn btn-warning" onclick="cancelBuyingEdit('${{itemName}}')">✗ 取消</button>
+                    </div>
+                `;
+                itemsGrid.appendChild(itemCard);
+            }}
+            
+            container.appendChild(itemsGrid);
+        }}
+        
+        // 渲染暫停買物品清單
+        function renderInactiveBuyingItemsList(items) {{
+            const container = document.getElementById('inactiveBuyingItemsSection');
+            container.innerHTML = '';
+            
+            if (!items || Object.keys(items).length === 0) {{
+                container.innerHTML = '<p class="pause-hint">💡 提示：當收購完成後，可點擊"暫停"按鈕保留對照表但停止監控</p>';
+                return;
+            }}
+            
+            const itemsGrid = document.createElement('div');
+            itemsGrid.className = 'items-grid';
+            
+            for (const [itemName, keywords] of Object.entries(items)) {{
+                const itemCard = document.createElement('div');
+                itemCard.className = 'inactive-buying-item-card';
+                itemCard.innerHTML = `
+                    <div class="inactive-buying-item-name">🛒 ${{itemName}} (已暫停)</div>
+                    <div class="inactive-buying-item-keywords">關鍵字: ${{keywords.join(', ')}}</div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning" onclick="editBuyingItem('${{itemName}}', true)">📝 編輯</button>
+                        <button class="btn btn-success" onclick="resumeBuyingItem('${{itemName}}')">▶️ 恢復</button>
+                        <button class="btn btn-danger" onclick="deleteBuyingItem('${{itemName}}')">🗑️ 刪除</button>
+                    </div>
+                    <div class="edit-form" id="editForm_buy_${{itemName}}" style="display: none;">
+                        <input type="text" value="${{keywords.join(', ')}}" id="editKeywords_buy_${{itemName}}" placeholder="關鍵字 (用逗號分隔)">
+                        <button class="btn btn-success" onclick="saveBuyingEdit('${{itemName}}')">✓ 保存</button>
+                        <button class="btn btn-warning" onclick="cancelBuyingEdit('${{itemName}}')">✗ 取消</button>
+                    </div>
+                `;
+                itemsGrid.appendChild(itemCard);
+            }}
+            
+            container.appendChild(itemsGrid);
+        }}
+        
         // 顯示添加物品表單
         function showAddItemForm() {{
             document.getElementById('addItemForm').style.display = 'block';
@@ -300,12 +412,14 @@ def get_enhanced_html_template():
         
         // 清空添加物品表單
         function clearAddItemForm() {{
+            document.querySelector('select[name="itemType"]').value = 'sell';
             document.querySelector('input[name="itemName"]').value = '';
             document.querySelector('input[name="keywords"]').value = '';
         }}
         
         // 保存新物品
         async function saveNewItem() {{
+            const itemType = document.querySelector('select[name="itemType"]').value;
             const itemName = document.querySelector('input[name="itemName"]').value.trim();
             const keywordsText = document.querySelector('input[name="keywords"]').value.trim();
             
@@ -333,7 +447,8 @@ def get_enhanced_html_template():
                     }},
                     body: JSON.stringify({{
                         itemName: itemName,
-                        keywords: keywords
+                        keywords: keywords,
+                        itemType: itemType
                     }})
                 }});
                 
@@ -464,6 +579,153 @@ def get_enhanced_html_template():
             }}
         }}
         
+        // 買物品相關操作函數
+        // 編輯買物品
+        function editBuyingItem(itemName, isInactive = false) {{
+            const formId = `editForm_buy_${{itemName}}`;
+            const editForm = document.getElementById(formId);
+            if (editForm) {{
+                editForm.style.display = 'block';
+                const input = document.getElementById(`editKeywords_buy_${{itemName}}`);
+                if (input) input.focus();
+            }}
+        }}
+        
+        // 取消編輯買物品
+        function cancelBuyingEdit(itemName) {{
+            const editForm = document.getElementById(`editForm_buy_${{itemName}}`);
+            if (editForm) {{
+                editForm.style.display = 'none';
+            }}
+        }}
+        
+        // 保存買物品編輯
+        async function saveBuyingEdit(itemName) {{
+            const keywordsText = document.getElementById(`editKeywords_buy_${{itemName}}`).value.trim();
+            
+            if (!keywordsText) {{
+                showAlert('請輸入關鍵字', 'error');
+                return;
+            }}
+            
+            const keywords = keywordsText.split(',').map(k => k.trim()).filter(k => k);
+            if (keywords.length === 0) {{
+                showAlert('請輸入有效的關鍵字', 'error');
+                return;
+            }}
+            
+            try {{
+                const response = await fetch(`${{API_BASE}}/api/items/update`, {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        itemName: itemName,
+                        keywords: keywords,
+                        itemType: 'buy'
+                    }})
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showAlert(result.message, 'success');
+                    loadCurrentItems(); // 重新載入列表
+                }} else {{
+                    showAlert(result.error || '更新失敗', 'error');
+                }}
+            }} catch (error) {{
+                console.error('更新買物品失敗:', error);
+                showAlert('無法連接到配置服務', 'error');
+            }}
+        }}
+        
+        // 暫停買物品監控
+        async function pauseBuyingItem(itemName) {{
+            if (!confirm(`確定要暫停收購物品 \"${{itemName}}\" 嗎？\\n\\n物品將移至暫停區域，保留對照表但不再監控。`)) {{
+                return;
+            }}
+            
+            try {{
+                const response = await fetch(`${{API_BASE}}/api/items/pause`, {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        itemName: itemName,
+                        itemType: 'buy'
+                    }})
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showAlert(result.message, 'success');
+                    loadCurrentItems(); // 重新載入列表
+                }} else {{
+                    showAlert(result.error || '暫停失敗', 'error');
+                }}
+            }} catch (error) {{
+                console.error('暫停買物品失敗:', error);
+                showAlert('無法連接到配置服務', 'error');
+            }}
+        }}
+        
+        // 恢復買物品監控
+        async function resumeBuyingItem(itemName) {{
+            try {{
+                const response = await fetch(`${{API_BASE}}/api/items/resume`, {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        itemName: itemName,
+                        itemType: 'buy'
+                    }})
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showAlert(result.message + ' 🎉', 'success');
+                    loadCurrentItems(); // 重新載入列表
+                }} else {{
+                    showAlert(result.error || '恢復失敗', 'error');
+                }}
+            }} catch (error) {{
+                console.error('恢復買物品失敗:', error);
+                showAlert('無法連接到配置服務', 'error');
+            }}
+        }}
+        
+        // 刪除買物品
+        async function deleteBuyingItem(itemName) {{
+            if (!confirm(`確定要刪除收購物品 \"${{itemName}}\" 嗎？`)) {{
+                return;
+            }}
+            
+            try {{
+                const response = await fetch(`${{API_BASE}}/api/items/delete?itemName=${{encodeURIComponent(itemName)}}&itemType=buy`, {{
+                    method: 'DELETE'
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showAlert(result.message, 'success');
+                    loadCurrentItems(); // 重新載入列表
+                }} else {{
+                    showAlert(result.error || '刪除失敗', 'error');
+                }}
+            }} catch (error) {{
+                console.error('刪除買物品失敗:', error);
+                showAlert('無法連接到配置服務', 'error');
+            }}
+        }}
+        
         // 刪除物品
         async function deleteItem(itemName) {{
             if (!confirm(`確定要刪除物品 "${{itemName}}" 嗎？`)) {{
@@ -552,20 +814,41 @@ def get_current_config():
     try:
         import sys
         from config import SELLING_ITEMS, SCAN_INTERVAL
-        # 嘗試獲取INACTIVE_ITEMS，如果不存在則使用空字典
+        # 嘗試獲取所有配置項，如果不存在則使用空字典
         try:
             from config import INACTIVE_ITEMS
         except ImportError:
             INACTIVE_ITEMS = {}
+            
+        try:
+            from config import BUYING_ITEMS
+        except ImportError:
+            BUYING_ITEMS = {}
+            
+        try:
+            from config import INACTIVE_BUYING_ITEMS
+        except ImportError:
+            INACTIVE_BUYING_ITEMS = {}
+            
+        try:
+            from config import TRADING_KEYWORDS
+        except ImportError:
+            TRADING_KEYWORDS = {}
         
         return {
             "SELLING_ITEMS": SELLING_ITEMS,
             "INACTIVE_ITEMS": INACTIVE_ITEMS,
+            "BUYING_ITEMS": BUYING_ITEMS,
+            "INACTIVE_BUYING_ITEMS": INACTIVE_BUYING_ITEMS,
+            "TRADING_KEYWORDS": TRADING_KEYWORDS,
             "SCAN_INTERVAL": SCAN_INTERVAL
         }
     except ImportError:
         return {
             "SELLING_ITEMS": {},
             "INACTIVE_ITEMS": {},
+            "BUYING_ITEMS": {},
+            "INACTIVE_BUYING_ITEMS": {},
+            "TRADING_KEYWORDS": {},
             "SCAN_INTERVAL": 2
         }

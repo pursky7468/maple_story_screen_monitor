@@ -7,6 +7,12 @@ import json
 import numpy as np
 from datetime import datetime
 from config import *
+
+# 確保買物品配置存在，向後兼容
+if 'BUYING_ITEMS' not in globals():
+    BUYING_ITEMS = {}
+if 'TRADING_KEYWORDS' not in globals():
+    TRADING_KEYWORDS = {}
 from roi_selector import ROISelector
 from text_analyzer import AnalysisResult
 from gemini_analyzer import GeminiAnalyzer
@@ -744,7 +750,7 @@ def create_analyzer(analyzer_type: str):
             from config import OCR_DEBUG_CONFIG
             save_debug = OCR_DEBUG_CONFIG.get("ENABLE_RECTANGLE_DEBUG", False)
             debug_dir = OCR_DEBUG_CONFIG.get("DEBUG_OUTPUT_DIR", "rectangle_debug")
-            return OCRRectangleAnalyzer(SELLING_ITEMS, save_debug_images=save_debug, debug_folder=debug_dir)
+            return OCRRectangleAnalyzer(SELLING_ITEMS, BUYING_ITEMS, save_debug_images=save_debug, debug_folder=debug_dir)
         except ImportError as e:
             print(f"❌ OCR_Rectangle依賴缺失: {e}")
             print("\n安裝OCR依賴：")
@@ -761,14 +767,14 @@ def create_analyzer(analyzer_type: str):
             print("錯誤：請先在 config.py 中設置您的 Gemini API Key")
             return None
         try:
-            return GeminiAnalyzer(GEMINI_API_KEY, SELLING_ITEMS)
+            return GeminiAnalyzer(GEMINI_API_KEY, SELLING_ITEMS, BUYING_ITEMS)
         except Exception as e:
             print(f"Gemini分析器初始化失敗: {e}")
             return None
     
     elif analyzer_type == "ocr":
         try:
-            return OCRAnalyzer(SELLING_ITEMS)
+            return OCRAnalyzer(SELLING_ITEMS, BUYING_ITEMS)
         except ImportError as e:
             print(f"❌ OCR依賴缺失: {e}")
             print("\n安裝OCR依賴：")
