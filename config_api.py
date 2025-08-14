@@ -30,24 +30,25 @@ class ConfigManager:
             
             return {
                 'SELLING_ITEMS': config.SELLING_ITEMS,
+                'INACTIVE_ITEMS': getattr(config, 'INACTIVE_ITEMS', {}),
                 'SCAN_INTERVAL': config.SCAN_INTERVAL,
                 'GEMINI_API_KEY': config.GEMINI_API_KEY[:10] + '...' if len(config.GEMINI_API_KEY) > 10 else config.GEMINI_API_KEY
             }
         except Exception as e:
             print(f"獲取配置失敗: {e}")
-            return {'SELLING_ITEMS': {}, 'SCAN_INTERVAL': 2, 'GEMINI_API_KEY': ''}
+            return {'SELLING_ITEMS': {}, 'INACTIVE_ITEMS': {}, 'SCAN_INTERVAL': 2, 'GEMINI_API_KEY': ''}
     
-    def update_selling_items(self, selling_items):
-        """更新SELLING_ITEMS配置"""
+    def update_config_section(self, section_name, items_dict):
+        """更新配置文件中的指定區域"""
         with self.config_lock:
             try:
                 # 讀取當前config.py文件
                 with open(self.config_file, 'r', encoding='utf-8') as f:
                     content = f.read()
                 
-                # 構造新的SELLING_ITEMS字典字符串
-                items_str = "SELLING_ITEMS = {\n"
-                for item_name, keywords in selling_items.items():
+                # 構造新的字典字符串
+                items_str = f"{section_name} = {{\n"
+                for item_name, keywords in items_dict.items():
                     # 轉義引號和特殊字符
                     safe_item_name = item_name.replace('"', '\\"')
                     safe_keywords = [kw.replace('"', '\\"') for kw in keywords]
@@ -55,11 +56,11 @@ class ConfigManager:
                     items_str += f'    "{safe_item_name}": [{keywords_str}],\n'
                 items_str += "}"
                 
-                # 使用正則表達式替換SELLING_ITEMS部分
-                pattern = r'SELLING_ITEMS\s*=\s*\{[^}]*\}'
+                # 使用正則表達式替換指定區域
+                pattern = rf'{section_name}\s*=\s*\{{[^}}]*\}}'
                 new_content = re.sub(pattern, items_str, content, flags=re.DOTALL)
                 
-                # 如果沒有找到SELLING_ITEMS，則添加到文件末尾
+                # 如果沒有找到該區域，則添加到文件末尾
                 if new_content == content:
                     new_content += f"\n\n{items_str}\n"
                 
@@ -67,12 +68,20 @@ class ConfigManager:
                 with open(self.config_file, 'w', encoding='utf-8') as f:
                     f.write(new_content)
                 
-                print(f"[OK] 配置已保存到 {self.config_file}")
+                print(f"[OK] {section_name}配置已保存到 {self.config_file}")
                 return True
                 
             except Exception as e:
-                print(f"[ERROR] 保存配置失敗: {e}")
+                print(f"[ERROR] 保存{section_name}配置失敗: {e}")
                 return False
+    
+    def update_selling_items(self, selling_items):
+        """更新SELLING_ITEMS配置"""
+        return self.update_config_section('SELLING_ITEMS', selling_items)
+    
+    def update_inactive_items(self, inactive_items):
+        """更新INACTIVE_ITEMS配置"""
+        return self.update_config_section('INACTIVE_ITEMS', inactive_items)
     
     def add_item(self, item_name, keywords):
         """添加新的監控物品"""
@@ -85,18 +94,71 @@ class ConfigManager:
         """刪除監控物品"""
         current_config = self.get_config()
         selling_items = current_config.get('SELLING_ITEMS', {})
+        inactive_items = current_config.get('INACTIVE_ITEMS', {})
+        
+        removed = False
         if item_name in selling_items:
             del selling_items[item_name]
-            return self.update_selling_items(selling_items)
-        return False
+            self.update_selling_items(selling_items)
+            removed = True
+        if item_name in inactive_items:
+            del inactive_items[item_name]
+            self.update_inactive_items(inactive_items)
+            removed = True
+        
+        return removed
     
     def update_item(self, item_name, keywords):
         """更新物品關鍵字"""
         current_config = self.get_config()
         selling_items = current_config.get('SELLING_ITEMS', {})
+        inactive_items = current_config.get('INACTIVE_ITEMS', {})
+        
         if item_name in selling_items:
             selling_items[item_name] = keywords
             return self.update_selling_items(selling_items)
+        elif item_name in inactive_items:
+            inactive_items[item_name] = keywords
+            return self.update_inactive_items(inactive_items)
+        
+        return False
+    
+    def pause_item(self, item_name):
+        """暫停物品監控 - 從SELLING_ITEMS移到INACTIVE_ITEMS"""
+        current_config = self.get_config()
+        selling_items = current_config.get('SELLING_ITEMS', {})
+        inactive_items = current_config.get('INACTIVE_ITEMS', {})
+        
+        if item_name in selling_items:
+            # 移動物品到暫停區域
+            inactive_items[item_name] = selling_items[item_name]
+            del selling_items[item_name]
+            
+            # 更新兩個區域
+            success1 = self.update_selling_items(selling_items)
+            success2 = self.update_inactive_items(inactive_items)
+            
+            return success1 and success2
+        
+        return False
+    
+    def resume_item(self, item_name):
+        """恢復物品監控 - 從INACTIVE_ITEMS移到SELLING_ITEMS"""
+        current_config = self.get_config()
+        selling_items = current_config.get('SELLING_ITEMS', {})
+        inactive_items = current_config.get('INACTIVE_ITEMS', {})
+        
+        if item_name in inactive_items:
+            # 移動物品到活躍區域
+            selling_items[item_name] = inactive_items[item_name]
+            del inactive_items[item_name]
+            
+            # 更新兩個區域
+            success1 = self.update_selling_items(selling_items)
+            success2 = self.update_inactive_items(inactive_items)
+            
+            return success1 and success2
+        
         return False
 
 
@@ -195,6 +257,40 @@ class ConfigAPIHandler(BaseHTTPRequestHandler):
                     })
                 else:
                     self._send_error_response('更新物品失敗')
+                    
+            elif parsed_path.path == '/api/items/pause':
+                # 暫停物品監控
+                item_name = data.get('itemName', '').strip()
+                
+                if not item_name:
+                    self._send_error_response('物品名稱不能為空')
+                    return
+                
+                success = self.config_manager.pause_item(item_name)
+                if success:
+                    self._send_json_response({
+                        'message': f'物品 "{item_name}" 已暫停監控',
+                        'success': True
+                    })
+                else:
+                    self._send_error_response('暫停監控失敗')
+                    
+            elif parsed_path.path == '/api/items/resume':
+                # 恢復物品監控
+                item_name = data.get('itemName', '').strip()
+                
+                if not item_name:
+                    self._send_error_response('物品名稱不能為空')
+                    return
+                
+                success = self.config_manager.resume_item(item_name)
+                if success:
+                    self._send_json_response({
+                        'message': f'物品 "{item_name}" 已恢復監控',
+                        'success': True
+                    })
+                else:
+                    self._send_error_response('恢復監控失敗')
             
             else:
                 self._send_error_response('Not Found', 404)
@@ -247,6 +343,8 @@ def start_config_api_server(port=8899):
         print(f"   GET  http://localhost:{port}/api/items")
         print(f"   POST http://localhost:{port}/api/items/add")
         print(f"   POST http://localhost:{port}/api/items/update")
+        print(f"   POST http://localhost:{port}/api/items/pause")
+        print(f"   POST http://localhost:{port}/api/items/resume")
         print(f"   DELETE http://localhost:{port}/api/items/delete")
         
         server.serve_forever()

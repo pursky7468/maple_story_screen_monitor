@@ -39,7 +39,16 @@ def get_enhanced_html_template():
         .item-card:hover {{ border-color: #3498db; }}
         .item-name {{ font-weight: bold; color: #2c3e50; margin-bottom: 8px; font-size: 1.1em; }}
         .item-keywords {{ font-size: 0.9em; color: #666; line-height: 1.4; margin-bottom: 10px; }}
-        .item-actions {{ display: flex; gap: 8px; }}
+        .item-actions {{ display: flex; gap: 8px; flex-wrap: wrap; }}
+        
+        /* 暫停物品樣式 */
+        .inactive-item-card {{ border: 1px solid #ddd; border-radius: 6px; padding: 15px; background: #f8f8f8; opacity: 0.7; transition: all 0.3s; }}
+        .inactive-item-card:hover {{ opacity: 1; border-color: #f39c12; }}
+        .inactive-item-name {{ font-weight: bold; color: #7f8c8d; margin-bottom: 8px; font-size: 1.1em; }}
+        .inactive-item-keywords {{ font-size: 0.9em; color: #95a5a6; line-height: 1.4; margin-bottom: 10px; }}
+        
+        /* 暫停提示 */
+        .pause-hint {{ color: #7f8c8d; font-size: 0.85em; text-align: center; padding: 20px; }}
         
         /* 按鈕樣式 */
         .btn {{ padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85em; transition: all 0.3s; }}
@@ -109,6 +118,11 @@ def get_enhanced_html_template():
                     <!-- 動態生成物品清單 -->
                 </div>
                 
+                <h4 style="margin-top: 30px;">⏸️ 暫停監控物品</h4>
+                <div id="inactiveItemsSection">
+                    <!-- 動態生成暫停物品清單 -->
+                </div>
+                
                 <!-- 添加新物品表單 -->
                 <div class="add-item-form" id="addItemForm">
                     <div class="form-row">
@@ -172,27 +186,36 @@ def get_enhanced_html_template():
         
         // 載入當前物品配置
         async function loadCurrentItems() {{
-            const container = document.getElementById('currentItemsSection');
-            container.innerHTML = '<p style="text-align: center; color: #666;">載入中...</p>';
+            const activeContainer = document.getElementById('currentItemsSection');
+            const inactiveContainer = document.getElementById('inactiveItemsSection');
+            
+            activeContainer.innerHTML = '<p style="text-align: center; color: #666;">載入中...</p>';
+            inactiveContainer.innerHTML = '<p style="text-align: center; color: #666;">載入中...</p>';
             
             try {{
-                const response = await fetch(`${{API_BASE}}/api/items`);
+                const response = await fetch(`${{API_BASE}}/api/config`);
                 const result = await response.json();
                 
                 if (result.success) {{
-                    currentConfig.SELLING_ITEMS = result.items;
-                    renderItemsList(result.items);
+                    const config = result.config;
+                    currentConfig.SELLING_ITEMS = config.SELLING_ITEMS || {{}};
+                    currentConfig.INACTIVE_ITEMS = config.INACTIVE_ITEMS || {{}};
+                    
+                    renderActiveItemsList(config.SELLING_ITEMS || {{}});
+                    renderInactiveItemsList(config.INACTIVE_ITEMS || {{}});
                 }} else {{
-                    container.innerHTML = '<p style="color: #e74c3c; text-align: center;">載入配置失敗</p>';
+                    activeContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">載入配置失敗</p>';
+                    inactiveContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">載入配置失敗</p>';
                 }}
             }} catch (error) {{
                 console.error('載入配置失敗:', error);
-                container.innerHTML = '<p style="color: #e74c3c; text-align: center;">無法連接到配置服務</p>';
+                activeContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">無法連接到配置服務</p>';
+                inactiveContainer.innerHTML = '<p style="color: #e74c3c; text-align: center;">無法連接到配置服務</p>';
             }}
         }}
         
-        // 渲染物品清單
-        function renderItemsList(items) {{
+        // 渲染活躍物品清單
+        function renderActiveItemsList(items) {{
             const container = document.getElementById('currentItemsSection');
             container.innerHTML = '';
             
@@ -212,6 +235,43 @@ def get_enhanced_html_template():
                     <div class="item-keywords">關鍵字: ${{keywords.join(', ')}}</div>
                     <div class="item-actions">
                         <button class="btn btn-warning" onclick="editItem('${{itemName}}')">📝 編輯</button>
+                        <button class="btn" style="background: #f39c12; color: white;" onclick="pauseItem('${{itemName}}')">⏸️ 暫停</button>
+                        <button class="btn btn-danger" onclick="deleteItem('${{itemName}}')">🗑️ 刪除</button>
+                    </div>
+                    <div class="edit-form" id="editForm_${{itemName}}" style="display: none;">
+                        <input type="text" value="${{keywords.join(', ')}}" id="editKeywords_${{itemName}}" placeholder="關鍵字 (用逗號分隔)">
+                        <button class="btn btn-success" onclick="saveEdit('${{itemName}}')">✓ 保存</button>
+                        <button class="btn btn-warning" onclick="cancelEdit('${{itemName}}')">✗ 取消</button>
+                    </div>
+                `;
+                itemsGrid.appendChild(itemCard);
+            }}
+            
+            container.appendChild(itemsGrid);
+        }}
+        
+        // 渲染暫停物品清單
+        function renderInactiveItemsList(items) {{
+            const container = document.getElementById('inactiveItemsSection');
+            container.innerHTML = '';
+            
+            if (!items || Object.keys(items).length === 0) {{
+                container.innerHTML = '<p class="pause-hint">💡 提示：當商品賣出後，可點擊"暫停"按鈕保留對照表但停止監控</p>';
+                return;
+            }}
+            
+            const itemsGrid = document.createElement('div');
+            itemsGrid.className = 'items-grid';
+            
+            for (const [itemName, keywords] of Object.entries(items)) {{
+                const itemCard = document.createElement('div');
+                itemCard.className = 'inactive-item-card';
+                itemCard.innerHTML = `
+                    <div class="inactive-item-name">${{itemName}} (已暫停)</div>
+                    <div class="inactive-item-keywords">關鍵字: ${{keywords.join(', ')}}</div>
+                    <div class="item-actions">
+                        <button class="btn btn-warning" onclick="editItem('${{itemName}}')">📝 編輯</button>
+                        <button class="btn btn-success" onclick="resumeItem('${{itemName}}')">▶️ 恢復</button>
                         <button class="btn btn-danger" onclick="deleteItem('${{itemName}}')">🗑️ 刪除</button>
                     </div>
                     <div class="edit-form" id="editForm_${{itemName}}" style="display: none;">
@@ -346,6 +406,64 @@ def get_enhanced_html_template():
             }}
         }}
         
+        // 暫停物品監控
+        async function pauseItem(itemName) {{
+            if (!confirm(`確定要暫停監控物品 "${{itemName}}" 嗎？\\n\\n物品將移至暫停區域，保留對照表但不再監控。`)) {{
+                return;
+            }}
+            
+            try {{
+                const response = await fetch(`${{API_BASE}}/api/items/pause`, {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        itemName: itemName
+                    }})
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showAlert(result.message, 'success');
+                    loadCurrentItems(); // 重新載入列表
+                }} else {{
+                    showAlert(result.error || '暫停失敗', 'error');
+                }}
+            }} catch (error) {{
+                console.error('暫停物品失敗:', error);
+                showAlert('無法連接到配置服務', 'error');
+            }}
+        }}
+        
+        // 恢復物品監控
+        async function resumeItem(itemName) {{
+            try {{
+                const response = await fetch(`${{API_BASE}}/api/items/resume`, {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        itemName: itemName
+                    }})
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showAlert(result.message + ' 🎉', 'success');
+                    loadCurrentItems(); // 重新載入列表
+                }} else {{
+                    showAlert(result.error || '恢復失敗', 'error');
+                }}
+            }} catch (error) {{
+                console.error('恢復物品失敗:', error);
+                showAlert('無法連接到配置服務', 'error');
+            }}
+        }}
+        
         // 刪除物品
         async function deleteItem(itemName) {{
             if (!confirm(`確定要刪除物品 "${{itemName}}" 嗎？`)) {{
@@ -432,13 +550,22 @@ def get_enhanced_html_template():
 def get_current_config():
     """獲取當前配置"""
     try:
+        import sys
         from config import SELLING_ITEMS, SCAN_INTERVAL
+        # 嘗試獲取INACTIVE_ITEMS，如果不存在則使用空字典
+        try:
+            from config import INACTIVE_ITEMS
+        except ImportError:
+            INACTIVE_ITEMS = {}
+        
         return {
             "SELLING_ITEMS": SELLING_ITEMS,
+            "INACTIVE_ITEMS": INACTIVE_ITEMS,
             "SCAN_INTERVAL": SCAN_INTERVAL
         }
     except ImportError:
         return {
             "SELLING_ITEMS": {},
+            "INACTIVE_ITEMS": {},
             "SCAN_INTERVAL": 2
         }
